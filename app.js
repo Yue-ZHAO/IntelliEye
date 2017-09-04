@@ -25,7 +25,9 @@ jsonfile.spaces = 4;
 // region DATA COLLECTION
 // ------------------------------------------------------
 var logsPath = 'logs/';
-var dataPath = 'squirreleye-data/';
+var dataPath = '../moocdata/';
+var squirreleyePath = path.join(dataPath, 'squirreleye');
+var ieyePath = path.join(dataPath, 'ieye');
 
 // create log file path, replace all : occurences for Windows
 var logfile = logsPath + (new Date()).toISOString().replace(/:/g, '.');
@@ -96,17 +98,21 @@ server.listen(port, ipaddress, function() {
     }
 
     // check if data folder exists
-    if (!fs.existsSync(path.join('../', dataPath))) {
-        if (!fs.existsSync(dataPath)) {
-            console.log('Creating data folder');
-            fs.mkdirSync(dataPath);
+    if (!fs.existsSync(dataPath)) {
+        fs.mkdirSync(dataPath);
+
+        if (!fs.existsSync(squirreleyePath)) {
+            console.log('creating ' + squirreleyePath +' data folder');
+            fs.mkdirSync(squirreleyePath);
         }
-        console.log('Using internal data folder');
-    } else {
-        console.log('Using external data folder');
-        dataPath = path.join('../', dataPath);
-    }
-    
+
+        if (!fs.existsSync(ieyePath)) {
+            console.log('creating ' + ieyePath +' data folder');
+            fs.mkdirSync(ieyePath);
+        }
+
+        console.log('Using' + dataPath + ' data folder');
+    }    
 
     // Logger to write logs to file.
     // to change the filename or folder, change the filename part below.
@@ -151,10 +157,11 @@ function writeFile(sessionID, userID) {
     });    
 }
 
-app.post('/user', function(req, res) {
+app.post('/user/:widgettype', function(req, res) {
     var log = req.body.data;
     var userID = log.userID;
     var sessionID = log.sessionID;
+    var widgettype = req.params.widgettype;
 
     // set up user data
     userData.set(sessionID, log);
@@ -165,11 +172,13 @@ app.post('/user', function(req, res) {
     userData.get(sessionID).widget = [];
     userData.get(sessionID).lastBeat = (new Date());
     userData.get(sessionID).exception = [];
+    userData.get(sessionID).widgetType = widgettype;
 
     // check if userfile exists
-    var userFile = path.join(dataPath, userID);
+    
+    var userFile = (widgettype === 'squirreleye') ? squirreleyePath : ieyePath;
+    userFile = path.join(userFile, userID);
     if (!fs.existsSync(userFile)) {
-        console.log('Creating logs folder for log4js');
         fs.writeFile(userFile, '', function(err) {
             if (err) {
                 console.log(err);
