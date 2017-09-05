@@ -49,7 +49,7 @@ if (!fs.existsSync(dataPath)) {
  * @param {*} userID 
  */
 var createUserFile = function(widgetType, userID) {
-    var userFile = (widgettype === 'sqeye') ? squirreleyePath : ieyePath;
+    var userFile = (widgetType === 'sqeye') ? squirreleyePath : ieyePath;
     userFile = path.join(userFile, userID);
     if (!fs.existsSync(userFile)) {
         fs.writeFile(userFile, '', function(err) {
