@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+require('map.prototype.tojson');
 var dp = require('../dataprocessing.js');
 
 var sessionData = new Map();
@@ -36,7 +37,7 @@ router.post('/heartbeat', function(req, res) {
 });
 
 router.get('/sessions', function(req, res) {
-
+    res.json(sessionData.toJSON());
 });
 
 router.post('/user', function(req, res) {
@@ -53,7 +54,6 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).widget = [];
     sessionData.get(sessionID).lastBeat = (new Date());
     sessionData.get(sessionID).exception = [];
-    sessionData.get(sessionID).widgetType = widgettype;
 
     dp.createUserFile('sqeye', userID);
 
