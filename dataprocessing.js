@@ -63,11 +63,12 @@ var createUserFile = function(widgetType, userID) {
 
 /**
  * Appends the session log to the user file.
+ * @param {String} widgetType 'sqeye' or 'ieye'
  * @param {*} sessionID SessionID for the log
  * @param {*} userID User
  */
-var writeFile = function(sessionID, userID) {
-    var filepath = (widgettype === 'sqeye') ? squirreleyePath : ieyePath;
+var writeFile = function(widgetType, sessionID, userID) {
+    var filepath = (widgetType === 'sqeye') ? squirreleyePath : ieyePath;
     jsonfile.writeFile(path.join(filepath, userID), sessionData.get(sessionID), {flag: 'a'}, function(err) {
         if (err) {
             console.log(err);
