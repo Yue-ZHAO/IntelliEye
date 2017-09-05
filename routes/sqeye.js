@@ -15,7 +15,7 @@ setInterval(function() {
         var then = new Date(session.lastBeat);
         if ((now - then) > CHECKTIME) {
             // store and delete
-            dp.writeFile('sqeye', sessionID, session.userID);
+            dp.writeFile('sqeye', sessionID, session.userID, sessionData.get(sessionID));
             sessionData.delete(sessionID);
         } 
     });
