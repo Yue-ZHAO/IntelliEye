@@ -59,9 +59,9 @@ app.use(mlog('common'));
 // Routes
 var dp = require('./dataprocessing.js');
 var sqeyeRoutes = require('./routes/sqeye.js');
-// var ieyeRoutes = require('./routes/ieye.js');
+var ieyeRoutes = require('./routes/ieye.js');
 app.use('/sqeye', sqeyeRoutes);
-// app.use('/ieye', ieyeRoutes);
+app.use('/ieye', ieyeRoutes);
 
 // =============================================================================
 
