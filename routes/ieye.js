@@ -53,6 +53,9 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).widget = [];
     sessionData.get(sessionID).lastBeat = (new Date());
     sessionData.get(sessionID).exception = [];
+    sessionData.get(sessionID).userChoices = [];
+    sessionData.get(sessionID).pausedCountUser = 0;
+    sessionData.get(sessionID).pausedCountWidget = 0;    
 
     dp.createUserFile('ieye', userID);
 
@@ -81,6 +84,16 @@ router.post('/data/:type', function(req, res) {
         case 'exception':
             user.exception.push(data);
             break;
+        case 'choice':
+            user.userChoices.push(data);
+            if (data['eventTypeID'] == '4') {
+                // if paused
+                if (data['isIEyeEvent'] == '1') {
+                    user.pausedCountWidget += 1;
+                } else {
+                    user.pausedCountUser += 1;
+                }
+            }
         default: // none
     }
 
