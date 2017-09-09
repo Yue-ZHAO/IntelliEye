@@ -15,6 +15,7 @@ setInterval(function() {
         var then = new Date(session.lastBeat);
         if ((now - then) > CHECKTIME) {
             // store and delete
+            console.log('no heartbeat sensed - saving');
             dp.writeFile('ieye', sessionID, session.userID, sessionData.get(sessionID));
             sessionData.delete(sessionID);
         } 
@@ -50,12 +51,16 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).userID = userID;
     sessionData.get(sessionID).environment.windowResizes = [];
     sessionData.get(sessionID).video = [];
+    sessionData.get(sessionID).videoTotalPlayTime = new Map();
+    sessionData.get(sessionID).videoPlayStart = new Map();
+    sessionData.get(sessionID).videoPlayStop = new Map();
     sessionData.get(sessionID).widget = [];
     sessionData.get(sessionID).lastBeat = (new Date());
     sessionData.get(sessionID).exception = [];
     sessionData.get(sessionID).userChoices = [];
     sessionData.get(sessionID).pausedCountUser = 0;
     sessionData.get(sessionID).pausedCountWidget = 0;    
+    sessionData.get(sessionID).metrics = [];    
 
     dp.createUserFile('ieye', userID);
 
@@ -74,6 +79,9 @@ router.post('/data/:type', function(req, res) {
             break;
         case 'video': // array of video statusses
             user.video = user.video.concat(data);
+            user.videoTotalPlayTime.set(data.ID, data.totalPlayTime);
+            user.videoPlayStart.set(data.ID, data.videoPlayStart);
+            user.videoPlayStop.set(data.ID, data.videoPlayStop);
             break;
         case 'prediction': // single prediction object
             user.prediction.push(data);
@@ -94,6 +102,10 @@ router.post('/data/:type', function(req, res) {
                     user.pausedCountUser += 1;
                 }
             }
+            break;
+        case 'metrics':
+            user.metrics.push(data);
+            break;
         default: // none
     }
 
