@@ -1,40 +1,105 @@
 (function(window) {
     window.moocwidget = window.moocwidget || {};
 
-    moocwidget.init = function() {
-        console.log('Initializing MOOCWidgets.');
-
-        if (MW_ENABLE_SQUIRRELEYE) {
-            // sqeye
-            if (webcam && desktop) {
-
+    /**
+     * Loads nesscessary js files
+     * @param {*} files 
+     * @param {*} next next function when finished loading
+     */
+    function _loadjs(files, next) {
+        var loaded = 0;
+        var loadIntervalRef;
+        files.forEach(function(src) {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = src;
+            script.onload = function() {
+                loaded+=1;
+            };
+            document.body.appendChild(script);
+        });
+        loadIntervalRef = setInterval(function() {
+            if (loaded === files.length) {
+                clearInterval(loadIntervalRef);
+                next();
             }
-        } else if (MW_ENABLE_INTELLIEYE) {
-            // ieye
-        } else if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
-            // both
-        } else {
-            // none
-        }
-    };
-
-    moocwidget.useSqeye = function() {
-
-    };
-
-    moocwidget.useIeye = function() {
-
-    };
+        }, 200);
+    }    
 
     /**
      * Checks if the user is in an environment fit for widget.
      * @return {bool} Returns true if environment can support widget, else false.
      */
-    function isValidEnvironment() {
+    function _isValidEnvironment() {
         var webcam = moocwidget.envChecker.webcamIsAvailable();
         var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);
         return webcam && desktop;   
+    }    
+
+    /**
+     * Starts sqeye widget
+     */
+    function _useSqeye() {
+        var validEnvironment = _isValidEnvironment();
+        if (validEnvironment) {
+            console.log('SQEYE');
+        }
     }
+
+    /**
+     * Starts ieye widget
+     */
+    function _useIeye() {
+        var validEnvironment = _isValidEnvironment();
+        if (validEnvironment) {
+            $('head').append( $('<link rel="stylesheet" type="text/css" />')
+                .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
+
+            // TODO: minimize
+            var files = [
+                'https://moocwidgets.cc/static/ieye/js/tracking-mod.js',
+                'https://moocwidgets.cc/static/ieye/js/face-min.js',
+                'https://moocwidgets.cc/static/ieye/js/client.min.js',              
+                'https://moocwidgets.cc/static/ieye/js/iew-vcontrol.js',              
+                'https://moocwidgets.cc/static/ieye/js/ieyewidget.js',              
+                'https://moocwidgets.cc/static/ieye/js/iew-log.js',              
+                'https://moocwidgets.cc/static/ieye/js/iew-controller.js',              
+            ];
+
+            _loadjs(files, function() {
+                IEyeController.init();
+            });
+        } else {
+            var logCheck = setInterval(function() {
+            if (IEWLogger.isReady()) {
+                clearInterval(logCheck);
+                var webcam = moocwidget.envChecker.webcamIsAvailable();
+                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);                
+                if (!desktop) {
+                    IEWLogger.logBannedUser('Mobile');                       
+                }                      
+                if (!webcam) {
+                    IEWLogger.logBannedUser('No webcam');
+                }                          
+            }
+            }, 200);              
+        }
+    }
+
+    moocwidget.init = function() {
+        console.log('Initializing MOOCWidgets.');
+
+        if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
+            // A/B
+            console.log('A/B/C testing');
+        } else if (MW_ENABLE_SQUIRRELEYE) {
+            _useSqeye();
+        } else if (MW_ENABLE_INTELLIEYE) {
+            _useIeye();
+        } else {
+            // none
+        }
+    };
 
     // =========================================================================
     // Environment
@@ -140,5 +205,46 @@
                 return checkWebcamState();
             },
         };
-      }) ();    
+      })();    
+
+    // =========================================================================
+    // UI
+    // =========================================================================
+    moocwidget.UI = (function() {
+        return {
+            init: function() {
+                $('body').append(`
+                    <div class="msgOverlay" id="msgOverlay">
+                        <div class="msgBox">
+                            <div class="msgTitle"><h1 class="customh1" id="msgH1">Title</h1></div>
+                            <div class="msgContent" id="msgContent">Test Message</div>
+                            <div class="msgButtons" id="msgInputs">
+                                <button class="msgButton"> Confirm </button>
+                                <button class="msgButtonFaded">Cancel</button>
+                                </div>
+                        </div>
+                    </div>            
+                `);
+            },
+
+            placeAlert: function(title, content, footer) {
+                $('#msgH1').empty();
+                $('#msgContent').empty();
+                $('#msgInputs').empty();
+
+                $('#msgH1').append(title);
+                $('#msgContent').append(content);
+
+                $.each(inputs, function(i, o) {
+                    $('#msgInputs').append(o);
+                });
+
+                $('#msgOverlay').css('display', 'flex');
+            },
+
+            hideAlert: function() {
+                $('#msgOverlay').hide();
+            },
+        };
+    }) ();
 }) (window);
