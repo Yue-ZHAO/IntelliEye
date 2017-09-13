@@ -1,0 +1,453 @@
+:root {
+	--edx-background: #fff;
+	--edx-background-dark: #111;
+	--edx-base: #0075b4;
+	--edx-accent: #2991c3;
+	--edx-text: #414141;
+	--edx-white: #f2f8fb;
+	--edx-lightgray: #f5f5f5;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+	font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#overlay {
+	background: rgba(153,153,153,0.55) scroll;
+	position: absolute; 	
+	display: none;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 9999;
+}
+
+#overlay-container {
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#ol-box {
+	background: var(--edx-background);
+	border: .0625rem solid #a0a0a0;
+	box-shadow: 0 0 5px rgba(0,0,0,.25);
+	color: var(--edx-text);
+	display: block;
+	line-height: 1.6;
+	/*padding: 20px;*/
+	position: absolute;
+	margin: 50px auto;
+	min-width: 500px;
+    width:100%;
+	/*width: 500px; */
+    max-width:1000px;
+	z-index: 99999;
+}
+
+#hd-img {
+	background: rgba(0, 0, 0, 0) url("intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	height: 60px;
+	width: 80px;
+	/*margin: 10px 0;*/
+	color: var(--edx-base) !important;
+	font-size: 22px;
+}
+
+#ol-box-heading {
+	/*background: rgba(0, 0, 0, 0) url("intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	height: 60px;
+	margin: 10px 0;
+	color: var(--edx-base) !important;
+	font-size: 22px;*/
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+    align-items: center;
+    justify-content: left;
+	background-color: var(--edx-lightgray);
+	padding: 1.25rem;
+
+}
+
+#ol-box-heading h1, .customh1 {
+	/*margin: 0 0 0 90px;*/
+	padding-top: 12px;
+	color: var(--edx-base) !important;
+	margin-bottom: 0px;
+}
+
+#ol-box-content {
+	padding: 1.25rem;
+}
+
+.h2-section {
+	font-size: 18px;
+	color: var(--edx-base);
+	cursor: pointer;
+}
+
+.h2-section span {
+	font-size: 12px;
+	color: var(--edx-text);
+	cursor: pointer;
+}
+
+#ieye_choice {
+	text-align: left;
+	padding-top: 10px;
+}
+
+#intro-howto-cont {
+	display: flex;
+	display: -webkit-flex;
+	align-items: flex-start;
+	margin-top: 10px;
+	justify-content: space-around;
+}
+
+#start_ieye {
+	background: url("intellieye_logo_white_h20.png") no-repeat scroll 5px center;
+	background-color: var(--edx-base);
+	border: 1px solid var(--edx-base);
+	border-radius: 3px;
+	color: var(--edx-white);
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 24px;
+	padding: 5px 8px 5px 35px;
+	display: inline-block;
+}
+
+#start_ieye:hover {
+	box-shadow: 0px 0px 5px var(--edx-base);
+}
+
+#skip_ieye {
+	background-color: var(--edx-lightgray);
+	border: 1px solid gray;
+	border-radius: 3px;
+	color: var(--edx-text);
+	cursor: pointer;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: 24px;
+	padding: 5px 8px 5px 8px;
+	margin-right: 10px;	
+	display: inline-block;	
+}
+
+#remember_ieye {
+	padding-top: 8px;
+	display: inline-block;
+	margin-left: 20px;
+}
+
+.ieye_descr {
+	display: none;
+	margin-bottom:30px;
+}
+
+/* Alert boxes */
+
+.msgOverlay {
+	background: rgba(153,153,153,0.5) scroll;
+	position: absolute; 	
+	top: 0;
+	left: 0;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	margin: 0;
+	width: 100%;
+	height: 100%;	
+	z-index: 9999;
+}
+
+.msgBox {
+	background: var(--edx-background);
+	border: .0625rem solid #a0a0a0;
+	box-shadow: 0 0 5px rgba(0,0,0,.25);
+	color: var(--edx-text);
+	display: block;
+	line-height: 1.6;
+	position: absolute;
+	margin: 50px auto;
+	min-width: 500px;
+    width:100%;
+	/*width: 500px; */
+    max-width:1000px;
+	z-index: 99999;
+}
+
+.msgTitle {
+	/*background: rgba(0, 0, 0, 0) url("intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	height: 60px;
+	margin: 10px 0;
+	color: var(--edx-base) !important;
+	font-size: 22px;*/
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+	line-height: 1;
+    align-items: center;
+    justify-content: left;
+	background-color: var(--edx-lightgray);
+	padding: 1.25rem;
+
+}
+
+.msgContent, .msgButtons {
+	padding: 1.25rem;
+}
+
+.msgButton {
+	background-color: var(--edx-base);
+	background-image: none;
+	border: 1px solid var(--edx-base);
+	border-radius: 3px;
+	color: var(--edx-white);
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 17px;
+	line-height: 24px;
+	padding: 5px 8px 5px 8px;
+	margin-right: 10px;
+	display: inline-block;	
+}
+
+.msgButton:hover {
+	background-color: var(--edx-accent);
+}
+
+.msgButton:active {
+	background-color: var(--edx-base);
+}
+
+.msgButtonFaded {
+	background-color: var(--edx-lightgray);
+	background-image: none;
+	border: 1px solid gray;
+	border-radius: 3px;
+	color: var(--edx-text);
+	cursor: pointer;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: 24px;
+	padding: 5px 8px 5px 8px;
+	margin-right: 10px;	
+	display: inline-block;	
+}
+
+#msgOverlay {
+	display: none;
+}
+
+.video-player {
+	display:inline-block
+}
+
+/*WIDGET INDICATOR*/
+
+#indicatorContainer {
+	width: 60%;
+    position: relative;
+    z-index:100;
+}
+
+.indicator {
+	background-color: var(--edx-lightgray);
+	background-image: url("intellieye_logo_edx_h60.png");
+     background-size: 20px 20px; 
+	background-position: 10% 50%;
+    background-repeat: no-repeat;
+	box-shadow: 0 0 5px rgba(0,0,0,.25);
+    border-radius: 20px 0 0 20px;
+	cursor: pointer;
+	color: var(--edx-base);
+	/* min-width: 85px;  */
+	/* width: 150px; */
+	height: 32px;
+	line-height:2;
+	/* margin-right:3px; */
+	 margin-top:2px; 
+	position: relative;
+	padding-right: 10px;
+	padding-left:50px;
+	float:right;
+	text-align: right;
+
+    -webkit-transition-property: width; /* Safari */
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-property: width;
+    transition-duration: 0.2s;		
+
+  	-webkit-touch-callout: none; 
+    -webkit-user-select: none;
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none; 
+                                 	
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;	
+
+    -webkit-animation: pulse 1.0s linear infinite;
+    -moz-animation: pulse 1.0s linear infinite;
+    -ms-animation: pulse 1.0s linear infinite;
+    -o-animation: pulse 1.0s linear infinite;
+    animation: pulse 1.0s linear infinite;	
+}
+
+.indicatorOff {
+	background-color: var(--edx-lightgray);
+	background-image: url("intellieye_logo_black_h20.png");
+      background-size: 20px 20px; 
+	background-position: 10% 50%;
+    background-repeat: no-repeat;
+	box-shadow: 0 0 5px rgba(0,0,0,.25);
+    border-radius: 20px 0 0 20px;
+	cursor: pointer;
+	color: var(--edx-text);
+	/* min-width: 85px;  */
+	height: 32px;
+	line-height:2;
+	/* margin-right:3px; */
+	 margin-top:2px; 
+	position: relative;
+	padding-right: 10px;
+	padding-left:50px;
+	float:right;
+	text-align: right;
+
+    -webkit-transition-property: width; /* Safari */
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-property: width;
+    transition-duration: 0.2s;	
+
+  	-webkit-touch-callout: none; 
+    -webkit-user-select: none;
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none; 
+                                 	
+	-o-transition:.3s;
+	-ms-transition:.3s;
+	-moz-transition:.3s;
+	-webkit-transition:.3s;
+	transition:.3s;	
+}
+
+.indicator:hover, .indicatorOff:hover {
+	background-color: white;
+	background-position: 5% 50%;
+	color: var(--edx-base);
+	line-height:2;
+	text-align: right;
+	/* width: 150px; */
+
+    -webkit-animation: none;
+    -moz-animation: none;
+    -ms-animation: none;
+    -o-animation: none;
+    animation: none;		
+}
+
+.indicator:active, .indicator:active {
+	background-color: var(--edx-base);
+}
+
+@keyframes pulse {
+    0% { background-image: url("intellieye_logo_edx_h60.png"); }
+    50% { background-image: none;}
+    100% { background-image: url("intellieye_logo_edx_h60.png"); }
+}
+
+.widgetSwitch {
+  position: relative;
+  width: 75px;
+  height: 32px;
+  margin:0px;
+  margin-left:-2px;
+   margin-top:2px; 
+   margin-bottom:2px;
+  float:right;
+  box-shadow: 0 0 5px rgba(0,0,0,.25);
+  border-radius: 25px;
+}
+
+/* Hide default HTML checkbox */
+.widgetSwitch input {display:none;}
+
+/* The slider */
+.widgetSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 0px 25px 25px 0px;
+}
+
+.widgetSlider:before {
+  position: absolute;
+  content: "Off";
+  height: 26px;
+  width: 30px;
+  left: 10px;
+  /* bottom: 4px; */
+  margin-top:3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 25px;    
+  padding-left:4px;
+  box-shadow: 0 0 5px rgba(0,0,0,.25);
+}
+
+#switchUseWidget:checked + .widgetSlider {
+  background-color: var(--edx-accent);
+}
+
+#switchUseWidget:focus + .widgetSlider {
+  box-shadow: 0 0 1px var(--edx-accent);
+}
+
+#switchUseWidget:checked + .widgetSlider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  content: "On";
+}

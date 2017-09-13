@@ -38,8 +38,7 @@ app.use(cors());
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/static', express.static(path.join(__dirname, 'public')));
 // set up of the body parser
 // this dependency is required to send json files
 // the limit of 5mb means that it allows the posting of files >= 5mb
