@@ -58,11 +58,11 @@ window.IEyeController = window.IEyeController || (function() {
                                 </ul>
                             </div>
                             <div id='ieye_choice'>
-                                <div id='start_ieye'>Start using IntelliEye</div>
-                                <div id='skip_ieye'>Skip</div>
+                                <div id='start_ieye'>Enable IntelliEye</div>
+                                <div id='skip_ieye'>Disable IntelliEye</div>
                                 <div id='remember_ieye'> For future:
-                                    <input name="r_remember" type="radio" value="yes" id='i_remember' checked><label for='i_remember'>Remember my choice</label>
-                                    <input name="r_remember" type="radio" value="no" id='i_dont_remember'><label for='i_dont_remember'>Always ask me</label>
+                                    <input name="r_remember" type="radio" value="no" id='i_dont_remember' checked><label for='i_dont_remember'>Always ask me</label>
+                                    <input name="r_remember" type="radio" value="yes" id='i_remember'><label for='i_remember'>Remember my choice</label>
                                 </div>
                             </div>
                             <i style="display:block;margin-top:20px">To recall this window, click on the <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png" width="20" height:"20" style="vertical-align:middle"> icon above the video.</i>
@@ -89,7 +89,7 @@ window.IEyeController = window.IEyeController || (function() {
         updateIndicator();
 
         // Events
-        $('.lm').click(function () {
+        $('.lm')[0].onclick = function() {
             var eq_id = $(this).attr('id');
             $('#' + eq_id + '-d').toggle();
             var eq_text_id = eq_id + '-text';
@@ -98,17 +98,17 @@ window.IEyeController = window.IEyeController || (function() {
             } else {
                 $('#' + eq_text_id).text('Learn more');
             }
-        });
+        };
 
-        $('#start_ieye').click(function () {
+        $('#start_ieye')[0].onclick = function () {
             setChoice(true);
             $('#overlay').hide();
-        });
+        };
 
-        $('#skip_ieye').click(function () {
+        $('#skip_ieye')[0].onclick = function () {
             setChoice(false);
             $('#overlay').hide();
-        });
+        };
 
         if (!localStorage.use_ieye)
             $('#overlay').show();
