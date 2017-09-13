@@ -20,6 +20,7 @@ window.IEWLogger = window.IEWLogger || (function() {
 
     // environment
     var _windowSizes = [];
+    var _windowDataSentBusy = false;
     var _videoStatus = [];
     var _videoDataSentBusy = false;
 
@@ -35,6 +36,7 @@ window.IEWLogger = window.IEWLogger || (function() {
     // time of heartbeat messages (ms) to send.
     // MUST BE SMALLER THAN SERVER'S CHECKTIME VALUE (300000)
     const HEARTBEAT_TIME = 30000; 
+    var _heartbeatBusy = false;
 
     /**
      * Initialize logger
@@ -94,7 +96,11 @@ window.IEWLogger = window.IEWLogger || (function() {
                 }, METRIC_UPDATE_INTERVAL);
 
                 HEARTBEAT_UPDATE = setInterval(function() {
-                    $.post(_route + '/heartbeat', {userID: getUserId(), sessionId: getSessionId()});
+                    if (!_heartbeatBusy) {
+                        $.post(_route + '/heartbeat', {userID: getUserId(), sessionId: getSessionId()}, function() {
+                            _heartbeatBusy = false;
+                        });
+                    }
                 }, HEARTBEAT_TIME);                     
                 
                 isReady = true;                     
@@ -140,11 +146,12 @@ window.IEWLogger = window.IEWLogger || (function() {
             });            
         }
 
-       if (forceSend || _windowSizes.length >= MAX_METRIC_COUNT) {
+       if ((forceSend || _windowSizes.length >= MAX_METRIC_COUNT) && !_windowDataSentBusy) {
             console.log('send server window sizes: ' + _windowSizes);
             $.post(dataRoute + '/environment', {sessionID: getSessionId(), data: _windowSizes}, function() {
                 console.log('send success');
                 _windowSizes = [];
+                _windowDataSentBusy = false;
             });
         }     
     }
