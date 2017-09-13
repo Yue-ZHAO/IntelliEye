@@ -30,6 +30,7 @@ router.post('/heartbeat', function(req, res) {
     var userID = req.body.userID;
     var sessionID = req.body.sessionID;
     if (!sessionData.has(sessionID)) {
+        console.log("not valid sessionid: " + sessionID);
         return;
     }
     sessionData.get(sessionID).lastBeat = (new Date());
