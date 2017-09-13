@@ -36,18 +36,18 @@ window.IEyeController = window.IEyeController || (function() {
                         </div>
                             <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions.png" width="350px">
                             </div>
-                    <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text'>Learn more</span></h2></span>
+                    <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text'>  Learn more</span></h2></span>
                             <p class='ieye_descr' id='lm1-d'>Intellieye uses your computer webcam, with your permission, and looks for a face frame in the camera feed. <br/>Intellieye
                                 is <b>privacy aware</b> – no videofeed leaves your computer.
                             <br>
                             <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions2.png" width="400px" style="margin-top:10px">
                             </p>
                     
-                    <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text'>Learn more</span></h2></span>
+                    <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text'>  Learn more</span></h2></span>
                             <p class='ieye_descr' id='lm2-d'>You can use Intellieye with any of the modern web browser, i.e., latest version on Firefox, Opera, Chrome, Safari (11+),
                                 and MS Edge. Unfortunately, Internet Explorer is not supported. If you have one of the supported browsers, all you
                                 need to use Intellieye is to allow camera access in browser when you are asked for it.</p>
-                            <span class='lm' id='lm3'><h2 class='h2-section'>What should I pay attention to?<span id='lm3-text'>Learn more</span></h2></span>
+                            <span class='lm' id='lm3'><h2 class='h2-section'>What should I pay attention to?<span id='lm3-text'>  Learn more</span></h2></span>
                             <div class='ieye_descr' id='lm3-d'>As Intellieye depends on face detection in the web camera video feed, you should pay attention to the following:
                                 <ul>
                                     <li>Enable your webcam once asked</li>
@@ -90,13 +90,15 @@ window.IEyeController = window.IEyeController || (function() {
 
         // Events
         $.each($('.lm'), (i, o) => {
-            var eq_id = $(o).attr('id');
-            $('#' + eq_id + '-d').toggle();
-            var eq_text_id = eq_id + '-text';
-            if ($('#' + eq_text_id).text() === 'Learn more') {
-                $('#' + eq_text_id).text('Hide');
-            } else {
-                $('#' + eq_text_id).text('Learn more');
+            o.onclick = function() {
+                var eq_id = $(o).attr('id');
+                $('#' + eq_id + '-d').toggle();
+                var eq_text_id = eq_id + '-text';
+                if ($('#' + eq_text_id).text() === 'Learn more') {
+                    $('#' + eq_text_id).text('Hide');
+                } else {
+                    $('#' + eq_text_id).text('Learn more');
+                }
             }
         });
 
