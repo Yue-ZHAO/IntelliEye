@@ -98,7 +98,7 @@ window.IEWLogger = window.IEWLogger || (function() {
                 HEARTBEAT_UPDATE = setInterval(function() {
                     if (!_heartbeatBusy) {
                         console.log(getSessionId());
-                        $.post(_route + '/heartbeat', {userID: getUserId(), sessionId: getSessionId()}, function() {
+                        $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()}, function() {
                             _heartbeatBusy = false;
                         });
                     }

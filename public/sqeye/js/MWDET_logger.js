@@ -122,7 +122,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
                 }, METRIC_UPDATE_INTERVAL);
 
                 HEARTBEAT_UPDATE = setInterval(function() {
-                    $.post(_route + '/heartbeat', {userID: getUserId(), sessionId: getSessionId()});
+                    $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()});
                 }, HEARTBEAT_TIME);                     
 
                 isReady = true;                
