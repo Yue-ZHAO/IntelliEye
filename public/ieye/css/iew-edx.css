@@ -61,7 +61,7 @@ body {
 }
 
 #hd-img {
-	background: rgba(0, 0, 0, 0) url("intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	background: rgba(0, 0, 0, 0) url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
 	height: 60px;
 	width: 80px;
 	/*margin: 10px 0;*/
@@ -70,7 +70,7 @@ body {
 }
 
 #ol-box-heading {
-	/*background: rgba(0, 0, 0, 0) url("intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	/*background: rgba(0, 0, 0, 0) url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
 	height: 60px;
 	margin: 10px 0;
 	color: var(--edx-base) !important;
@@ -124,7 +124,7 @@ body {
 }
 
 #start_ieye {
-	background: url("intellieye_logo_white_h20.png") no-repeat scroll 5px center;
+	background: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_white_h20.png") no-repeat scroll 5px center;
 	background-color: var(--edx-base);
 	border: 1px solid var(--edx-base);
 	border-radius: 3px;
@@ -203,7 +203,7 @@ body {
 }
 
 .msgTitle {
-	/*background: rgba(0, 0, 0, 0) url("intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	/*background: rgba(0, 0, 0, 0) url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
 	height: 60px;
 	margin: 10px 0;
 	color: var(--edx-base) !important;
@@ -281,7 +281,7 @@ body {
 
 .indicator {
 	background-color: var(--edx-lightgray);
-	background-image: url("intellieye_logo_edx_h60.png");
+	background-image: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png");
      background-size: 20px 20px; 
 	background-position: 10% 50%;
     background-repeat: no-repeat;
@@ -328,7 +328,7 @@ body {
 
 .indicatorOff {
 	background-color: var(--edx-lightgray);
-	background-image: url("intellieye_logo_black_h20.png");
+	background-image: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_black_h20.png");
       background-size: 20px 20px; 
 	background-position: 10% 50%;
     background-repeat: no-repeat;
@@ -386,9 +386,9 @@ body {
 }
 
 @keyframes pulse {
-    0% { background-image: url("intellieye_logo_edx_h60.png"); }
+    0% { background-image: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png"); }
     50% { background-image: none;}
-    100% { background-image: url("intellieye_logo_edx_h60.png"); }
+    100% { background-image: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png"); }
 }
 
 .widgetSwitch {
