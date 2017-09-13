@@ -21,6 +21,7 @@ window.IEWLogger = window.IEWLogger || (function() {
     // environment
     var _windowSizes = [];
     var _videoStatus = [];
+    var _videoDataSentBusy = false;
 
     // video
     var pauseCount = 0;
@@ -219,14 +220,16 @@ window.IEWLogger = window.IEWLogger || (function() {
             });            
         }
 
-        if (forceSend || _videoStatus.length >= MAX_METRIC_COUNT) {
+        if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
             console.log(forceSend);
             console.log(_videoStatus.length);
+            _videoDataSentBusy = true;
             // TODO: send to server
             console.log('send server video status: ' + _videoStatus);
             $.post(dataRoute + '/video', {sessionID: getSessionId(), data: _videoStatus}, function() {
                 console.log('Send success');
                 _videoStatus = [];
+                _videoDataSentBusy = false;
                 console.log(_videoStatus.length);
             });
         }  
