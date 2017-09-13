@@ -89,8 +89,8 @@ window.IEyeController = window.IEyeController || (function() {
         updateIndicator();
 
         // Events
-        $('.lm')[0].onclick = function() {
-            var eq_id = $(this).attr('id');
+        $.each($('.lm'), (i, o) => {
+            var eq_id = $(o).attr('id');
             $('#' + eq_id + '-d').toggle();
             var eq_text_id = eq_id + '-text';
             if ($('#' + eq_text_id).text() === 'Learn more') {
@@ -98,7 +98,7 @@ window.IEyeController = window.IEyeController || (function() {
             } else {
                 $('#' + eq_text_id).text('Learn more');
             }
-        };
+        });
 
         $('#start_ieye')[0].onclick = function () {
             setChoice(true);
@@ -449,56 +449,3 @@ function logInTab(title, text, wd) {
   }
   return newwindow;
 }
-
-var edxCheck;
-var logCheck;
-$(document).ready(function() {
-  if (window.location.href.indexOf('studio') > 0) {
-      $('#overlay').hide();
-  } else {
-    edxCheck = setInterval(function() {
-      if (analytics && analytics.user) {
-          clearInterval(edxCheck);
-
-          var desktop = (prechecker.getEnvironment().mobile == false);
-          var webcam = prechecker.webcamIsAvailable();
-          var group = (parseInt(analytics.user().id()) % 2 === 0) ? 'ieye' : 'ieye';
-          
-          if (desktop) {
-            console.log('Desktop OK.');
-          }
-
-          if (webcam) {
-            console.log('Webcam OK.');
-          }
-
-          if (group === 'sqeye') {
-            if (desktop && webcam) {
-              alert('tarmos widget');
-            } else {
-              // log exception
-            }
-          } else {
-            if (desktop && webcam) {
-              setTimeout(function() {
-                IEyeController.init();
-              }, 500);
-            } else {
-              IEyeController.hideAlert();
-              IEWLogger.init();
-              logCheck = setInterval(function() {
-                if (IEWLogger.isReady()) {
-                  clearInterval(logCheck);
-                  if (!desktop) {
-                    IEWLogger.logBannedUser('Mobile');                       }                      
-                  if (!webcam) {
-                    IEWLogger.logBannedUser('No webcam');
-                  }                          
-                }
-              }, 200);  
-            }              
-          }
-      }
-    }, 100);
-  }
-});
