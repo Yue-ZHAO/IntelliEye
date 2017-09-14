@@ -124,6 +124,11 @@
     moocwidget.init = function() {
         console.log('Initializing MOOCWidgets.');
 
+        // if in studio, we don't start any widgets.
+        if (document.URL.includes('studio.edge.edx.org')) {
+            return;
+        }
+
         if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
             // A/B
             var check = setInterval(function() {
