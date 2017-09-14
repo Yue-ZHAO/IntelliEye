@@ -49,6 +49,10 @@
 
             // TODO: minimize
             var files = [
+                'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.13.3/math.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.3/jquery.csv.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
                 'https://moocwidgets.cc/static/sqeye/js/RTP.js',
                 'https://moocwidgets.cc/static/sqeye/js/webgazer_mod.js',
                 'https://moocwidgets.cc/static/sqeye/js/MWDET_gazer.js',
