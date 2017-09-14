@@ -455,8 +455,8 @@
                         </ul>
                     </div>
                 `,
-                    ['<button id=\'bEnable\' class=\'edx-button\' onclick=\'mwdet.handleUsersChoice(true)\'> Enable SquirrelEye </button>',
-                        '<button id=\'bDisable\' class=\'edx-button-faded\' onclick=\'mwdet.handleUsersChoice(false)\'> Disable SquirrelEye </button>',
+                    ['<button id=\'bEnable\' class=\'edx-button\' onclick=\'mwdet.handleUsersChoice(true); moocwidget.UI.hideAlert()\'> Enable SquirrelEye </button>',
+                        '<button id=\'bDisable\' class=\'edx-button-faded\' onclick=\'mwdet.handleUsersChoice(false); moocwidget.UI.hideAlert()\'> Disable SquirrelEye </button>',
                         '<input id=\'intro_askAgain\' name=\'i_remember\' type=\'radio\' checked>Always ask me</input>',
                         '<input name=\'i_remember\' type=\'radio\'> Remember this choice </input>'
                         +

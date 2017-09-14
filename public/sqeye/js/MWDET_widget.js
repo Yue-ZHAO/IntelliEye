@@ -364,10 +364,6 @@ window.mwdet = window.mwdet || (function() {
     showIntroMessage();
   };
 
-  module.hideAlert = function() {
-    hideAlert();
-  };
-
   /**
    * handles the user's choice whether to use the widget.
    * @param {bool} userAccepts whether the user chooses to use widget.
@@ -406,7 +402,6 @@ window.mwdet = window.mwdet || (function() {
     }
 
     updateIndicator();
-    hideAlert();
   };
 
   module.toggleWidget = function() {
@@ -562,43 +557,3 @@ function logInTab(title, text, wd) {
   }
   return newwindow;
 }
-
-var edxCheck;
-var logCheck;
-$(document).ready(function() {
-  if (window.location.href.indexOf('studio') > 0) {
-      $('.mwdet-main').hide();
-  } else {
-    edxCheck = setInterval(function() {
-      if (analytics && analytics.user) {
-          clearInterval(edxCheck);
-
-          var desktop = (prechecker.getEnvironment().mobile == false);
-          var webcam = prechecker.webcamIsAvailable();
-          
-          if (desktop && webcam) {   
-              setTimeout(function() {
-                  if (parseInt(analytics.user().id()) % 2 === 0) {
-                      mwdet.init();
-
-                      logCheck = setInterval(function() {
-                        if (mwdet_logger.isReady()) {
-                          clearInterval(logCheck);
-                          if (!desktop) {
-                            mwdet_logger.logBannedUser('Mobile');                       
-                          } if (!webcam) {
-                            mwdet_logger.logBannedUser('No webcam');
-                          }                          
-                        }
-                      }, 200);
-                  } else {
-                      alert('tarmo\'s widget');
-                  }
-              }, 0);
-          } else {
-            mwdet.hideAlert();
-          }
-      }
-    }, 100);
-  }
-});

@@ -120,9 +120,10 @@ window.Gazer = window.Gazer || (function () {
 
   function stopWebgazer() {
     Gazerdata.stopPolling();
-    if (localstream) {
-      localstream.getTracks()[0].stop();
-    }
+    // TODO: shut down cam
+    // if (localstream) {
+    //   localstream.getTracks()[0].stop();
+    // }
     if (gazerIsStarted) {
       try {
         webgazer.end();
