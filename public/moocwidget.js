@@ -181,7 +181,7 @@
                 // Error Callback
                 function(err) {
                     if (err.name === 'PermissionDeniedError') {
-                      mwdet.placeAlert('Webcam permission', 
+                      moocwidget.UI.placeAlert('Webcam permission', 
                         'You need to grant permission to the webcam and refresh the page for the widget to work.', 
                         [`<button class='msgButton' onclick='moocwidget.UI.hideAlert()'>Ok</button>`]
                     );
