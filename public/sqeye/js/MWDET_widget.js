@@ -349,17 +349,17 @@ window.mwdet = window.mwdet || (function() {
     sessionStorage.mwdet_enabled = userAccepts;
     localStorage.mwdet_enabled = userAccepts;
 
-    console.log("use widget:: " + userAccepts);
-
     if (askAgain) {
       localStorage.removeItem('mwdet_enabled');
     }
 
     if (userAccepts) {
       // show setup overlay
+      $('#switchUseWidget').prop('checked', true);
       module.startWidget();
       logWidgetStatus('allow');
     } else {
+      $('#switchUseWidget').prop('checked', true);
       module.stopWidget();
       if (askAgain) {
         logWidgetStatus('skip');
@@ -374,9 +374,9 @@ window.mwdet = window.mwdet || (function() {
   module.toggleWidget = function() {
     vcontrol.pauseVideo();
     if ($('#switchUseWidget').is(':checked')) {
-      module.handleUsersChoice(true, true);
-    } else {
       module.handleUsersChoice(false, true);
+    } else {
+      module.handleUsersChoice(true, true);
     }
   };
 
