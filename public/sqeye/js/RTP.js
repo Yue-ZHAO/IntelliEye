@@ -1138,4 +1138,4 @@ RTP.test_feature_extraction = function (bench_filepath) {
         }
         return list_gaze_array;
     };
-}) ();
+}) (window);
