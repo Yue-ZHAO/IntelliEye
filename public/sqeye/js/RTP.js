@@ -1067,23 +1067,38 @@ RTP.test_feature_extraction = function (bench_filepath) {
             var temp_y = null;
 
             // So we do not pop the data at the beginning
-            var step_temp_index = 0
-            while (step.length > 0 && getGazeTimestamp(step[step_temp_index]) >= sample_start_time && getGazeTimestamp(step[step_temp_index]) < sample_end_time) {
-                console.log(">>>" + step_temp_index);
-                console.log("next>>>" + JSON.stringify(step[step_temp_index+1]));
-                var current_gaze_data = step[step_temp_index];
-                if (gazeIsNull(current_gaze_data)) {
-                    step_temp_index = step_temp_index + 1
-                    continue;
-                } else {
-                    var gap = timegap_calculation_ms(getGazeTimestamp(current_gaze_data), currentTime);
-                    if (gap <= temp_gap) {
-                        temp_timestamp = getGazeTimestamp(current_gaze_data);
-                        temp_x = current_gaze_data.GazeX;
-                        temp_y = current_gaze_data.GazeY;
-                        temp_gap = gap;
+            // var step_temp_index = 0
+            // while (step.length > 0 && getGazeTimestamp(step[step_temp_index]) >= sample_start_time && getGazeTimestamp(step[step_temp_index]) < sample_end_time) {
+            //     console.log(">>>" + step_temp_index);
+            //     console.log("next>>>" + JSON.stringify(step[step_temp_index+1]));
+            //     var current_gaze_data = step[step_temp_index];
+            //     if (gazeIsNull(current_gaze_data)) {
+            //         step_temp_index = step_temp_index + 1
+            //         continue;
+            //     } else {
+            //         var gap = timegap_calculation_ms(getGazeTimestamp(current_gaze_data), currentTime);
+            //         if (gap <= temp_gap) {
+            //             temp_timestamp = getGazeTimestamp(current_gaze_data);
+            //             temp_x = current_gaze_data.GazeX;
+            //             temp_y = current_gaze_data.GazeY;
+            //             temp_gap = gap;
+            //         }
+            //         step_temp_index = step_temp_index + 1
+            //     }
+            // }
+
+            for (var step_temp_index in step) {
+                if (getGazeTimestamp(step[step_temp_index]) >= sample_start_time && getGazeTimestamp(step[step_temp_index]) < sample_end_time) {
+                    var current_gaze_data = step[step_temp_index];
+                    if (!gazeIsNull(current_gaze_data)) {
+                        var gap = timegap_calculation_ms(getGazeTimestamp(current_gaze_data), currentTime);
+                        if (gap <= temp_gap) {
+                            temp_timestamp = getGazeTimestamp(current_gaze_data);
+                            temp_x = current_gaze_data.GazeX;
+                            temp_y = current_gaze_data.GazeY;
+                            temp_gap = gap;
+                        }
                     }
-                    step_temp_index = step_temp_index + 1
                 }
             }
 
