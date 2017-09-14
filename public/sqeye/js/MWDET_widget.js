@@ -83,16 +83,6 @@ window.mwdet = window.mwdet || (function() {
     Gazerdata.init(function(window) {
       // window with fixed frequency
       console.log('window size: ' + window.length);
-      // if (window.length < 25) {
-      //   mwdet_logger.logException({
-      //     'videoID': vcontrol.getCurrentPlayerID(),
-      //     'exceptionType': 2,
-      //     'exceptionDescription': 'low/no gaze data',
-      //     'videoTime': vcontrol.getCurrentTime(),
-      //     'videoDuration': vcontrol.getDuration(),
-      //   });
-      //   return;
-      // }
 
       var prediction = NBayes.predictFromWindow(window);
       console.log('>> prediction: ' + prediction);
@@ -314,14 +304,7 @@ window.mwdet = window.mwdet || (function() {
     if (!localStorage.mwdet_enabled) {
       showIntroMessage();
     } else if (localStorage.getItem('mwdet_enabled') == 'true') {
-      if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
-        $('.MWDET-setup').css('display', 'flex');
-        moocwidget.envChecker.webcamState();
-        Gazer.startWebgazer();
-        Gazer.initFacecheck(facecheckComplete);
-      } else {
-        enableFeedbackProcedure();
-      }
+      module.startWidget();
     }
 
     vcontrol.init(function(status) {
@@ -329,26 +312,15 @@ window.mwdet = window.mwdet || (function() {
       switch (status) {
         case 'play':
           // Rating.enable();
-          if (mwdetIsEnabled()) {
-            Gazer.resumeWebgazer();
-            widgetStatus = (widgetStatus === 'end') ? 'start':'resume';
-            console.log('[MWDET] webgazer resumed.');
-          }
+          module.resumeWidget();
           break;
         case 'seek':
         case 'pause':
           // Rating.pause();
-          if (mwdetIsEnabled()) {
-            Gazer.pauseWebgazer();
-            widgetStatus = 'pause';
-            console.log('[MWDET] webgazer paused.');
-          }
+          module.pauseWidget();
           break;
         case 'ended':
-          if (mwdetIsEnabled()) {
-            Gazer.stopWebgazer();
-            widgetStatus = 'end';
-          }
+          module.stopWidget();
         default: // nothing.
       }
     });
@@ -359,7 +331,6 @@ window.mwdet = window.mwdet || (function() {
 
     updateIndicator();
     mwdet_logger.init();
-    logWidgetStatus(widgetStatus);
   };
 
   module.showIntroMessage = function() {
@@ -384,18 +355,10 @@ window.mwdet = window.mwdet || (function() {
 
     if (userAccepts) {
       // show setup overlay
-      if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
-        $('.MWDET-setup').css('display', 'flex');
-        moocwidget.envChecker.webcamState();
-        Gazer.startWebgazer();
-        Gazer.initFacecheck(facecheckComplete);
-      } else {
-        enableFeedbackProcedure();
-      }
-
+      module.startWidget();
       logWidgetStatus('allow');
     } else {
-      Gazer.stopWebgazer();
+      module.stopWidget();
       if (askAgain) {
         logWidgetStatus('skip');
       } else {
@@ -439,108 +402,52 @@ window.mwdet = window.mwdet || (function() {
     stopVisualAlertLoop();
   };
 
+  module.startWidget = function() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }
+
+    if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
+      $('.MWDET-setup').css('display', 'flex');
+      moocwidget.envChecker.webcamState();
+      Gazer.startWebgazer();
+      Gazer.initFacecheck(facecheckComplete);
+    } else {
+      enableFeedbackProcedure();
+    }    
+    console.log('[Sqeye] Starting widget');
+    widgetStatus = 'start';
+    logWidgetStatus(widgetStatus);
+  };
+
+  module.stopWidget = function() {
+    if (widgetStatus === 'start' || widgetStatus === 'resume') {
+      Gazer.stopWebgazer();      
+    }
+    widgetStatus = 'end';
+    logWidgetStatus(widgetStatus);    
+  };
+
+  module.pauseWidget = function() {
+    Gazer.pauseWebgazer();
+    widgetStatus = 'pause';
+    logWidgetStatus(widgetStatus);    
+    console.log('[MWDET] webgazer paused.');
+  };
+
+  module.resumeWidget = function() {
+    Gazer.resumeWebgazer();
+    console.log('[MWDET] webgazer resumed.');
+    widgetStatus = 'resume';
+    logWidgetStatus(widgetStatus);    
+  };
+
   module.isReady = function() {
     return isReady;
   };
 
   return module;
 })();
-
-window.prechecker = window.prechecker || (function() {
-  /**
-   * @return {bool} true if webcam is available;
-   */
-  function webcamIsAvailable() {
-      navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
-      if (navigator.getUserMedia) {
-          return true;
-      } else {
-          return false;
-      }
-  }
-
-  /**
-   * Places an alert if the webcam is denied by user.
-   */
-  function checkWebcamState() {
-      navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
-      if (navigator.getUserMedia) {
-          navigator.getUserMedia( {
-              video: true,
-          },
-          // Success Callback
-          function(stream) {
-              stream.getVideoTracks()[0].stop();
-          },
-          // Error Callback
-          function(err) {
-              if (err.name === 'PermissionDeniedError') {
-                moocwidget.UI.placeAlert('Webcam permission', 'You need to grant permission to the webcam and refresh the page for the widget to work.', 
-              []
-              );
-              }
-          });
-      }
-  }        
-
-  /**
-   * @return {*} 
-   */
-  function getEnvironment() {
-      // detect operating system.
-      var OS = 'unknown';
-      var browser = 'unkown';
-      var version = 'unknown';
-      var mobile = false;
-      
-      if (/Mobi/i.test(navigator.userAgent) || /Android/i.test(navigator.userAgent)) {
-          mobile = true;
-      }
-
-      if (window.navigator.userAgent.indexOf('Windows NT 10.0') != -1) OS = 'Windows 10';
-      if (window.navigator.userAgent.indexOf('Windows NT 6.2') != -1) OS = 'Windows 8';
-      if (window.navigator.userAgent.indexOf('Windows NT 6.1') != -1) OS = 'Windows 7';
-      if (window.navigator.userAgent.indexOf('Windows NT 6.0') != -1) OS = 'Windows Vista';
-      if (window.navigator.userAgent.indexOf('Windows NT 5.1') != -1) OS = 'Windows XP';
-      if (window.navigator.userAgent.indexOf('Windows NT 5.0') != -1) OS = 'Windows 2000';
-      if (window.navigator.userAgent.indexOf('Mac') != -1) OS = 'Mac/iOS';
-      if (window.navigator.userAgent.indexOf('X11') != -1) OS = 'UNIX';
-      if (window.navigator.userAgent.indexOf('Linux') != -1) OS = 'Linux';
-      
-      // detect browser & version
-      var N= navigator.appName, ua= navigator.userAgent, tem;
-      var M= ua.match(/(opera|chrome|safari|firefox|msie|trident)\/?\s*(\.?\d+(\.\d+)*)/i);
-      // eslint-disable-next-line
-      if (M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) {M[2]=tem[1];}
-      M= M? [M[1], M[2]]: [N, navigator.appVersion, '-?'];
-      browser = M[0];
-      version = M[1];
-
-      return {
-          'OS': OS,
-          'browser': browser,
-          'browserVersion': version,
-          'mobile': mobile,
-          'screenHeigth': screen.height,
-          'screenWidth': screen.width,
-      };
-  }
-
-  return {
-      getEnvironment: function() {
-          return getEnvironment();
-      },
-
-      webcamIsAvailable: function() {
-          return webcamIsAvailable();
-      },
-
-      webcamState: function() {
-          return checkWebcamState();
-      },
-  };
-}) ();
-
 
 /**
  * For debugging purposes
