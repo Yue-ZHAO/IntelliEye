@@ -66,7 +66,7 @@ window.IEyeController = window.IEyeController || (function() {
     function setChoice(widgetIsUsed, fromSwitch=false) {
         vcontrol.pauseVideo();
 
-        moocwidget.envCheck.webcamState();
+        moocwidget.envChecker.webcamState();
 
         var iremember = fromSwitch || $('input#i_remember').is(':checked');
 

@@ -314,7 +314,7 @@ window.mwdet = window.mwdet || (function() {
     } else if (localStorage.getItem('mwdet_enabled') == 'true') {
       if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
         $('.MWDET-setup').css('display', 'flex');
-        prechecker.webcamState();
+        moocwidget.envChecker.webcamState();
         Gazer.startWebgazer();
         Gazer.initFacecheck(facecheckComplete);
       } else {
@@ -388,7 +388,7 @@ window.mwdet = window.mwdet || (function() {
       // show setup overlay
       if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
         $('.MWDET-setup').css('display', 'flex');
-        prechecker.webcamState();
+        moocwidget.envChecker.webcamState();
         Gazer.startWebgazer();
         Gazer.initFacecheck(facecheckComplete);
       } else {
