@@ -33,6 +33,7 @@ window.mwdet = window.mwdet || (function() {
     localStorage.setItem('cal_wsize', JSON.stringify({ 'width': w, 'height': h }));
 
     // start calibration
+    $('#calibrationOverlay').show();
     Calibration.initCalibration(calibrationComplete);
     console.log('[MWDET] Facechecking complete.');
   };
@@ -44,6 +45,7 @@ window.mwdet = window.mwdet || (function() {
    */
   var calibrationComplete = function() {
     webgazer.pause();
+    $('#calibrationOverlay').hide();
     enableFeedbackProcedure();
     $('.MWDET-overlay').fadeOut();
     console.log('[MWDET] Calibration complete.');
