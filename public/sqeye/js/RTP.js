@@ -1030,6 +1030,7 @@ RTP.test_feature_extraction = function (bench_filepath) {
 
     mwdet_preprocessor.windowFill = function(window, step) {
         if (typeof step === 'undefined' || step.length === 0) return;
+        console.log(">>>step:"+JSON.stringify(step));
         var endTime = getGazeTimestamp(step[step.length - 1]) + 100;
         var currentTime = 0;
         if (window.length === 0) {
