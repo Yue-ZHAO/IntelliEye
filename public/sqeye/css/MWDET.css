@@ -49,14 +49,14 @@ body {
     box-shadow: 1px 1px 20px 1px #787878;
     background-color: #fafafa !important;
     z-index: 999;
-    position: absolute;
+    position: relative;
     height: 550px;
     width: 830px;
 }
 
 .MWDET-overlay {
     /*display: none;*/
-    height: 100%;
+    height: 150%;
     width: 100%;
     top: 0;
     left: 0;
@@ -94,7 +94,7 @@ body {
     /*background-color: red !important;*/
     width: 100%;
     height: 500px;
-    position: absolute;
+    position: relative;
     padding: 20px;
     display: flex;
     -webkit-flex-direction: column;
@@ -107,7 +107,7 @@ body {
     /*background-color: green !important;*/
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: relative;
     /* padding:20px; */
 }
 
@@ -261,7 +261,7 @@ body {
     justify-content: center;
     margin: 0;
     width: 100%;
-    height: 200%;   
+    height: 150%;   
     z-index: 9999;
 }
 
@@ -272,13 +272,13 @@ body {
     color: var(--edx-text);
     display: block;
     line-height: 1.6;
-    position: absolute;
+    position: relative;
     margin: 50px auto;
     min-width: 500px;
     width:100%;
     /*width: 500px; */
     max-width:1000px;
-    top:250px;
+    top:100px;
     z-index: 99999;
 }
 
@@ -354,7 +354,7 @@ body {
 /*WIDGET INDICATOR*/
 
 #indicatorContainer {
-	width: 100%;
+	width: 60%;
     position: relative;
     z-index:100;
 }
@@ -363,20 +363,21 @@ body {
 	background-color: var(--edx-lightgray);
 	background-image: url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue-sm.png");
     /* background-size: 20px 20px; */
-	background-position: 5% 50%;
+	background-position: 10% 50%;
     background-repeat: no-repeat;
 	box-shadow: 0 0 5px rgba(0,0,0,.25);
-
+    border-radius: 20px 0 0 20px;
 	cursor: pointer;
 	color: var(--edx-base);
+	/* min-width: 85px;  */
 	/* width: 150px; */
 	height: 32px;
 	line-height:2;
 	/* margin-right:3px; */
-	/* margin-top:1px; */
+	 margin-top:2px; 
 	position: relative;
 	padding-right: 10px;
-	padding-left:40px;
+	padding-left:50px;
 	float:right;
 	text-align: right;
 
@@ -409,20 +410,20 @@ body {
 	background-color: var(--edx-lightgray);
 	background-image: url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-black-sm.png");
      /* background-size: 20px 20px; */
-	background-position: 5% 50%;
+	background-position: 10% 50%;
     background-repeat: no-repeat;
 	box-shadow: 0 0 5px rgba(0,0,0,.25);
-
+    border-radius: 20px 0 0 20px;
 	cursor: pointer;
 	color: var(--edx-text);
-	/* width: 150px; */
+	/* min-width: 85px;  */
 	height: 32px;
 	line-height:2;
 	/* margin-right:3px; */
-	/* margin-top:1px; */
+	 margin-top:2px; 
 	position: relative;
 	padding-right: 10px;
-	padding-left:40px;
+	padding-left:50px;
 	float:right;
 	text-align: right;
 
@@ -472,13 +473,15 @@ body {
 
 .widgetSwitch {
   position: relative;
-  width: 60px;
+  width: 75px;
   height: 32px;
   margin:0px;
   margin-left:-2px;
-  /* margin-top:1px; */
+   margin-top:2px; 
+   margin-bottom:2px;
   float:right;
   box-shadow: 0 0 5px rgba(0,0,0,.25);
+  border-radius: 25px;
 }
 
 /* Hide default HTML checkbox */
@@ -495,30 +498,36 @@ body {
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
+  border-radius: 0px 25px 25px 0px;
 }
 
 .widgetSlider:before {
   position: absolute;
-  content: "";
+  content: "Off";
   height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  width: 30px;
+  left: 10px;
+  /* bottom: 4px; */
+  margin-top:3px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
+  border-radius: 25px;    
+  padding-left:4px;
+  box-shadow: 0 0 5px rgba(0,0,0,.25);
 }
 
 #switchUseWidget:checked + .widgetSlider {
-  background-color: #2196F3;
+  background-color: var(--edx-accent);
 }
 
 #switchUseWidget:focus + .widgetSlider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px var(--edx-accent);
 }
 
 #switchUseWidget:checked + .widgetSlider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+  content: "On";
 }
