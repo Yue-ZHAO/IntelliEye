@@ -1028,14 +1028,14 @@ RTP.test_feature_extraction = function (bench_filepath) {
         return false;
     }
 
-    mwdet_preprocessor.windowFill = function(window, step) {
+    mwdet_preprocessor.windowFill = function(wd, step) {
         if (typeof step === 'undefined' || step.length === 0) return;
         var endTime = getGazeTimestamp(step[step.length - 1]) + 100;
         var currentTime = 0;
-        if (window.length === 0) {
+        if (wd.length === 0) {
             currentTime = getGazeTimestamp(step[0]); // timestamp of first gaze data in step
         } else {
-            currentTime = getGazeTimestamp(window[window.length - 1]) + 200; // last gaze data in window
+            currentTime = getGazeTimestamp(wd[wd.length - 1]) + 200; // last gaze data in wd
         }
 
         while (currentTime < endTime) {
@@ -1054,10 +1054,12 @@ RTP.test_feature_extraction = function (bench_filepath) {
                     'GazeX': null,
                     'GazeY': null,
                 };
-                window.push(null_gaze_data);
+                wd.push(null_gaze_data);
                 currentTime = currentTime + 200;
                 continue;
             }
+
+            console.log(JSON.stringify(step));
 
             var temp_gap = 100;
             var temp_timestamp = currentTime;
@@ -1096,16 +1098,16 @@ RTP.test_feature_extraction = function (bench_filepath) {
                 'GazeY': temp_y,
             };
 
-            window.push(temp_gaze_data);
+            wd.push(temp_gaze_data);
 
             currentTime = temp_timestamp + 200;
         }
     
-        while (getGazeTimestamp(window[0]) < (endTime - 30000)) {
-            window.shift();
+        while (getGazeTimestamp(wd[0]) < (endTime - 30000)) {
+            wd.shift();
         }
 
-        return window;
+        return wd;
     }
 
     mwdet_preprocessor.windowSplit = function(gaze_array) {
@@ -1136,4 +1138,4 @@ RTP.test_feature_extraction = function (bench_filepath) {
         }
         return list_gaze_array;
     };
-}) (window);
+}) ();
