@@ -183,7 +183,7 @@
                     if (err.name === 'PermissionDeniedError') {
                       moocwidget.UI.placeAlert('Webcam permission', 
                         'You need to grant permission to the webcam and refresh the page for the widget to work.', 
-                        [`<button class='msgButton' onclick='moocwidget.UI.hideAlert()'>Ok</button>`]
+                        ['<button class="msgButton" onclick="moocwidget.UI.hideAlert()">Ok</button>']
                     );
                     }
                 });
@@ -319,7 +319,7 @@
                 $('#msgH1').append(title);
                 $('#msgContent').append(content);
 
-                $.each(inputs, function(i, o) {
+                $.each(footer, function(i, o) {
                     $('#msgInputs').append(o);
                 });
 
