@@ -361,7 +361,7 @@ body {
 
 .indicator {
 	background-color: var(--edx-lightgray);
-	background-image: url("sqeye-logo-blue-sm.png");
+	background-image: url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue-sm.png");
     /* background-size: 20px 20px; */
 	background-position: 5% 50%;
     background-repeat: no-repeat;
@@ -407,7 +407,7 @@ body {
 
 .indicatorOff {
 	background-color: var(--edx-lightgray);
-	background-image: url("sqeye-logo-black-sm.png");
+	background-image: url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-black-sm.png");
      /* background-size: 20px 20px; */
 	background-position: 5% 50%;
     background-repeat: no-repeat;
@@ -465,9 +465,9 @@ body {
 }
 
 @keyframes pulse {
-    0% { background-image: url("sqeye-logo-blue-sm.png"); }
+    0% { background-image: url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue-sm.png"); }
     50% { background-image: none;}
-    100% { background-image: url("sqeye-logo-blue-sm.png"); }
+    100% { background-image: url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue-sm.png"); }
 }
 
 .widgetSwitch {

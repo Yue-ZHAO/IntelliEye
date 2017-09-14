@@ -350,7 +350,10 @@
 	// ----------------- STOP ----------------- 
 	ieyewidget.stopiEye = function() {
 		trackerTaskReference.stop(); // Stops the tracking
-		localstream.getTracks()[0].stop();
+		if (localstream) {
+			// NOTE: check added in case there is no feed
+			localstream.getTracks()[0].stop();
+		}
 		try{
 			document.body.removeChild(iEyeVideoFeed);
 			if(document.getElementById('overlay-trackerjs')) {			// if overlay used, remove it

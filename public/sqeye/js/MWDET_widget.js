@@ -117,34 +117,6 @@ window.mwdet = window.mwdet || (function() {
   }
 
   /**
-   * Places an alert on page
-   * @param {String} title Title of alert
-   * @param {HTMLstring} content Content of alert
-   * @param {HTMLinputs} inputs 
-   */
-  function placeAlert(title, content, inputs) {
-    $('#msgH1').empty();
-    $('#msgContent').empty();
-    $('#msgInputs').empty();
-
-    $('#msgH1').append(title);
-    $('#msgContent').append(content);
-
-    $.each(inputs, function(i, o) {
-      $('#msgInputs').append(o);
-    });
-
-    $('#msgOverlay').css('display', 'flex');
-  }
-
-  /**
-   * Hides the alert
-   */
-  function hideAlert() {
-    $('#msgOverlay').hide();
-  }
-
-  /**
    * Check if the widget is enabled by user.
    * @return {boolean} True if widget is enabled else false
    */
@@ -156,7 +128,7 @@ window.mwdet = window.mwdet || (function() {
    * Turns the introduction message visible.
    */
   function showIntroMessage() {
-    mwdet_intro();
+    moocwidget.UI.mwdet_intro();
   }
 
   /**
@@ -437,13 +409,9 @@ window.mwdet = window.mwdet || (function() {
     hideAlert();
   };
 
-  module.placeAlert = function(title, content, inputs) {
-    placeAlert(title, content, inputs);
-  };
-
   module.toggleWidget = function() {
     vcontrol.pauseVideo();
-    if($('#switchUseWidget').is(':checked')) {
+    if ($('#switchUseWidget').is(':checked')) {
       module.handleUsersChoice(true, true);
     } else {
       module.handleUsersChoice(false, true);
@@ -510,7 +478,7 @@ window.prechecker = window.prechecker || (function() {
           // Error Callback
           function(err) {
               if (err.name === 'PermissionDeniedError') {
-                mwdet.placeAlert('Webcam permission', 'You need to grant permission to the webcam and refresh the page for the widget to work.', 
+                moocwidget.UI.placeAlert('Webcam permission', 'You need to grant permission to the webcam and refresh the page for the widget to work.', 
               []
               );
               }
@@ -617,8 +585,8 @@ $(document).ready(function() {
                         if (mwdet_logger.isReady()) {
                           clearInterval(logCheck);
                           if (!desktop) {
-                            mwdet_logger.logBannedUser('Mobile');                       }                      
-                          if (!webcam) {
+                            mwdet_logger.logBannedUser('Mobile');                       
+                          } if (!webcam) {
                             mwdet_logger.logBannedUser('No webcam');
                           }                          
                         }
