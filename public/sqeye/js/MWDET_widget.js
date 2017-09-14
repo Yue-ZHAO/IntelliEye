@@ -349,6 +349,8 @@ window.mwdet = window.mwdet || (function() {
     sessionStorage.mwdet_enabled = userAccepts;
     localStorage.mwdet_enabled = userAccepts;
 
+    console.log("use widget:: " + userAccepts);
+
     if (askAgain) {
       localStorage.removeItem('mwdet_enabled');
     }
@@ -415,7 +417,7 @@ window.mwdet = window.mwdet || (function() {
     } else {
       enableFeedbackProcedure();
     }    
-    console.log('[Sqeye] Starting widget');
+    console.log('[Sqeye] Starting widget.');
     widgetStatus = 'start';
     logWidgetStatus(widgetStatus);
   };
@@ -426,20 +428,21 @@ window.mwdet = window.mwdet || (function() {
     }
     widgetStatus = 'end';
     logWidgetStatus(widgetStatus);    
+    console.log('[Sqeye] Stopping widget.');
   };
 
   module.pauseWidget = function() {
     Gazer.pauseWebgazer();
     widgetStatus = 'pause';
     logWidgetStatus(widgetStatus);    
-    console.log('[MWDET] webgazer paused.');
+    console.log('[Sqeye] Pausing widget.');
   };
 
   module.resumeWidget = function() {
     Gazer.resumeWebgazer();
-    console.log('[MWDET] webgazer resumed.');
     widgetStatus = 'resume';
     logWidgetStatus(widgetStatus);    
+    console.log('[Sqeye] Resuming widget.');
   };
 
   module.isReady = function() {
