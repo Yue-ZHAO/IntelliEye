@@ -66,8 +66,6 @@ window.IEyeController = window.IEyeController || (function() {
     function setChoice(widgetIsUsed, fromSwitch=false) {
         vcontrol.pauseVideo();
 
-        moocwidget.envChecker.webcamState();
-
         var iremember = fromSwitch || $('input#i_remember').is(':checked');
 
         localStorage.use_ieye = widgetIsUsed;
@@ -84,6 +82,7 @@ window.IEyeController = window.IEyeController || (function() {
         // stop ieye if they chooses not to use the widget
         // start ieye if they chooses to use the widget
         if (widgetIsUsed) {
+            moocwidget.envChecker.webcamState();
             console.log('using vid playing');
             IEWLogger.logWidgetStatus('allow');
             if (sessionStorage.iEyeStarted == 'false') {
