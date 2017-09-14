@@ -1030,7 +1030,6 @@ RTP.test_feature_extraction = function (bench_filepath) {
 
     mwdet_preprocessor.windowFill = function(window, step) {
         if (typeof step === 'undefined' || step.length === 0) return;
-        console.log(">>>step:"+JSON.stringify(step));
         var endTime = getGazeTimestamp(step[step.length - 1]) + 100;
         var currentTime = 0;
         if (window.length === 0) {
@@ -1068,6 +1067,8 @@ RTP.test_feature_extraction = function (bench_filepath) {
             // So we do not pop the data at the beginning
             var step_temp_index = 0
             while (step.length > 0 && getGazeTimestamp(step[step_temp_index]) >= sample_start_time && getGazeTimestamp(step[step_temp_index]) < sample_end_time) {
+                console.log(">>>" + step_temp_index);
+                console.log(">>>" + step[step_temp_index]);
                 var current_gaze_data = step[step_temp_index];
                 if (gazeIsNull(current_gaze_data)) {
                     step_temp_index = step_temp_index + 1
