@@ -415,6 +415,7 @@ window.mwdet = window.mwdet || (function() {
       Gazer.startWebgazer();
       Gazer.initFacecheck(facecheckComplete);
     } else {
+      Gazer.resumeWebgazer();
       enableFeedbackProcedure();
     }    
     console.log('[Sqeye] Starting widget.');

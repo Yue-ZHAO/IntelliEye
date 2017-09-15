@@ -333,6 +333,7 @@
                 });
 
                 $('#msgOverlay').css('display', 'flex');
+                $(window).scrollTop(0);
             },
 
             hideAlert: function() {
