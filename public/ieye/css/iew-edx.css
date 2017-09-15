@@ -276,7 +276,7 @@ body {
 
 #indicatorContainer {
     width: 58%;
-    height: 33px;
+    height: 43px;
     padding: 5px;
     position: relative;
     z-index:100;
@@ -293,7 +293,7 @@ body {
     border-radius: 20px 0 0 20px;
 	cursor: pointer;
     color: var(--edx-base);
-    width: 90px;
+    width: 150px;
 	height: 32px;
 	line-height:2;
 	position: relative;
@@ -338,7 +338,7 @@ body {
     border-radius: 20px 0 0 20px;
 	cursor: pointer;
     color: var(--edx-base);
-    width: 90px;
+    width: 150px;
 	height: 32px;
 	line-height:2;
 	position: relative;
@@ -372,7 +372,7 @@ body {
 	color: var(--edx-base);
 	line-height:2;
 	text-align: right;
-	 width: 90px; 
+	 width: 150px; 
 
     -webkit-animation: none;
     -moz-animation: none;

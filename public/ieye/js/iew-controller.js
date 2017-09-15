@@ -4,6 +4,7 @@ var IEYEVERSION = '01';
 window.IEyeController = window.IEyeController || (function() {
     var module = {}; // store public functions here
     var widgetStatus = 'end';
+    var fullscreen = false;
     // =========================================================================
     // Private 
     // =========================================================================
@@ -19,6 +20,15 @@ window.IEyeController = window.IEyeController || (function() {
 
         // setting up correct layout (sizes)
         $('.main-container').prepend($('#overlay'));
+        $('.add-fullscreen').on('click', function() {
+            if (fullscreen) {
+                $('#indicatorContainer').css('position', 'relative');
+                fullscreen = false;
+            } else {
+                $('#indicatorContainer').css('position', 'absolute');
+                fullscreen = true;
+            }
+        });
         // $('#overlay').css('height', $('body').height() + 'px');
         // $('#overlay-container').css('height', $(window).height());
 

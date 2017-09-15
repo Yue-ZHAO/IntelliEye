@@ -300,6 +300,16 @@ window.mwdet = window.mwdet || (function() {
     $('.mwdet-main').css('width', $('body').width());
     $('.main-container').prepend($('.mwdet-main'));
 
+    $('.add-fullscreen').on('click', function() {
+        if (fullscreen) {
+            $('#indicatorContainer').css('position', 'relative');
+            fullscreen = false;
+        } else {
+            $('#indicatorContainer').css('position', 'absolute');
+            fullscreen = true;
+        }
+    });    
+
     // place introduction box
     if (!localStorage.mwdet_enabled) {
       showIntroMessage();
