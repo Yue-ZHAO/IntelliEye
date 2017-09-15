@@ -2389,6 +2389,7 @@
             opt_classifiers[i] = tracking.ViolaJones.classifiers[classifier];
           }
           if (!opt_classifiers[i]) {
+            console.log(opt_classifiers);
             throw new Error('Object classifier not valid, try `new tracking.ObjectTracker("face")`.');
           }
         });
