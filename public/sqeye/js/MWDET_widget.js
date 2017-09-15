@@ -47,7 +47,6 @@ window.mwdet = window.mwdet || (function() {
   var calibrationComplete = function() {
     webgazer.pause();
     $('#calibrationOverlay').hide();
-    enableFeedbackProcedure();
     $('.MWDET-overlay').fadeOut();
     console.log('[MWDET] Calibration complete.');
     webgazer.showPredictionPoints(false);
@@ -368,7 +367,6 @@ window.mwdet = window.mwdet || (function() {
   module.handleUsersChoice = function(userAccepts, fromSwitch=false) {
     var askAgain;
     askAgain = fromSwitch || $('#intro_askAgain').is(':checked');
-    console.log("from switch: " + fromSwitch);
     sessionStorage.mwdet_enabled = userAccepts;
     localStorage.mwdet_enabled = userAccepts;
 
@@ -379,7 +377,7 @@ window.mwdet = window.mwdet || (function() {
     if (userAccepts) {
       // show setup overlay
       $('#switchUseWidget').prop('checked', true);
-      module.startWidget();
+      module.initWidget();
       logWidgetStatus('allow');
     } else {
       $('#switchUseWidget').prop('checked', false);
@@ -427,15 +425,21 @@ window.mwdet = window.mwdet || (function() {
     stopVisualAlertLoop();
   };
 
-  module.startWidget = function() {
-    Gazer.startWebgazer();
+  module.initWidget = function() {
+    if (widgetInitialized) {
+      return;
+    }
     if (localStorage.getItem('webgazerGlobalData') === null || (windowSizeIsChanged() && (parseInt(sessionStorage.getItem('unitsVisited')) === 1)) ) {
       $('.MWDET-setup').css('display', 'flex');
       moocwidget.envChecker.webcamState();
       Gazer.initFacecheck(facecheckComplete);
-    } else {
-      enableFeedbackProcedure();
     }    
+    widgetInitialized = true;
+  };
+
+  module.startWidget = function() {
+    Gazer.startWebgazer();
+    enableFeedbackProcedure();
     console.log('[Sqeye] Starting widget.');
     widgetStatus = 'start';
     logWidgetStatus(widgetStatus);
@@ -445,6 +449,7 @@ window.mwdet = window.mwdet || (function() {
     Gazer.stopWebgazer();
     widgetStatus = 'end';
     logWidgetStatus(widgetStatus);    
+    widgetInitialized = false;
     console.log('[Sqeye] Stopping widget.');
   };
 
