@@ -364,7 +364,7 @@ window.mwdet = window.mwdet || (function() {
       module.startWidget();
       logWidgetStatus('allow');
     } else {
-      $('#switchUseWidget').prop('checked', true);
+      $('#switchUseWidget').prop('checked', false);
       module.stopWidget();
       if (askAgain) {
         logWidgetStatus('skip');
