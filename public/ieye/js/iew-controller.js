@@ -161,7 +161,7 @@ window.IEyeController = window.IEyeController || (function() {
 
             $('#iEyeIndicator').hover(function() {
                 currentIndicator = $(this).text();
-                $(this).text('Click to show menu');
+                $(this).text('Show menu');
             }, function() {
                 $(this).text(currentIndicator);
             });            
