@@ -14,9 +14,8 @@ window.mwdet = window.mwdet || (function() {
 
   var module = {};
 
-  // var RTP = require('RTP');
-
   var widgetStatus = 'end';
+  var widgetInitialized = 'false';
   var fullscreen = false;
 
   /**
