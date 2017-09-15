@@ -312,7 +312,12 @@ window.mwdet = window.mwdet || (function() {
       switch (status) {
         case 'play':
           // Rating.enable();
-          module.resumeWidget();
+          if (widgetStatus === 'pause') {
+            module.resumeWidget();
+          } else {
+            module.startWidget();
+          }
+          
           break;
         case 'seek':
         case 'pause':
@@ -428,9 +433,7 @@ window.mwdet = window.mwdet || (function() {
       return;
     }
 
-    if (widgetStatus === 'start' || widgetStatus === 'resume') {
-      Gazer.stopWebgazer();      
-    }
+    Gazer.stopWebgazer();
     widgetStatus = 'end';
     logWidgetStatus(widgetStatus);    
     console.log('[Sqeye] Stopping widget.');

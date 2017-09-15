@@ -1059,8 +1059,6 @@ RTP.test_feature_extraction = function (bench_filepath) {
                 continue;
             }
 
-            console.log(JSON.stringify(step));
-
             var temp_gap = 100;
             var temp_timestamp = currentTime;
             var temp_x = null;
@@ -1069,8 +1067,6 @@ RTP.test_feature_extraction = function (bench_filepath) {
             // So we do not pop the data at the beginning
             var step_temp_index = 0
             while (step.length > 0 && step_temp_index < step.length && getGazeTimestamp(step[step_temp_index]) >= sample_start_time && getGazeTimestamp(step[step_temp_index]) < sample_end_time) {
-                console.log(">>>" + step_temp_index);
-                console.log("next>>>" + JSON.stringify(step[step_temp_index+1]));
                 var current_gaze_data = step[step_temp_index];
                 if (gazeIsNull(current_gaze_data)) {
                     step_temp_index = step_temp_index + 1
