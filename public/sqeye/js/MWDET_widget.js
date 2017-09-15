@@ -312,20 +312,27 @@ window.mwdet = window.mwdet || (function() {
       switch (status) {
         case 'play':
           // Rating.enable();
-          if (widgetStatus === 'pause') {
-            module.resumeWidget();
-          } else {
-            module.startWidget();
-          }
-          
+          if (mwdetIsEnabled()) {
+            if (widgetStatus === 'pause') {
+              module.resumeWidget();
+            } else {
+              module.startWidget();
+            }
+          }          
           break;
         case 'seek':
         case 'pause':
           // Rating.pause();
-          module.pauseWidget();
+          if (mwdetIsEnabled()) {
+            module.pauseWidget();          
+          }
+
           break;
         case 'ended':
-          module.stopWidget();
+        if (mwdetIsEnabled) {
+          module.stopWidget();        
+        }
+
         default: // nothing.
       }
     });
@@ -360,12 +367,10 @@ window.mwdet = window.mwdet || (function() {
 
     if (userAccepts) {
       // show setup overlay
-      console.log("should be starting widget");
       $('#switchUseWidget').prop('checked', true);
       module.startWidget();
       logWidgetStatus('allow');
     } else {
-      console.log("should be stopping widget");
       $('#switchUseWidget').prop('checked', false);
       module.stopWidget();
       if (askAgain) {
@@ -412,10 +417,6 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.startWidget = function() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }
-
     Gazer.startWebgazer();
     if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
       $('.MWDET-setup').css('display', 'flex');
@@ -430,10 +431,6 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.stopWidget = function() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }
-
     Gazer.stopWebgazer();
     widgetStatus = 'end';
     logWidgetStatus(widgetStatus);    
@@ -441,10 +438,6 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.pauseWidget = function() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }
-
     Gazer.pauseWebgazer();
     widgetStatus = 'pause';
     logWidgetStatus(widgetStatus);    
@@ -452,10 +445,6 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.resumeWidget = function() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }
-
     Gazer.resumeWebgazer();
     widgetStatus = 'resume';
     logWidgetStatus(widgetStatus);    
