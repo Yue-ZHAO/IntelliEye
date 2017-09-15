@@ -28,7 +28,7 @@ window.IEyeController = window.IEyeController || (function() {
         $.each($('.lm'), (i, o) => {
             o.onclick = function() {
                 var eq_id = $(o).attr('id');
-                $('#' + eq_id + '-d').toggle();
+                $('#' + eq_id + '-d').slideToggle();
                 var eq_text_id = eq_id + '-text';
                 if ($('#' + eq_text_id).text() === 'Learn more') {
                     $('#' + eq_text_id).text('Hide');

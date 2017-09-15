@@ -383,13 +383,13 @@
                                     </p>
                             
                             <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text'>  Learn more</span></h2></span>
-                                    <p class='ieye_descr' id='lm2-d'>
+                                    <div class='ieye_descr' id='lm2-d'>
                                         <ul>
                                             <li>IntelliEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
                                             <li>You can use IntelliEye with any modern web browser, e.g., latest version on Firefox, Opera, Chrome, and Microsoft Edge. Internet Explorer is not supported.</li>
                                             <li>We need your permission to use your camera on your machine. External camera should be aligned with the screen you are watching the video on.</li>
                                         </ul>                                        
-                                    </p>
+                                    </div>
                                     <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text'>  Learn more</span></h2></span>
                                     <div class='ieye_descr' id='lm3-d'>As Intellieye depends on face detection in the web camera video feed, you should pay attention to the following:
                                         <ul>
