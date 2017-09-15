@@ -17,6 +17,7 @@ window.IEyeController = window.IEyeController || (function() {
         $(window).scrollTop(0);
 
         moocwidget.UI.ieye_intro();
+        $('#i_dont_remember').prop('checked', true);
 
         // setting up correct layout (sizes)
         $('.main-container').prepend($('#overlay'));

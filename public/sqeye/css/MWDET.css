@@ -48,7 +48,7 @@ body {
     -webkit-box-shadow: 1px 1px 20px 1px #787878;
     box-shadow: 1px 1px 20px 1px #787878;
     background-color: #fafafa !important;
-    z-index: 999;
+    z-index: 9999;
     position: relative;
     height: 550px;
     width: 830px;
@@ -63,7 +63,7 @@ body {
     left: 0;
     background-color: rgba(200, 200, 200, .8);
     position:absolute;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .fcContent {
