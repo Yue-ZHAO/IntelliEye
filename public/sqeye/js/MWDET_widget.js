@@ -149,7 +149,7 @@ window.mwdet = window.mwdet || (function() {
       /* eslint-disable */
       $('#iEyeIndicator').hover(function() {
         currentIndicator = $(this).text();
-        $(this).text('Click to show menu');
+        $(this).text('Show menu');
       }, function() {
         $(this).text(currentIndicator);
       });
@@ -423,6 +423,10 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.stopWidget = function() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }
+
     if (widgetStatus === 'start' || widgetStatus === 'resume') {
       Gazer.stopWebgazer();      
     }
@@ -432,6 +436,10 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.pauseWidget = function() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }
+
     Gazer.pauseWebgazer();
     widgetStatus = 'pause';
     logWidgetStatus(widgetStatus);    
@@ -439,6 +447,10 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.resumeWidget = function() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }
+
     Gazer.resumeWebgazer();
     widgetStatus = 'resume';
     logWidgetStatus(widgetStatus);    
