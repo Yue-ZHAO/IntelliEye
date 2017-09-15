@@ -108,6 +108,7 @@ window.Gazer = window.Gazer || (function () {
     if (gazerIsStarted)
       return;
     gazerIsStarted = true;
+    Gazerdata.startPolling();
     window.webgazer = webgazer;
     webgazer.setRegression('ridge') /* currently must set regression and tracker */
       .setTracker('clmtrackr')
