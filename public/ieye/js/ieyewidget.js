@@ -250,7 +250,7 @@
 			
 		
 			
-			var tracker = new tracking.ObjectTracker(['face']);	//var tracker = new tracking.ObjectTracker(['face', 'eye', 'mouth']);
+			var tracker = new tracking.ObjectTracker("face");	//var tracker = new tracking.ObjectTracker(['face', 'eye', 'mouth']);
 			tracker.setInitialScale(4);  	// the smaller, the smaller faces it can discover, however small values are in trouble with big faces over all area.
 			tracker.setStepSize(1.7);			// how fast is the recognition
 			tracker.setEdgesDensity(0.1);	// the smaller the better; 0.1 would be ok
