@@ -414,13 +414,12 @@ window.mwdet = window.mwdet || (function() {
       return;
     }
 
+    Gazer.startWebgazer();
     if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
       $('.MWDET-setup').css('display', 'flex');
       moocwidget.envChecker.webcamState();
-      Gazer.startWebgazer();
       Gazer.initFacecheck(facecheckComplete);
     } else {
-      Gazer.resumeWebgazer();
       enableFeedbackProcedure();
     }    
     console.log('[Sqeye] Starting widget.');

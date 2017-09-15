@@ -379,7 +379,7 @@ body {
 	padding-right: 10px;
 	padding-left:50px;
 	float:right;
-	text-align: right;
+	text-align: center;
 
     -webkit-transition-property: width; /* Safari */
     -webkit-transition-duration: 0.2s; /* Safari */
@@ -423,7 +423,7 @@ body {
 	padding-right: 10px;
 	padding-left:50px;
 	float:right;
-	text-align: right;
+	text-align: center;
 
     -webkit-transition-property: width; /* Safari */
     -webkit-transition-duration: 0.2s; /* Safari */
