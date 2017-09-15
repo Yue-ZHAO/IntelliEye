@@ -254,7 +254,7 @@
 			try {
 				tracker = new tracking.ObjectTracker(['face']);
 			} catch (e) {
-				new tracking.ObjectTracker('face');
+				tracker = new tracking.ObjectTracker('face');
 			}
 
 			tracker.setInitialScale(4);  	// the smaller, the smaller faces it can discover, however small values are in trouble with big faces over all area.
