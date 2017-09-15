@@ -340,7 +340,7 @@ window.mwdet = window.mwdet || (function() {
 
           break;
         case 'ended':
-        if (mwdetIsEnabled) {
+        if (mwdetIsEnabled()) {
           module.stopWidget();        
         }
 
@@ -368,7 +368,7 @@ window.mwdet = window.mwdet || (function() {
   module.handleUsersChoice = function(userAccepts, fromSwitch=false) {
     var askAgain;
     askAgain = fromSwitch || $('#intro_askAgain').is(':checked');
-
+    console.log("from switch: " + fromSwitch);
     sessionStorage.mwdet_enabled = userAccepts;
     localStorage.mwdet_enabled = userAccepts;
 
@@ -428,9 +428,6 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.startWidget = function() {
-    if (widgetStatus !== 'end') {
-      return;
-    }
     Gazer.startWebgazer();
     if (localStorage.getItem('webgazerGlobalData') === null || (windowSizeIsChanged() && (parseInt(sessionStorage.getItem('unitsVisited')) === 1)) ) {
       $('.MWDET-setup').css('display', 'flex');
