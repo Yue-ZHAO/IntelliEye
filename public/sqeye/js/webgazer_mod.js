@@ -10735,6 +10735,7 @@ var mosseFilterResponses = function() {
             navigator.getUserMedia(options,
                     function(stream){
                         console.log('video stream created');
+                        webgazer.localStream = stream;
                         init(window.URL.createObjectURL(stream));
                     },
                     function(e){
@@ -10800,6 +10801,10 @@ var mosseFilterResponses = function() {
 
         if (videoElementCanvas && videoElementCanvas.length > 0)
           document.body.removeChild(videoElementCanvas);
+
+        if (webgazer.localStream && webgazer.localStream.getTracks().length > 0) {
+          webgazer.localStream.getTracks()[0].stop();
+        }
 
         setGlobalData();
         return webgazer;
