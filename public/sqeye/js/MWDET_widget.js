@@ -360,10 +360,12 @@ window.mwdet = window.mwdet || (function() {
 
     if (userAccepts) {
       // show setup overlay
+      console.log("should be starting widget");
       $('#switchUseWidget').prop('checked', true);
       module.startWidget();
       logWidgetStatus('allow');
     } else {
+      console.log("should be stopping widget");
       $('#switchUseWidget').prop('checked', false);
       module.stopWidget();
       if (askAgain) {
