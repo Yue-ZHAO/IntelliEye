@@ -19,8 +19,8 @@ window.IEyeController = window.IEyeController || (function() {
 
         // setting up correct layout (sizes)
         $('.main-container').prepend($('#overlay'));
-        $('#overlay').css('height', $('body').height() + 'px');
-        $('#overlay-container').css('height', $(window).height());
+        // $('#overlay').css('height', $('body').height() + 'px');
+        // $('#overlay-container').css('height', $(window).height());
 
         updateIndicator();
 
