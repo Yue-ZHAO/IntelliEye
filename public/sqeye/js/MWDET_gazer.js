@@ -53,12 +53,13 @@ window.Gazer = window.Gazer || (function () {
       // overlay.style.left = leftDist;
       overlay.style.margin = '0px';
 
-      $(".overlay").append(overlay);
+      // $(".overlay").append(overlay);
+      $('.facecheckContainer').empty();
       $('.facecheckContainer').prepend($('#overlay'));
       $('.facecheckContainer').prepend($('#webgazerVideoFeed'));
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
 
-      $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face perfectly.");
+      $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face sufficiently. Please make sure that your eyes are correctly fitted.");
       $('#fc_infobox').append("<button class='btn btn-primary' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>");
 
       var cl = webgazer.getTracker().clm;
