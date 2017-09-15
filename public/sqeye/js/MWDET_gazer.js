@@ -53,8 +53,8 @@ window.Gazer = window.Gazer || (function () {
       // overlay.style.left = leftDist;
       overlay.style.margin = '0px';
 
-      // $(".overlay").append(overlay);
-      $('.facecheckContainer').empty();
+      $(".overlay").append(overlay);
+      // $('.facecheckContainer').empty();
       $('.facecheckContainer').prepend($('#overlay'));
       $('.facecheckContainer').prepend($('#webgazerVideoFeed'));
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
