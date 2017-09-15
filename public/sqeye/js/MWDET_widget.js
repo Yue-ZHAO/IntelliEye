@@ -17,6 +17,7 @@ window.mwdet = window.mwdet || (function() {
   // var RTP = require('RTP');
 
   var widgetStatus = 'end';
+  var fullscreen = false;
 
   /**
    * Callback function.
@@ -428,7 +429,7 @@ window.mwdet = window.mwdet || (function() {
 
   module.startWidget = function() {
     Gazer.startWebgazer();
-    if (localStorage.getItem('webgazerGlobalData') === null || windowSizeIsChanged()) {
+    if (localStorage.getItem('webgazerGlobalData') === null /* || windowSizeIsChanged() */) {
       $('.MWDET-setup').css('display', 'flex');
       moocwidget.envChecker.webcamState();
       Gazer.initFacecheck(facecheckComplete);
