@@ -314,9 +314,9 @@ window.mwdet = window.mwdet || (function() {
     // place introduction box
     if (!localStorage.mwdet_enabled) {
       showIntroMessage();
-    } else if (localStorage.getItem('mwdet_enabled') == 'true') {
+    } /* else if (localStorage.getItem('mwdet_enabled') == 'true') {
       module.startWidget();
-    }
+    }*/
 
     vcontrol.init(function(status) {
       updateIndicator(status);
