@@ -274,7 +274,9 @@ body {
 /*WIDGET INDICATOR*/
 
 #indicatorContainer {
-	width: 60%;
+    width: 58%;
+    height: 33px;
+    padding: 5px;
     position: relative;
     z-index:100;
 }
@@ -282,24 +284,22 @@ body {
 .indicator {
 	background-color: var(--edx-lightgray);
 	background-image: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png");
-     background-size: 20px 20px; 
+    background-size: 20px 20px; 
+	
 	background-position: 10% 50%;
     background-repeat: no-repeat;
-	box-shadow: 0 0 5px rgba(0,0,0,.25);
+	box-shadow: -1px 0px 8px -2px rgba(0,0,0,.55);
     border-radius: 20px 0 0 20px;
 	cursor: pointer;
-	color: var(--edx-base);
-	/* min-width: 85px;  */
-	/* width: 150px; */
+    color: var(--edx-base);
+    width: 90px;
 	height: 32px;
 	line-height:2;
-	/* margin-right:3px; */
-	 margin-top:2px; 
 	position: relative;
 	padding-right: 10px;
 	padding-left:50px;
 	float:right;
-	text-align: right;
+	text-align: center;
 
     -webkit-transition-property: width; /* Safari */
     -webkit-transition-duration: 0.2s; /* Safari */
@@ -323,34 +323,33 @@ body {
     -moz-animation: pulse 1.0s linear infinite;
     -ms-animation: pulse 1.0s linear infinite;
     -o-animation: pulse 1.0s linear infinite;
-    animation: pulse 1.0s linear infinite;	
+    animation: pulse 1.0s linear infinite;
 }
 
 .indicatorOff {
 	background-color: var(--edx-lightgray);
 	background-image: url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_black_h20.png");
-      background-size: 20px 20px; 
+	background-size: 20px 20px; 
+
 	background-position: 10% 50%;
     background-repeat: no-repeat;
-	box-shadow: 0 0 5px rgba(0,0,0,.25);
+	box-shadow: -1px 0px 8px -2px rgba(0,0,0,.55);
     border-radius: 20px 0 0 20px;
 	cursor: pointer;
-	color: var(--edx-text);
-	/* min-width: 85px;  */
+    color: var(--edx-base);
+    width: 90px;
 	height: 32px;
 	line-height:2;
-	/* margin-right:3px; */
-	 margin-top:2px; 
 	position: relative;
 	padding-right: 10px;
 	padding-left:50px;
 	float:right;
-	text-align: right;
+	text-align: center;
 
     -webkit-transition-property: width; /* Safari */
     -webkit-transition-duration: 0.2s; /* Safari */
     transition-property: width;
-    transition-duration: 0.2s;	
+    transition-duration: 0.2s;		
 
   	-webkit-touch-callout: none; 
     -webkit-user-select: none;
@@ -368,17 +367,17 @@ body {
 
 .indicator:hover, .indicatorOff:hover {
 	background-color: white;
-	background-position: 5% 50%;
+	background-position: 10% 50%;
 	color: var(--edx-base);
 	line-height:2;
 	text-align: right;
-	/* width: 150px; */
+	 width: 90px; 
 
     -webkit-animation: none;
     -moz-animation: none;
     -ms-animation: none;
     -o-animation: none;
-    animation: none;		
+    animation: none;			
 }
 
 .indicator:active, .indicator:active {
@@ -396,11 +395,7 @@ body {
   width: 75px;
   height: 32px;
   margin:0px;
-  margin-left:-2px;
-   margin-top:2px; 
-   margin-bottom:2px;
   float:right;
-  box-shadow: 0 0 5px rgba(0,0,0,.25);
   border-radius: 25px;
 }
 
@@ -419,6 +414,7 @@ body {
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: 0px 25px 25px 0px;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,.55);
 }
 
 .widgetSlider:before {
