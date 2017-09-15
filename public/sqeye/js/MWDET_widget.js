@@ -366,7 +366,6 @@ window.mwdet = window.mwdet || (function() {
    * @param {bool} fromSwitch whether the choice was made through the switch or the menu.
    */
   module.handleUsersChoice = function(userAccepts, fromSwitch=false) {
-    console.log("from switch: " + fromSwitch);
     var askAgain;
     askAgain = fromSwitch || $('#intro_askAgain').is(':checked');
 
@@ -429,6 +428,9 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.startWidget = function() {
+    if (widgetStatus !== 'end') {
+      return;
+    }
     Gazer.startWebgazer();
     if (localStorage.getItem('webgazerGlobalData') === null || (windowSizeIsChanged() && (parseInt(sessionStorage.getItem('unitsVisited')) === 1)) ) {
       $('.MWDET-setup').css('display', 'flex');
