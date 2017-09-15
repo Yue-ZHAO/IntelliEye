@@ -88,11 +88,11 @@ window.mwdet = window.mwdet || (function() {
       var prediction = NBayes.predictFromWindow(window);
       console.log('>> prediction: ' + prediction);
       if (parseInt(prediction) === 1) {
-        if (MWDET_AUDITORY_ALERT) {
+        if (SQEYE_AUDIO_ALERT) {
           audioAlert();
         }
 
-        if (MWDET_VISUAL_ALERT) {
+        if (SQEYE_VISUAL_ALERT) {
           visualAlert();
         }
 
