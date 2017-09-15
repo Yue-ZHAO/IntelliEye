@@ -368,8 +368,9 @@
                                         </ul>
                                         By using IntelliEye you will also help us to improve our widgets in the future. 
                                         If you have any questions or feedback, please send email to 
-                                        <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a>  or 
-                                        <a href="mailto:y.zhao-1@tudelft.nl">t.robal@tudelft.nl</a>. 
+                                        <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a> or <a href="mailto:y.zhao-1@tudelft.nl">t.robal@tudelft.nl</a>. 
+                                        <br>
+                                        <br>
                                     </p>
                                 </div>
                                     <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions.png" width="350px">
