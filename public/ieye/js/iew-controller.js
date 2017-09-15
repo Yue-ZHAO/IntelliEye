@@ -29,6 +29,15 @@ window.IEyeController = window.IEyeController || (function() {
                 fullscreen = true;
             }
         });
+
+        $('.seq_video').on('click', function() {
+            if (useIEye()) {
+                ieyewidget.stopiEye();
+                widgetStatus = 'end';
+                sessionStorage.iEyeStarted = false;
+            }
+        });
+
         // $('#overlay').css('height', $('body').height() + 'px');
         // $('#overlay-container').css('height', $(window).height());
 
