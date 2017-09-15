@@ -133,6 +133,7 @@ window.Gazer = window.Gazer || (function () {
         console.log("Store failed");
       }      
     }
+    gazerIsStarted = false;
   }
 
   function pauseGazer() {
