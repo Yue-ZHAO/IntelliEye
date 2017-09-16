@@ -374,7 +374,7 @@
                                 </div>
                                     <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions.png" width="350px">
                                     </div>
-                            <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text'>  Learn more</span></h2></span>
+                            <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>
                                     <p class='ieye_descr' id='lm1-d'>IntelliEye uses your computer webcam, with your permission, 
                                     and looks for a face frame in the camera feed. Based on the detected face frame and your presence in it, 
                                     IntelliEye decides over automatic video play control. IntelliEye is privacy aware – no video feed leaves your computer.  
@@ -382,7 +382,7 @@
                                     <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions2.png" width="400px" style="margin-top:10px">
                                     </p>
                             
-                            <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text'>  Learn more</span></h2></span>
+                            <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>
                                     <div class='ieye_descr' id='lm2-d'>
                                         <ul>
                                             <li>IntelliEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
@@ -390,7 +390,7 @@
                                             <li>We need your permission to use your camera on your machine. External camera should be aligned with the screen you are watching the video on.</li>
                                         </ul>                                        
                                     </div>
-                                    <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text'>  Learn more</span></h2></span>
+                                    <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
                                     <div class='ieye_descr' id='lm3-d'>As Intellieye depends on face detection in the web camera video feed, you should pay attention to the following:
                                         <ul>
                                             <li>Enable your webcam once asked.</li>
@@ -464,7 +464,7 @@
                         </ol>
             </div>
 
-                <span onclick="$('#attention-a').slideToggle()"><h2 class='h2-section'>What do I need to pay attention to?<span > Learn more</span></h2></span>
+                <span onclick="$('#attention-a').slideToggle()"><h2 class='h2-section'>What do I need to do to use SquirrelEye?<span > Learn more</span></h2></span>
                     <div id="attention-a" style="display:none">
                         As SquirrelEye depends on face and eye detection in the web camera video feed, you should pay attention to the following:
                         <ul>

@@ -199,10 +199,11 @@ window.IEyeController = window.IEyeController || (function() {
                     $('#iEyeIndicator').text('Paused');                
                     break;
                 case 'ended':
+                    $('#iEyeIndicator').removeClass('indicator').addClass('indicatorOff');
                     $('#iEyeIndicator').text('Not Active');            
                     break;
                 default: $('#iEyeIndicator').text('Active');   
-        }                    
+            }                    
         } else {
             $('#iEyeIndicator').removeClass('indicator').addClass('indicatorOff');
             $('#iEyeIndicator').text('Not Active');  

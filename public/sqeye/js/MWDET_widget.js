@@ -309,6 +309,10 @@ window.mwdet = window.mwdet || (function() {
         }
     });    
 
+    $('.seq_video').on('click', function() {
+        module.stopWidget();
+    });    
+
     // place introduction box
     if (!localStorage.mwdet_enabled) {
       showIntroMessage();
