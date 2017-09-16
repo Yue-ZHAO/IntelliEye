@@ -42,14 +42,6 @@
 	/** 
 	 *	----------------- Collect the metrics stream -----------------
 	*/
-
-	ieyewidget.enableMetricsLog = function() {
-		logMetricsEnabled = true;
-	}
-
-	ieyewidget.disableMetricsLog = function() {
-		logMetricsEnabled = false;
-	}
 	
 	function collectMetrics() {
 		//tjs metrics
@@ -429,8 +421,19 @@
 		if (vcontrol.getCurrentPlayerState() == "pause") vcontrol.rewindAndPlay(getRewindSeconds());
 	}
 
-	// "overrides" collectMetrics() function so we have all latest metrics to send.
-	// this affects the intervalref of collectMetrics()
+	/**
+	 * --------- Logging functions ----------
+	 */	
+
+	ieyewidget.enableMetricsLog = function() {
+		logMetricsEnabled = true;
+	}
+
+	ieyewidget.disableMetricsLog = function() {
+		logMetricsEnabled = false;
+	}	
+
+	// public function, called in iew-controller.js when video status changes.
 	ieyewidget.updateAndLogMetrics = function() {
 		collectMetrics();
 		var data = getAllMetrics();
