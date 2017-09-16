@@ -441,6 +441,7 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.startWidget = function() {
+    moocwidget.envChecker.webcamState();
     Gazer.startWebgazer();
     enableFeedbackProcedure();
     console.log('[Sqeye] Starting widget.');
