@@ -285,6 +285,7 @@ window.IEyeController = window.IEyeController || (function() {
                 default: // none;
             }
             // update the indicator with the correct status
+            ieyewidget.updateAndLogMetrics();
             updateIndicator(status);
         });
 

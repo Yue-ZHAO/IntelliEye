@@ -130,8 +130,6 @@
 	 *	----------------- Handle scores and make a decision -----------------
 	*/
 	function handleDecision() {
-		updateMetrics();
-
 		var isDefocus = false; 	// true= defocus detected
 		var trend = getCurrentTrend();
 		var hasFocus = document.hasFocus();
@@ -433,7 +431,7 @@
 
 	// "overrides" collectMetrics() function so we have all latest metrics to send.
 	// this affects the intervalref of collectMetrics()
-	function updateMetrics() {
+	ieyewidget.updateAndLogMetrics = function() {
 		collectMetrics();
 		var data = getAllMetrics();
 		if (ieyewidget.logMetricsEnabled) {
