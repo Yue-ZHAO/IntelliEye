@@ -176,7 +176,7 @@
         /**
          * Places an alert if the webcam is denied by user.
          */
-        function checkWebcamState() {
+        function checkWebcamState(callIfFail='undefined') {
             navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
             if (navigator.getUserMedia) {
                 navigator.getUserMedia( {
@@ -189,10 +189,13 @@
                 // Error Callback
                 function(err) {
                     if (err.name === 'PermissionDeniedError') {
-                      moocwidget.UI.placeAlert('Webcam permission', 
-                        'You need to grant permission to the webcam and refresh the page for the widget to work.', 
-                        []
-                    );
+                        moocwidget.UI.placeAlert('Webcam permission', 
+                            'You need to grant permission to the webcam and refresh the page for the widget to work.', 
+                            []
+                        );
+                        if (callIfFail !== 'undefined') {
+                            callIfFail();
+                        }
                     }
                 });
             }

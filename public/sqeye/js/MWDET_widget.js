@@ -441,7 +441,10 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.startWidget = function() {
-    moocwidget.envChecker.webcamState();
+    moocwidget.envChecker.webcamState(function() {
+      // if webcam no permission:
+      vcontrol.pauseVideo();
+    });
     Gazer.startWebgazer();
     enableFeedbackProcedure();
     console.log('[Sqeye] Starting widget.');
