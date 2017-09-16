@@ -319,7 +319,7 @@
                 `);
             },
 
-            placeAlert: function(title, content, footer) {
+            placeAlert: function(title, content, footer, events='undefined') {
                 $('#msgH1').empty();
                 $('#msgContent').empty();
                 $('#msgInputs').empty();
@@ -330,6 +330,10 @@
                 $.each(footer, function(i, o) {
                     $('#msgInputs').append(o);
                 });
+
+                if (events !== 'undefined') {
+                    eval(events);
+                }
 
                 $('#msgOverlay').css('display', 'flex');
                 $(window).scrollTop(0);
@@ -439,9 +443,9 @@
                 </div>    
 
                 SquirrelEye is developed by TU Delft. Using this widget will be helpful for us to make better inattention-detection widgets in the future. 
-        If you have any questions or feedback, please send email to <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a>
+                If you have any questions or feedback, please send email to <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a>
 
-                <span onclick="$('#howto-a').slideToggle()"><h2 class='h2-section'>How does it work?<span > Learn more</span></h2></span>
+                <span class="sq-intro-span" onclick="$('#howto-a').slideToggle()"><h2 class='h2-section'>How does it work?<span style='margin-left:5px'>Learn more</span></h2></span>
                     <div id="howto-a" class="intro-textimg" style="display:none">
                         <p style="width:500px">
                             SquirrelEye uses your computer webcam, with your permission, and looks for a face frame in the camera feed. 
@@ -455,16 +459,16 @@
                         </div>
                     </div>
 
-                <span onclick="$('#what-a').slideToggle()"><h2 class='h2-section'>What do I need to use SquirrelEye?<span > Learn more</span></h2></span>
+                <span class="sq-intro-span" onclick="$('#what-a').slideToggle()"><h2 class='h2-section'>What do I need to use SquirrelEye?<span style='margin-left:5px'>Learn more</span></h2></span>
                     <div id="what-a" style="display:none">
                         <ol>
                         <li>SquirrelEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
                         <li>You can use SquirrelEye with any modern web browser, e.g., latest version on Firefox, Opera, Chrome, and Microsoft Edge. Internet Explorer is not supported.</li>
                         <li>We need your permission to use the built-in camera on your machine. External camera should be aligned with the screen you are watching the video on.</li>
                         </ol>
-            </div>
+                    </div>
 
-                <span onclick="$('#attention-a').slideToggle()"><h2 class='h2-section'>What do I need to do to use SquirrelEye?<span > Learn more</span></h2></span>
+                <span class="sq-intro-span" onclick="$('#attention-a').slideToggle()"><h2 class='h2-section'>What do I need to do to use SquirrelEye?<span style='margin-left:5px'>Learn more</span></h2></span>
                     <div id="attention-a" style="display:none">
                         As SquirrelEye depends on face and eye detection in the web camera video feed, you should pay attention to the following:
                         <ul>
@@ -476,16 +480,26 @@
                         </ul>
                     </div>
                 `,
-                    ['<button id=\'bEnable\' class=\'edx-button\' onclick=\'mwdet.handleUsersChoice(true); moocwidget.UI.hideAlert()\'> Enable SquirrelEye </button>',
-                        '<button id=\'bDisable\' class=\'edx-button-faded\' onclick=\'mwdet.handleUsersChoice(false); moocwidget.UI.hideAlert()\'> Disable SquirrelEye </button>',
-                        '<input id=\'intro_askAgain\' name=\'i_remember\' type=\'radio\' checked>Always ask me</input>',
-                        '<input name=\'i_remember\' type=\'radio\'> Remember this choice </input>'
-                        +
-                        `
-                    <i style="display:block;margin-top:20px">If you want to change the choice you have made here, 
-                        click on the <img src="https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue-sm.png" style="vertical-align:middle;"> icon above the video.</i>      
-                    `,
-                    ]); 
+                ['<button id=\'bEnable\' class=\'edx-button\' onclick=\'mwdet.handleUsersChoice(true); moocwidget.UI.hideAlert()\'> Enable SquirrelEye </button>',
+                    '<button id=\'bDisable\' class=\'edx-button-faded\' onclick=\'mwdet.handleUsersChoice(false); moocwidget.UI.hideAlert()\'> Disable SquirrelEye </button>',
+                    '<input id=\'intro_askAgain\' name=\'i_remember\' type=\'radio\' checked>Always ask me</input>',
+                    '<input name=\'i_remember\' type=\'radio\'> Remember this choice </input>'
+                    +
+                    `
+                <i style="display:block;margin-top:20px">If you want to change the choice you have made here, 
+                    click on the <img src="https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue-sm.png" style="vertical-align:middle;"> icon above the video.</i>      
+                `,
+                ],
+                `
+                    $('.sq-intro-span').on('click', function() {
+                        if ($(this).find('span').first().text() === 'Learn more') {
+                            $(this).find('span').first().text('Hide');
+                        } else {
+                            $(this).find('span').first().text('Learn more');
+                        }
+                    });
+                `
+                ); 
             },
         };
     }) ();
