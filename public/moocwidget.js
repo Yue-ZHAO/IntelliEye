@@ -53,14 +53,7 @@
                 'https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.13.3/math.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.3/jquery.csv.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js',
-                'https://moocwidgets.cc/static/sqeye/js/RTP.js',
-                'https://moocwidgets.cc/static/sqeye/js/webgazer_mod.js',
-                'https://moocwidgets.cc/static/sqeye/js/MWDET_gazer.js',
-                'https://moocwidgets.cc/static/sqeye/js/MWDET_calibration.js',
-                'https://moocwidgets.cc/static/sqeye/js/MWDET_gazerdata.js',
-                'https://moocwidgets.cc/static/sqeye/js/MWDET_vcontrol.js',
-                'https://moocwidgets.cc/static/sqeye/js/MWDET_logger.js',
-                'https://moocwidgets.cc/static/sqeye/js/MWDET_widget.js',
+                'https://moocwidgets.cc/static/sqeye/js/sqeye-build.min.js',
             ];
 
             _loadjs(files, function() {
@@ -94,14 +87,7 @@
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
 
-            // TODO: minimize
-            var files = [
-                // 'https://moocwidgets.cc/static/ieye/js/tracking-mod.js',
-                // 'https://moocwidgets.cc/static/ieye/js/client.min.js',              
-                // 'https://moocwidgets.cc/static/ieye/js/iew-vcontrol.js',              
-                // 'https://moocwidgets.cc/static/ieye/js/ieyewidget.js',              
-                // 'https://moocwidgets.cc/static/ieye/js/iew-log.js',              
-                // 'https://moocwidgets.cc/static/ieye/js/iew-controller.js',              
+            var files = [             
                 'https://moocwidgets.cc/static/ieye/js/ieye-build.min.js',              
             ];
 
