@@ -96,12 +96,13 @@
 
             // TODO: minimize
             var files = [
-                'https://moocwidgets.cc/static/ieye/js/tracking-mod.js',
-                'https://moocwidgets.cc/static/ieye/js/client.min.js',              
-                'https://moocwidgets.cc/static/ieye/js/iew-vcontrol.js',              
-                'https://moocwidgets.cc/static/ieye/js/ieyewidget.js',              
-                'https://moocwidgets.cc/static/ieye/js/iew-log.js',              
-                'https://moocwidgets.cc/static/ieye/js/iew-controller.js',              
+                // 'https://moocwidgets.cc/static/ieye/js/tracking-mod.js',
+                // 'https://moocwidgets.cc/static/ieye/js/client.min.js',              
+                // 'https://moocwidgets.cc/static/ieye/js/iew-vcontrol.js',              
+                // 'https://moocwidgets.cc/static/ieye/js/ieyewidget.js',              
+                // 'https://moocwidgets.cc/static/ieye/js/iew-log.js',              
+                // 'https://moocwidgets.cc/static/ieye/js/iew-controller.js',              
+                'https://moocwidgets.cc/static/ieye/js/ieye-min.js',              
             ];
 
             _loadjs(files, function() {
