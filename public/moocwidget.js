@@ -102,7 +102,7 @@
                 // 'https://moocwidgets.cc/static/ieye/js/ieyewidget.js',              
                 // 'https://moocwidgets.cc/static/ieye/js/iew-log.js',              
                 // 'https://moocwidgets.cc/static/ieye/js/iew-controller.js',              
-                'https://moocwidgets.cc/static/ieye/js/ieye-build.js',              
+                'https://moocwidgets.cc/static/ieye/js/ieye-build.min.js',              
             ];
 
             _loadjs(files, function() {
