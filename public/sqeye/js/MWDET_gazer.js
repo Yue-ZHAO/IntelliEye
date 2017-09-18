@@ -62,15 +62,21 @@ window.Gazer = window.Gazer || (function () {
       $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face sufficiently. Please make sure that your eyes are correctly fitted.");
       $('#fc_infobox').append(
         `
-        <div class="mw_tooltip">
-        <button class='btn btn-primary' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
-        <span class="mw_tooltiptext">I can see that my face and eyes are tracked sufficiently.</span>
-        </div>
+        <button id='fc_cont' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
+        <button id='fc_disable' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
+      `, 
+      `
+        $('#fc_cont').hover(function() {
+          moocwidget.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
+        }, function() {
+          moocwidget.hideTooltip();
+        });
 
-        <div class="mw_tooltip">
-        <button class='btn btn-primary' style='margin-top: 10px;' onclick='module.stopInit()'>Disable SquirrelEye</button>
-        <span class="mw_tooltiptext">I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
-        </div>        
+        $('#fc_disable').hover(function() {
+          moocwidget.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
+        }, function() {
+          moocwidget.hideTooltip();
+        });        
       `);
 
       var cl = webgazer.getTracker().clm;
@@ -83,9 +89,6 @@ window.Gazer = window.Gazer || (function () {
         }
       }
       drawLoop();
-
-      // $('#infobox').show();
-      // $('#infobox').css('top', parseInt(height + (($(document).height() - height) / 2) + 25) + 'px');
     };
 
     function checkIfReady() {
@@ -124,8 +127,6 @@ window.Gazer = window.Gazer || (function () {
     webgazer.setRegression('ridge') /* currently must set regression and tracker */
       .setTracker('clmtrackr')
       .setGazeListener(function (data, clock) {
-        //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-        //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
       })
       .begin();
     webgazer.showPredictionPoints(false); /* shows a square every 100 milliseconds where current prediction is */
@@ -133,10 +134,6 @@ window.Gazer = window.Gazer || (function () {
 
   function stopWebgazer() {
     Gazerdata.stopPolling();
-    // TODO: shut down cam
-    // if (localstream) {
-    //   localstream.getTracks()[0].stop();
-    // }
     if (gazerIsStarted) {
       try {
         webgazer.end();
