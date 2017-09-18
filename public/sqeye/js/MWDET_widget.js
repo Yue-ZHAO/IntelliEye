@@ -354,6 +354,24 @@ window.mwdet = window.mwdet || (function() {
       return;
     }
 
+    // if visiting a new URL or refreshing same page
+    if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
+        sessionStorage.setItem('storedURL', document.URL);
+        sessionStorage.setItem('unitsVisited', 1);
+        if (sessionStorage.getItem('sessionId')) {
+            sessionStorage.removeItem('sessionId');
+        }
+    } else {
+        // if changing units
+        var ucount = parseInt(sessionStorage.getItem('unitsVisited'));
+        sessionStorage.setItem('unitsVisited', ucount+1);
+        widgetInitialized = false;
+    }
+
+    $(window).on('beforeunload', function() {
+        sessionStorage.removeItem('storedURL');
+    });    
+
     updateIndicator();
     mwdet_logger.init();
   };
@@ -433,12 +451,18 @@ window.mwdet = window.mwdet || (function() {
       return;
     }
 
-    // if ((windowSizeIsChanged() && (parseInt(sessionStorage.getItem('unitsVisited')) === 1)) ) {
-      $('.MWDET-setup').css('display', 'flex');
-      moocwidget.envChecker.webcamState();
-      Gazer.initFacecheck(facecheckComplete);
-      widgetInitialized = true;
-    // }    
+    $('.MWDET-setup').css('display', 'flex');
+    moocwidget.envChecker.webcamState();
+    Gazer.initFacecheck(facecheckComplete);
+    widgetInitialized = true;
+  };
+
+  module.stopInit = function() {
+    if ($('.MWDET-setup').is(':visible') || $('.MWDET-setup').css('display') === 'none') {
+      $('.MWDET-setup').hide();
+    }
+    
+    module.stopWidget();
   };
 
   module.startWidget = function() {

@@ -55,23 +55,6 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             if (analytics && analytics.user) {
                 clearInterval(readyCheck);
 
-                // if visiting a new URL or refreshing same page
-                if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
-                    sessionStorage.setItem('storedURL', document.URL);
-                    sessionStorage.setItem('unitsVisited', 1);
-                    if (sessionStorage.getItem('sessionId')) {
-                        sessionStorage.removeItem('sessionId');
-                    }
-                } else {
-                    // if changing units
-                    var ucount = parseInt(sessionStorage.getItem('unitsVisited'));
-                    sessionStorage.setItem('unitsVisited', ucount+1);
-                }
-
-                $(window).on('beforeunload', function() {
-                    sessionStorage.removeItem('storedURL');
-                });
-
                 sessionStartDate = new Date();
                 referenceNumber = createReferenceNumber();
                 sessionId = getSessionId();
