@@ -69,7 +69,7 @@ window.Gazer = window.Gazer || (function () {
         $('#fc_cont').hover(function() {
           moocwidget.UI.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
         }, function() {
-          moocwidget.hideTooltip();
+          moocwidget.UI.hideTooltip();
         });
 
         $('#fc_disable').hover(function() {

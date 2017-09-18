@@ -338,8 +338,8 @@
                 var pos = $(el).position();
                 $('body').append('<span class="mw_tooltiptext">'+ text +'</span>');
                 $('.mw_tooltiptext').css('width', w);
-                $('.mw_tooltiptext').css('top', pos.top);
-                $('.mw_tooltiptext').css('left', pos.left);
+                $('.mw_tooltiptext').css('top', pos.top+'px');
+                $('.mw_tooltiptext').css('left', pos.left+'px');
             },
 
             hideTooltip: function() {

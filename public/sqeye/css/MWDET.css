@@ -529,7 +529,6 @@ body {
 
 /* mw_tooltip  */
 .mw_tooltiptext {
-    visibility: hidden;    
     background-color: rgba(0, 0, 0, 0.80);
     color: #fff;
     text-align: center;
@@ -538,9 +537,5 @@ body {
 
     /* Position the mw_tooltip */
     position: absolute;
-    z-index: 1;    
-}
-
-.mw_tooltip:hover .mw_tooltiptext {
-    visibility: visible;
+    z-index: 9999;    
 }
