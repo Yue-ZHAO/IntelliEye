@@ -336,7 +336,7 @@
             showTooltipAt: function(el, text) {
                 var w = $(el).width();
                 var pos = $(el).position();
-                $('body').append('<span class="mw_tooltiptext">'+ text +'</span>');
+                $(el).parent().append('<span class="mw_tooltiptext">'+ text +'</span>');
                 $('.mw_tooltiptext').css('width', w);
                 $('.mw_tooltiptext').css('top', pos.top+'px');
                 $('.mw_tooltiptext').css('left', pos.left+'px');
