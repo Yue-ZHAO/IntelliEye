@@ -449,7 +449,7 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.initWidget = function() {
-    if (widgetInitialized) {
+    if (widgetInitialized || parseInt(sessionStorage.getItem('unitsVisited')) > 1) {
       return;
     }
 
@@ -464,7 +464,7 @@ window.mwdet = window.mwdet || (function() {
       $('.MWDET-setup').hide();
     }
     
-    module.stopWidget();
+    module.handleUsersChoice(false, true);
   };
 
   module.startWidget = function() {
