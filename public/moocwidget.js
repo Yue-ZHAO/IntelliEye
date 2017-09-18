@@ -333,18 +333,6 @@
                 $('#msgOverlay').hide();
             },
 
-            showTooltipAt: function(el, text) {
-                var tooltip = $('<div class="mw_tooltip"></div>');
-                $(el).parent().append(tooltip);
-                tooltip.append($(el));
-                tooltip.append('<span class="mw_tooltiptext">'+ text +'</span>');
-            },
-
-            hideTooltip: function(el) {
-                $(el).closest('.mw_tooltiptext').parent().append(el);
-                $('.mw_tooltiptext').remove();
-            },
-
             ieye_intro: function() {
                 $('body').append(`
                     <div id='overlay'>

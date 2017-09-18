@@ -62,21 +62,15 @@ window.Gazer = window.Gazer || (function () {
       $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face sufficiently. Please make sure that your eyes are correctly fitted.");
       $('#fc_infobox').append(
         `
+        <div class='mw_tooltip'>
         <button id='fc_cont' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
+        <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
+        </div>
+        <div class='mw_tooltip'>
         <button id='fc_disable' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
+        <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
+        </div>
       `);
-
-      $('#fc_cont').hover(function() {
-        moocwidget.UI.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
-      }, function() {
-        moocwidget.UI.hideTooltip($(this));
-      });
-
-      $('#fc_disable').hover(function() {
-        moocwidget.UI.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
-      }, function() {
-        moocwidget.UI.hideTooltip($(this));
-      });         
 
       var cl = webgazer.getTracker().clm;
 
