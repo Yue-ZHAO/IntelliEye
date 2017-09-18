@@ -62,14 +62,14 @@ window.Gazer = window.Gazer || (function () {
       $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face sufficiently. Please make sure that your eyes are correctly fitted.");
       $('#fc_infobox').append(
         `
-        <div class="tooltip">
+        <div class="mw_tooltip">
         <button class='btn btn-primary' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
-        <span class="tooltiptext">I can see that my face and eyes are tracked sufficiently.</span>
+        <span class="mw_tooltiptext">I can see that my face and eyes are tracked sufficiently.</span>
         </div>
 
-        <div class="tooltip">
+        <div class="mw_tooltip">
         <button class='btn btn-primary' style='margin-top: 10px;' onclick='module.stopInit()'>Disable SquirrelEye</button>
-        <span class="tooltiptext">I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
+        <span class="mw_tooltiptext">I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
         </div>        
       `);
 

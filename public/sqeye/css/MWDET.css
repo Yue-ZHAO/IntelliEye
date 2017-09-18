@@ -527,13 +527,13 @@ body {
   content: "On";
 }
 
-/* tooltip  */
-.tooltip {
+/* mw_tooltip  */
+.mw_tooltip {
     position: relative;
     display: inline-block;
 }
 
-.tooltip .tooltiptext {
+.mw_tooltip .mw_tooltiptext {
     visibility: hidden;
     width: 200px;
     background-color: rgba(0, 0, 0, 0.80);
@@ -544,11 +544,11 @@ body {
     margin-left:-100px;
     bottom:120%;
 
-    /* Position the tooltip */
+    /* Position the mw_tooltip */
     position: absolute;
     z-index: 1;
 }
 
-.tooltip:hover .tooltiptext {
+.mw_tooltip:hover .mw_tooltiptext {
     visibility: visible;
 }
