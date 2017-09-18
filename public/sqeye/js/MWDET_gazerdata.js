@@ -250,7 +250,9 @@ window.Gazerdata = window.Gazerdata || (function() {
 
     // notify callback of new data
     // onNewDataWindow(_.flatten(window));
-    onNewDataWindow(window);
+    if (onNewDataWindow) {
+      onNewDataWindow(window);
+    }
   }
 
   function stopPolling() {
