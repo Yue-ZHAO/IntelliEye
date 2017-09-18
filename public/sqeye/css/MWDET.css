@@ -529,7 +529,7 @@ body {
 
 /* mw_tooltip  */
 .mw_tooltiptext {
-    width: 200px;
+    min-width: 200px;
     background-color: rgba(0, 0, 0, 0.80);
     color: #fff;
     text-align: center;
