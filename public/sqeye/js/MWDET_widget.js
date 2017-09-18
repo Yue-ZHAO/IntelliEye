@@ -433,6 +433,9 @@ window.mwdet = window.mwdet || (function() {
     if (widgetInitialized) {
       return;
     }
+    console.log('>>>' + localStorage.getItem('webgazerGlobalData'));
+    console.log('>>>' + windowSizeIsChanged());
+    console.log('>>>' + parseInt(sessionStorage.getItem('unitsVisited')));
     if (localStorage.getItem('webgazerGlobalData') === null || (windowSizeIsChanged() && (parseInt(sessionStorage.getItem('unitsVisited')) === 1)) ) {
       console.log("facecheking on");
       $('.MWDET-setup').css('display', 'flex');
