@@ -36,6 +36,7 @@
     "log4js": "^1.1.0",
     "map.prototype.tojson": "^0.1.3",
     "morgan": "^1.8.1",
-    "pug": "^2.0.0-rc.2"
+    "pug": "^2.0.0-rc.2",
+    "yargs": "^9.0.1"
   }
 }
