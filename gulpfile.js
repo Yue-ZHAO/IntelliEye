@@ -8,12 +8,12 @@ var rename = require('gulp-rename');
 
 var sqeye = (argv.sqeye === undefined) ? false : true;
 var ieye = (argv.ieye === undefined) ? false :true;
+var driver = (argv.driver === undefined) ? false :true;
 
  // Concatenate & Minify JS
 if (sqeye) {
   gulp.task('scripts', function() {
           return gulp.src([
-            './public/sqeye/js/client.min.js',
             './public/sqeye/js/RTP.js',
             './public/sqeye/js/webgazer_mod.js',
             './public/sqeye/js/MWDET_gazer.js',
@@ -45,6 +45,18 @@ if (sqeye) {
           .pipe(rename({suffix: '.min'}))
           .pipe(uglify())
           .pipe(gulp.dest('./public/ieye/js/'));
+  });
+  // Default Task
+  gulp.task('default', ['scripts']);
+} else if (driver) {
+  gulp.task('scripts', function() {
+          return gulp.src([
+            './public/client.min.js',
+            './public/moocwidget-dev.js',
+          ])
+        .pipe(concat('moocwidget.js'))
+          .pipe(uglify())
+          .pipe(gulp.dest('./public/'));
   });
   // Default Task
   gulp.task('default', ['scripts']);
