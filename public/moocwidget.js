@@ -334,14 +334,14 @@
             },
 
             showTooltipAt: function(el, text) {
-                var w = $(el).width();
-                var pos = $(el).position();
-                $(el).parent().append('<span class="mw_tooltiptext">'+ text +'</span>');
-                $('.mw_tooltiptext').css('top', pos.top+'px');
-                $('.mw_tooltiptext').css('left', pos.left+'px');
+                var tooltip = $('<div class="mw_tooltip"></div>');
+                $(el).parent().append(tooltip);
+                tooltip.append($(el));
+                tooltip.append('<span class="mw_tooltiptext">'+ text +'</span>');
             },
 
-            hideTooltip: function() {
+            hideTooltip: function(el) {
+                $(el).closest('.mw_tooltiptext').parent().append(el);
                 $('.mw_tooltiptext').remove();
             },
 

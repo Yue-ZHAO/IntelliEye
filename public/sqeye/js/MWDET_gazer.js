@@ -66,17 +66,17 @@ window.Gazer = window.Gazer || (function () {
         <button id='fc_disable' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
       `);
 
-        $('#fc_cont').hover(function() {
-          moocwidget.UI.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
-        }, function() {
-          moocwidget.UI.hideTooltip();
-        });
+      $('#fc_cont').hover(function() {
+        moocwidget.UI.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
+      }, function() {
+        moocwidget.UI.hideTooltip($(this));
+      });
 
-        $('#fc_disable').hover(function() {
-          moocwidget.UI.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
-        }, function() {
-          moocwidget.UI.hideTooltip();
-        });         
+      $('#fc_disable').hover(function() {
+        moocwidget.UI.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
+      }, function() {
+        moocwidget.UI.hideTooltip($(this));
+      });         
 
       var cl = webgazer.getTracker().clm;
 
