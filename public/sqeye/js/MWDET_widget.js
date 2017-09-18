@@ -143,10 +143,7 @@ window.mwdet = window.mwdet || (function() {
       var indicator = $('<div id="indicatorContainer"></div>');
       indicator.append('<label class="widgetSwitch" onclick="mwdet.toggleWidget()"><input id="switchUseWidget" type="checkbox"><span class="widgetSlider"></span></label>');
       indicator.append(`
-        <div class="mw_tooltip">
         <div id="iEyeIndicator" class="indicator" onclick="vcontrol.pauseVideo();mwdet.showIntroMessage()"></div>
-        <span class="mw_tooltiptext">Click to show the menu</span>
-        </div>
       `);
       par.prepend(indicator);
 

@@ -13,6 +13,7 @@ var ieye = (argv.ieye === undefined) ? false :true;
 if (sqeye) {
   gulp.task('scripts', function() {
           return gulp.src([
+            './public/sqeye/js/client.min.js',
             './public/sqeye/js/RTP.js',
             './public/sqeye/js/webgazer_mod.js',
             './public/sqeye/js/MWDET_gazer.js',

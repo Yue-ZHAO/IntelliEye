@@ -70,7 +70,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
                         'sessionStartTime': sessionStartDate.toISOString(),
                         'pageTitle': document.title,
                         'pageURL': document.URL,
-                        'environment': getEnvironment(),
+                        'environment': moocwidget.envChecker.getEnvironment(),
                     };
 
                     $.post(userRoute, {data: initialLog}, function() {
@@ -324,44 +324,6 @@ window.mwdet_logger = window.mwdet_logger || (function() {
         return d+m+y+hh+mm+ss;
     }
 
-    /**
-     * Detect and return the user's environment
-     * @return {Object} User's environment
-     */
-    function getEnvironment() {
-        // detect operating system.
-        var OS = 'unknown';
-        var browser = 'unkown';
-        var version = 'unknown';
-
-        if (window.navigator.userAgent.indexOf('Windows NT 10.0') != -1) OS = 'Windows 10';
-        if (window.navigator.userAgent.indexOf('Windows NT 6.2') != -1) OS = 'Windows 8';
-        if (window.navigator.userAgent.indexOf('Windows NT 6.1') != -1) OS = 'Windows 7';
-        if (window.navigator.userAgent.indexOf('Windows NT 6.0') != -1) OS = 'Windows Vista';
-        if (window.navigator.userAgent.indexOf('Windows NT 5.1') != -1) OS = 'Windows XP';
-        if (window.navigator.userAgent.indexOf('Windows NT 5.0') != -1) OS = 'Windows 2000';
-        if (window.navigator.userAgent.indexOf('Mac') != -1) OS = 'Mac/iOS';
-        if (window.navigator.userAgent.indexOf('X11') != -1) OS = 'UNIX';
-        if (window.navigator.userAgent.indexOf('Linux') != -1) OS = 'Linux';
-        
-        // detect browser & version
-        var N= navigator.appName, ua= navigator.userAgent, tem;
-        var M= ua.match(/(opera|chrome|safari|firefox|msie|trident)\/?\s*(\.?\d+(\.\d+)*)/i);
-        // eslint-disable-next-line
-        if (M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) {M[2]=tem[1];}
-        M= M? [M[1], M[2]]: [N, navigator.appVersion, '-?'];
-        browser = M[0];
-        version = M[1];
-
-        return {
-            'OS': OS,
-            'browser': browser,
-            'browserVersion': version,
-            'screenHeigth': screen.height,
-            'screenWidth': screen.width,
-        };
-    }
-
     // =========================================================================
     // Functions for send log
     // =========================================================================
@@ -421,7 +383,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             'sessionStartTime': sessionStartDate.toISOString(),
             'pageTitle': document.title,
             'pageURL': document.URL,
-            'environment': getEnvironment(),
+            'environment': moocwidget.envChecker.getEnvironment(),
             'banned': true,
             'reason': reason,
         };

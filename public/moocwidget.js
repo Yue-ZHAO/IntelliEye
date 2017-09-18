@@ -27,22 +27,12 @@
     }    
 
     /**
-     * Checks if the user is in an environment fit for widget.
-     * @return {bool} Returns true if environment can support widget, else false.
-     */
-    function _isValidEnvironment() {
-        var webcam = moocwidget.envChecker.webcamIsAvailable();
-        var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);
-        return webcam && desktop;   
-    }    
-
-    /**
      * Starts sqeye widget
      */
     function _useSqeye() {
         moocwidget.UI.initSqeyeHTML();
 
-        var validEnvironment = _isValidEnvironment();
+        var validEnvironment = moocwidget.envChecker.isValidEnvironment();
         if (validEnvironment) {
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/sqeye/css/MWDET.css'));
@@ -82,7 +72,7 @@
     function _useIeye() {
         moocwidget.UI.initIeyeHTML();
 
-        var validEnvironment = _isValidEnvironment();
+        var validEnvironment = moocwidget.envChecker.isValidEnvironment();
         if (validEnvironment) {
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
@@ -162,6 +152,7 @@
       
         /**
          * Places an alert if the webcam is denied by user.
+         * @param {function} callIfFail call this function if permission to webcam is denied.
          */
         function checkWebcamState(callIfFail='undefined') {
             navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
@@ -205,51 +196,48 @@
             var browser = 'unkown';
             var version = 'unknown';
             var mobile = false;
-            
-            if (/Mobi/i.test(navigator.userAgent) || /Android/i.test(navigator.userAgent)) {
-                mobile = true;
-            }
-      
-            if (window.navigator.userAgent.indexOf('Windows NT 10.0') != -1) OS = 'Windows 10';
-            if (window.navigator.userAgent.indexOf('Windows NT 6.2') != -1) OS = 'Windows 8';
-            if (window.navigator.userAgent.indexOf('Windows NT 6.1') != -1) OS = 'Windows 7';
-            if (window.navigator.userAgent.indexOf('Windows NT 6.0') != -1) OS = 'Windows Vista';
-            if (window.navigator.userAgent.indexOf('Windows NT 5.1') != -1) OS = 'Windows XP';
-            if (window.navigator.userAgent.indexOf('Windows NT 5.0') != -1) OS = 'Windows 2000';
-            if (window.navigator.userAgent.indexOf('Mac') != -1) OS = 'Mac/iOS';
-            if (window.navigator.userAgent.indexOf('X11') != -1) OS = 'UNIX';
-            if (window.navigator.userAgent.indexOf('Linux') != -1) OS = 'Linux';
-            
-            // detect browser & version
-            var N= navigator.appName, ua= navigator.userAgent, tem;
-            var M= ua.match(/(opera|chrome|safari|firefox|msie|trident)\/?\s*(\.?\d+(\.\d+)*)/i);
-            // eslint-disable-next-line
-            if (M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) {M[2]=tem[1];}
-            M= M? [M[1], M[2]]: [N, navigator.appVersion, '-?'];
-            browser = M[0];
-            version = M[1];
-      
+
+            var client = new ClientJS();            
+
             return {
-                'OS': OS,
-                'browser': browser,
-                'browserVersion': version,
-                'mobile': mobile,
+                'OS': client.getOS(),
+                'OSVersion': client.getOSVersion(),
+                'browser': client.getBrowser(),
+                'browserVersion': client.getBrowserMajorVersion(),
+                'mobile': client.isMobile(),
                 'screenHeigth': screen.height,
                 'screenWidth': screen.width,
             };
+        }
+        
+        /**
+         * @return {bool} true if browser and webcam are OK.
+         */
+        function isValidEnvironment() {
+            var client = new ClientJS();
+            var opera = client.isOpera() && (client.getBrowserMajorVersion() > 40);
+            var firefox = client.isFirefox() && (client.getBrowserMajorVersion() > 44);
+            var chrome = client.isChrome() && (client.getBrowserMajorVersion() > 53);
+            var browserOK = opera || firefox || chrome;
+            var webcamOK = webcamIsAvailable();
+            return browserOK && webcamOk;
         }
       
         return {
             getEnvironment: function() {
                 return getEnvironment();
             },
+
+            isValidEnvironment: function() {
+                return isValidEnvironment();
+            },
       
             webcamIsAvailable: function() {
                 return webcamIsAvailable();
             },
       
-            webcamState: function() {
-                return checkWebcamState();
+            webcamState: function(callIfFail) {
+                checkWebcamState(callIfFail);
             },
         };
       })();    
