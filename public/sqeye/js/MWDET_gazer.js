@@ -64,8 +64,8 @@ window.Gazer = window.Gazer || (function () {
         `
         <button id='fc_cont' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
         <button id='fc_disable' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
-      `, 
-      `
+      `);
+
         $('#fc_cont').hover(function() {
           moocwidget.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
         }, function() {
@@ -76,8 +76,7 @@ window.Gazer = window.Gazer || (function () {
           moocwidget.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
         }, function() {
           moocwidget.hideTooltip();
-        });        
-      `);
+        });         
 
       var cl = webgazer.getTracker().clm;
 
