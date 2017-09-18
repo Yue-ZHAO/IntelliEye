@@ -441,8 +441,8 @@ window.mwdet = window.mwdet || (function() {
       $('.MWDET-setup').css('display', 'flex');
       moocwidget.envChecker.webcamState();
       Gazer.initFacecheck(facecheckComplete);
+      widgetInitialized = true;
     }    
-    widgetInitialized = true;
   };
 
   module.startWidget = function() {
