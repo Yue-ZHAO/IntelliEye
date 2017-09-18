@@ -219,8 +219,7 @@
             var firefox = client.isFirefox() && (client.getBrowserMajorVersion() > 44);
             var chrome = client.isChrome() && (client.getBrowserMajorVersion() > 53);
             var browserOK = opera || firefox || chrome;
-            var webcamOK = webcamIsAvailable();
-            return browserOK && webcamOk;
+            return browserOK && webcamIsAvailable() && !client.isMobile();
         }
       
         return {
