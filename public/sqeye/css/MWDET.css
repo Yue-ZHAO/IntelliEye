@@ -528,10 +528,6 @@ body {
 }
 
 /* mw_tooltip  */
-.mw_tooltip {
-    visibility: hidden;
-}
-
 .mw_tooltiptext {
     visibility: hidden;    
     background-color: rgba(0, 0, 0, 0.80);

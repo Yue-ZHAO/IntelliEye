@@ -67,15 +67,15 @@ window.Gazer = window.Gazer || (function () {
       `);
 
         $('#fc_cont').hover(function() {
-          moocwidget.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
+          moocwidget.UI.showTooltipAt($(this), 'I can see that my face and eyes are tracked sufficiently.');
         }, function() {
           moocwidget.hideTooltip();
         });
 
         $('#fc_disable').hover(function() {
-          moocwidget.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
+          moocwidget.UI.showTooltipAt($(this), 'I cannot see my face or I am unable to get my face or eyes tracked sufficiently.');
         }, function() {
-          moocwidget.hideTooltip();
+          moocwidget.UI.hideTooltip();
         });         
 
       var cl = webgazer.getTracker().clm;
