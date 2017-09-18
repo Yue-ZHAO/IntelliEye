@@ -431,6 +431,7 @@ window.mwdet = window.mwdet || (function() {
   module.initWidget = function() {
     console.log("widget initialized: " + widgetInitialized);
     if (widgetInitialized) {
+      console.log("already initialized: return");
       return;
     }
     console.log('>>>' + localStorage.getItem('webgazerGlobalData'));
