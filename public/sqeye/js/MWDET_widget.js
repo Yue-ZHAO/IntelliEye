@@ -15,7 +15,7 @@ window.mwdet = window.mwdet || (function() {
   var module = {};
 
   var widgetStatus = 'end';
-  var widgetInitialized = 'false';
+  var widgetInitialized = false;
   var fullscreen = false;
 
   /**
@@ -429,16 +429,11 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.initWidget = function() {
-    console.log("widget initialized: " + widgetInitialized);
     if (widgetInitialized) {
-      console.log("already initialized: return");
       return;
     }
-    console.log('>>>' + localStorage.getItem('webgazerGlobalData'));
-    console.log('>>>' + windowSizeIsChanged());
-    console.log('>>>' + parseInt(sessionStorage.getItem('unitsVisited')));
+    
     if (localStorage.getItem('webgazerGlobalData') === null || (windowSizeIsChanged() && (parseInt(sessionStorage.getItem('unitsVisited')) === 1)) ) {
-      console.log("facecheking on");
       $('.MWDET-setup').css('display', 'flex');
       moocwidget.envChecker.webcamState();
       Gazer.initFacecheck(facecheckComplete);
