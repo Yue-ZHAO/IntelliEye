@@ -549,7 +549,7 @@ body {
 
     /* Position the mw_tooltip */
     position: absolute;
-    z-index: 1;
+    z-index: 9999;
 }
 
 .mw_tooltip:hover .mw_tooltiptext {

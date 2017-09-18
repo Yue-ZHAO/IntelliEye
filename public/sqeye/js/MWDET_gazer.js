@@ -39,6 +39,7 @@ window.Gazer = window.Gazer || (function () {
       video.width = width;
       video.height = height;
       video.style.margin = '0px';
+      video.style.marginTop = '40px';
 
       webgazer.params.imgWidth = width;
       webgazer.params.imgHeight = height;
@@ -47,12 +48,12 @@ window.Gazer = window.Gazer || (function () {
       overlay.id = 'overlay';
       overlay.style.position = 'absolute';
       overlay.width = width;
-      // overlay.height = height;
+      overlay.height = height;
       overlay.style.zIndex = 3;
       // overlay.style.top = topDist;
       // overlay.style.left = leftDist;
       overlay.style.margin = '0px';
-      overlay.style.marginTop = '40px';
+   
 
       $(".overlay").append(overlay);
       // $('.facecheckContainer').empty();
