@@ -136,6 +136,7 @@ body {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    font-size: 9pt;
     align-items: center;
     justify-content: center;
     -webkit-flex-direction: column;

@@ -24,7 +24,7 @@ window.Gazer = window.Gazer || (function () {
   function initFacecheck() {
     // window.localStorage.clear();
 
-    var width = 360;
+    var width = 480;
     var height = 360;
     var topDist = ($(document).height() - height) / 2 + 'px';
     var leftDist = ($(document).width() - width) / 2 + 'px';
@@ -47,11 +47,12 @@ window.Gazer = window.Gazer || (function () {
       overlay.id = 'overlay';
       overlay.style.position = 'absolute';
       overlay.width = width;
-      overlay.height = height;
+      // overlay.height = height;
       overlay.style.zIndex = 3;
       // overlay.style.top = topDist;
       // overlay.style.left = leftDist;
       overlay.style.margin = '0px';
+      overlay.style.marginTop = '40px';
 
       $(".overlay").append(overlay);
       // $('.facecheckContainer').empty();
@@ -63,11 +64,11 @@ window.Gazer = window.Gazer || (function () {
       $('#fc_infobox').append(
         `
         <div class='mw_tooltip'>
-        <button id='fc_cont' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
+        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
         <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
         </div>
         <div class='mw_tooltip'>
-        <button id='fc_disable' class='btn btn-primary mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
+        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
         <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
         </div>
       `);
