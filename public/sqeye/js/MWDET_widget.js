@@ -453,6 +453,7 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.initWidget = function() {
+    console.log(" >>> units visited: " + sessionStorage.getItem("unitsVisited"));
     if (widgetInitialized || parseInt(sessionStorage.getItem('unitsVisited')) > 1) {
       return;
     }
