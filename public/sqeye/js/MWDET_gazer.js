@@ -22,7 +22,25 @@ window.Gazer = window.Gazer || (function () {
   // private
   // =========================================================================
   function initFacecheck() {
-    // window.localStorage.clear();
+    
+    $('#fc_infobox').empty();
+    $('#fc_infobox').append(`
+    <p style="margin:0">Try to position yourself in such a way that the overlay fits your face sufficiently. 
+    Please make sure that your eyes are correctly fitted.</p>
+    <p style="margin:0">If you cannot see your face or you are not able to get your face or eyes tracked sufficiently, 
+    please refresh this page and disable the widget.</p>
+    `);
+    $('#fc_infobox').append(
+      `
+      <div class='mw_tooltip'>
+      <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
+      <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
+      </div>
+      <div class='mw_tooltip'>
+      <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckAndRefresh();'>Refresh this page</button>
+      <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
+      </div>
+    `);    
 
     var width = 480;
     var height = 360;
@@ -59,25 +77,6 @@ window.Gazer = window.Gazer || (function () {
       $('.facecheckContainer').prepend($('#overlay'));
       $('.facecheckContainer').prepend($('#webgazerVideoFeed'));
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
-
-      $('#fc_infobox').empty();
-      $('#fc_infobox').append(`
-      <p style="margin:0">Try to position yourself in such a way that the overlay fits your face sufficiently. 
-      Please make sure that your eyes are correctly fitted.</p>
-      <p style="margin:0">If you cannot see your face or you are not able to get your face or eyes tracked sufficiently, 
-      please refresh this page and disable the widget.</p>
-      `);
-      $('#fc_infobox').append(
-        `
-        <div class='mw_tooltip'>
-        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
-        <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
-        </div>
-        <div class='mw_tooltip'>
-        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckAndRefresh();'>Refresh this page</button>
-        <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
-        </div>
-      `);
 
       var cl = webgazer.getTracker().clm;
 
