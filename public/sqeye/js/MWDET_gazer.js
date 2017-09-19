@@ -176,8 +176,8 @@ window.Gazer = window.Gazer || (function () {
     closeFacecheckAndRefresh();
   };
 
-  module.closeFaceCheckContinue = function() {
-    closeFaceCheckContinue();
+  module.closeFacecheckContinue = function() {
+    closeFacecheckContinue();
   };
 
   module.startWebgazer = function () {
