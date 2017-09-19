@@ -224,6 +224,9 @@ window.mwdet = window.mwdet || (function() {
    * loops audio alert when focus out
    */
   function audioAlertLoop() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }
     clearInterval(audioloop);
     audioloop = setInterval(function() {
       audioAlert();
@@ -234,6 +237,9 @@ window.mwdet = window.mwdet || (function() {
    * stops audio alert loop
    */
   function stopAudioAlertLoop() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }    
     clearInterval(audioloop);
     audioloop = null;
   }
@@ -242,6 +248,9 @@ window.mwdet = window.mwdet || (function() {
    * loops visual alert when focus out
    */
   function visualAlertLoop() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }    
     // currently not in fullscreen mode
     if ($('.add-fullscreen').attr('title') === 'Fill browser') {
       $('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink');
@@ -255,6 +264,9 @@ window.mwdet = window.mwdet || (function() {
    * stops visual alert loop
    */
   function stopVisualAlertLoop() {
+    if (!mwdetIsEnabled()) {
+      return;
+    }    
     removeVisualAlert();
   }
 
@@ -318,9 +330,9 @@ window.mwdet = window.mwdet || (function() {
     // place introduction box
     if (!localStorage.mwdet_enabled) {
       showIntroMessage();
-    } /* else if (localStorage.getItem('mwdet_enabled') == 'true') {
-      module.startWidget();
-    }*/
+    } else if (localStorage.getItem('mwdet_enabled') == 'true') {
+      module.initWidget();
+    }
 
     vcontrol.init(function(status) {
       updateIndicator(status);
