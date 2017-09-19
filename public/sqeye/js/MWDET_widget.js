@@ -469,7 +469,6 @@ window.mwdet = window.mwdet || (function() {
       $('.MWDET-setup').hide();
     }
     module.handleUsersChoice(false, true);
-    widgetInitialized = true;
   };
 
   module.startWidget = function() {

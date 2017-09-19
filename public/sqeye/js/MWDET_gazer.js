@@ -56,7 +56,6 @@ window.Gazer = window.Gazer || (function () {
    
 
       $(".overlay").append(overlay);
-      $('.facecheckContainer').empty();
       $('.facecheckContainer').prepend($('#overlay'));
       $('.facecheckContainer').prepend($('#webgazerVideoFeed'));
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
@@ -103,10 +102,9 @@ window.Gazer = window.Gazer || (function () {
   }
 
   function closeFacecheck() {
-    // webgazer.end(); // something's not right here.
-    $(".facecheckContainer").remove();
+    $('#webgazerVideoFeed').remove();
+    $('#webgazerVideoCanvas').remove();
     $("#infobox").empty();
-    $(".overlay").hide();
     onFinishFacecheck();
   }
 
