@@ -150,6 +150,8 @@ window.mwdet_logger = window.mwdet_logger || (function() {
                 'winWidth': w,
                 'time': Date.now(),
             });       
+
+            $('#msgOverlay').css('width', w);
             
             vcontrol.updateOverlay();
         }

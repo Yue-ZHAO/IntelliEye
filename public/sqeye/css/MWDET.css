@@ -21,6 +21,7 @@ body {
 }
 
 .mwdet-main {
+    display:none;
     position: absolute;
     top: 0;
 }
@@ -254,11 +255,12 @@ body {
     position: absolute;     
     top: 0;
     left: 0;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-    display: flex;
+    display: flex; */
+    display: none;
     align-items: flex-start;
     justify-content: center;
     margin: 0;

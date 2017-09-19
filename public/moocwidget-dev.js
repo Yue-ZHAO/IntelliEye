@@ -37,7 +37,6 @@
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/sqeye/css/MWDET.css'));
 
-            // TODO: minimize
             var files = [
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.13.3/math.min.js',
@@ -51,16 +50,22 @@
             });
         } else {
             var logCheck = setInterval(function() {
-            if (IEWLogger.isReady()) {
+            if (mwdet_logger.isReady()) {
                 clearInterval(logCheck);
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
-                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);                
+                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false); 
+                var browserInfo = moocwidget.envChecker.isValidBrowser();   
+
                 if (!desktop) {
-                    IEWLogger.logBannedUser('Mobile');                       
+                    mwdet_logger.logBannedUser('Mobile');                       
                 }                      
                 if (!webcam) {
-                    IEWLogger.logBannedUser('No webcam');
+                    mwdet_logger.logBannedUser('No webcam');
                 }                          
+
+                if (!browserInfo[0]) {
+                    mwdet_logger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                }
             }
             }, 200);              
         }
@@ -86,16 +91,21 @@
             });
         } else {
             var logCheck = setInterval(function() {
-                if (mwdet_logger.isReady()) {
+                if (IEWLogger.isReady()) {
                     clearInterval(logCheck);
                     var webcam = moocwidget.envChecker.webcamIsAvailable();
-                    var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);                
+                    var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
+                    var browserInfo = moocwidget.envChecker.isValidBrowser();             
                     if (!desktop) {
-                        mwdet_logger.logBannedUser('Mobile');                       
+                        IEWLogger.logBannedUser('Mobile');                       
                     }                      
                     if (!webcam) {
-                        mwdet_logger.logBannedUser('No webcam');
+                        IEWLogger.logBannedUser('No webcam');
                     }                          
+
+                    if (!browserInfo[0]) {
+                        IEWLogger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                    }
                 }
             }, 200);              
         }
@@ -209,22 +219,36 @@
                 'screenWidth': screen.width,
             };
         }
+
+        /**
+         * Returns whether browser is valid
+         * @return {array} [true/false, browser, browserversion]
+         */
+        function isValidBrowser() {
+            var client = new ClientJS();
+            var opera = client.isOpera() && (client.getBrowserMajorVersion() > 40);
+            var firefox = client.isFirefox() && (client.getBrowserMajorVersion() > 44);
+            var chrome = client.isChrome() && (client.getBrowserMajorVersion() > 53);
+            var browserOK = opera || firefox || chrome;
+            return [browserOK, client.getBrowser(), client.getBrowserMajorVersion];
+        }
         
         /**
          * @return {bool} true if browser and webcam are OK.
          */
         function isValidEnvironment() {
             var client = new ClientJS();
-            var opera = client.isOpera() && (client.getBrowserMajorVersion() > 40);
-            var firefox = client.isFirefox() && (client.getBrowserMajorVersion() > 44);
-            var chrome = client.isChrome() && (client.getBrowserMajorVersion() > 53);
-            var browserOK = opera || firefox || chrome;
+            var browserOK = isValidBrowser()[0];
             return browserOK && webcamIsAvailable() && !client.isMobile();
         }
       
         return {
             getEnvironment: function() {
                 return getEnvironment();
+            },
+
+            isValidBrowser: function() {
+                return isValidBrowser();
             },
 
             isValidEnvironment: function() {

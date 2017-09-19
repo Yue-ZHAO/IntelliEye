@@ -315,6 +315,7 @@ window.mwdet = window.mwdet || (function() {
 
     var height = Math.max(body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight);
+    $('.mwdet-main').show();
     $('.mwdet-main').css('height', height);
     $('.mwdet-main').css('width', $('body').width());
     $('.main-container').prepend($('.mwdet-main'));

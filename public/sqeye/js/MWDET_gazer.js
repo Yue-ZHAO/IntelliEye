@@ -61,7 +61,11 @@ window.Gazer = window.Gazer || (function () {
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
 
       $('#fc_infobox').empty();
-      $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face sufficiently. Please make sure that your eyes are correctly fitted.");
+      $('#fc_infobox').append(`<p>Try to position yourself in such a way that the overlay fits your face sufficiently. 
+      Please make sure that your eyes are correctly fitted.</p>
+      <p>If you cannot see your face or you are not able to get your face or eyes tracked sufficiently, 
+      please refresh this page and disable the widget.</p>
+      `);
       $('#fc_infobox').append(
         `
         <div class='mw_tooltip'>
@@ -69,7 +73,7 @@ window.Gazer = window.Gazer || (function () {
         <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
         </div>
         <div class='mw_tooltip'>
-        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck();mwdet.stopInit()'>Disable SquirrelEye</button>
+        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckAndRefresh();'>Refresh this page</button>
         <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
         </div>
       `);
@@ -101,12 +105,11 @@ window.Gazer = window.Gazer || (function () {
 
   }
 
-  function closeFacecheck() {
-    $("#infobox").empty();
+  function closeFacecheckAndRefresh() {
+    window.location.href=document.URL;
   }
 
   function closeFaceCheckContinue() {
-    closeFacecheck();
     onFinishFacecheck();    
   }
 
@@ -168,8 +171,8 @@ window.Gazer = window.Gazer || (function () {
     setOnFinishFacecheck(callback);
   };
 
-  module.closeFacecheck = function () {
-    closeFacecheck();
+  module.closeFacecheckAndRefresh = function () {
+    closeFacecheckAndRefresh();
   };
 
   module.closeFaceCheckContinue = function() {
