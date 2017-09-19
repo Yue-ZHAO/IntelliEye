@@ -65,11 +65,11 @@ window.Gazer = window.Gazer || (function () {
       $('#fc_infobox').append(
         `
         <div class='mw_tooltip'>
-        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck()'>Continue</button>
+        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
         <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
         </div>
         <div class='mw_tooltip'>
-        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='mwdet.stopInit()'>Disable SquirrelEye</button>
+        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheck();mwdet.stopInit()'>Disable SquirrelEye</button>
         <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
         </div>
       `);
@@ -105,7 +105,11 @@ window.Gazer = window.Gazer || (function () {
     $('#webgazerVideoFeed').remove();
     $('#webgazerVideoCanvas').remove();
     $("#infobox").empty();
-    onFinishFacecheck();
+  }
+
+  function closeFaceCheckContinue() {
+    closeFacecheck();
+    onFinishFacecheck();    
   }
 
   function setOnFinishFacecheck(callback) {
@@ -168,6 +172,10 @@ window.Gazer = window.Gazer || (function () {
 
   module.closeFacecheck = function () {
     closeFacecheck();
+  };
+
+  module.closeFaceCheckContinue = function() {
+    closeFaceCheckContinue();
   };
 
   module.startWebgazer = function () {
