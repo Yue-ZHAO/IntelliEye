@@ -61,9 +61,10 @@ window.Gazer = window.Gazer || (function () {
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
 
       $('#fc_infobox').empty();
-      $('#fc_infobox').append(`<p>Try to position yourself in such a way that the overlay fits your face sufficiently. 
+      $('#fc_infobox').append(`
+      <p style="margin:0">Try to position yourself in such a way that the overlay fits your face sufficiently. 
       Please make sure that your eyes are correctly fitted.</p>
-      <p>If you cannot see your face or you are not able to get your face or eyes tracked sufficiently, 
+      <p style="margin:0">If you cannot see your face or you are not able to get your face or eyes tracked sufficiently, 
       please refresh this page and disable the widget.</p>
       `);
       $('#fc_infobox').append(
@@ -109,7 +110,7 @@ window.Gazer = window.Gazer || (function () {
     window.location.href=document.URL;
   }
 
-  function closeFaceCheckContinue() {
+  function closeFacecheckContinue() {
     onFinishFacecheck();    
   }
 
