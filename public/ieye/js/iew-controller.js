@@ -15,7 +15,8 @@ window.IEyeController = window.IEyeController || (function() {
     function init() {
         console.log('initializing controller');
         $(window).scrollTop(0);
-
+        
+        $('#overlay').css('height', $('body').outerHeight() + 'px');
         moocwidget.UI.ieye_intro();
         $('#i_dont_remember').prop('checked', true);
 
@@ -77,7 +78,7 @@ window.IEyeController = window.IEyeController || (function() {
      */
     function recallOverlay() {
         $(window).scrollTop(0);
-        $('#overlay').css('height', $('body').height() + 'px');
+        $('#overlay').css('height', $('body').outerHeight() + 'px');
         $('#overlay').show();
         vcontrol.pauseVideo();      
     }    

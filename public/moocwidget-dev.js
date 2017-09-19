@@ -335,7 +335,7 @@
                 if (events !== 'undefined') {
                     eval(events);
                 }
-
+                $('#msgOverlay').css('height', $('body').outerHeight() + 'px');
                 $('#msgOverlay').css('display', 'flex');
                 $(window).scrollTop(0);
             },
