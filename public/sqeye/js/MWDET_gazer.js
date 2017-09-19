@@ -102,8 +102,6 @@ window.Gazer = window.Gazer || (function () {
   }
 
   function closeFacecheck() {
-    $('#webgazerVideoFeed').remove();
-    $('#webgazerVideoCanvas').remove();
     $("#infobox").empty();
   }
 
