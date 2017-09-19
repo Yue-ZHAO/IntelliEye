@@ -169,16 +169,17 @@ body {
 
 /* Alert boxes */
 
-.msgOverlay {
+.msgOverlay, #msgOverlay {
 	background: rgba(153,153,153,0.5) scroll;
 	position: absolute; 	
 	top: 0;
 	left: 0;
-	display: -webkit-box;
+	/* display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-	display: flex;
+	display: flex; */
+	display:none;
     align-items: flex-start;
     justify-content: center;
 	margin: 0;
