@@ -56,11 +56,12 @@ window.Gazer = window.Gazer || (function () {
    
 
       $(".overlay").append(overlay);
-      // $('.facecheckContainer').empty();
+      $('.facecheckContainer').empty();
       $('.facecheckContainer').prepend($('#overlay'));
       $('.facecheckContainer').prepend($('#webgazerVideoFeed'));
       $('.facecheckContainer').prepend($('#webgazerVideoCanvas'));
 
+      $('#fc_infobox').empty();
       $('#fc_infobox').append("Try to position yourself in such a way that the overlay fits your face sufficiently. Please make sure that your eyes are correctly fitted.");
       $('#fc_infobox').append(
         `
