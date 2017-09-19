@@ -291,6 +291,24 @@ window.mwdet = window.mwdet || (function() {
 
   // public
   module.init = function() {
+    // if visiting a new URL or refreshing same page
+    if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
+      sessionStorage.setItem('storedURL', document.URL);
+      sessionStorage.setItem('unitsVisited', 1);
+      if (sessionStorage.getItem('sessionId')) {
+          sessionStorage.removeItem('sessionId');
+      }
+  } else {
+      // if changing units
+      var ucount = parseInt(sessionStorage.getItem('unitsVisited'));
+      sessionStorage.setItem('unitsVisited', ucount+1);
+      widgetInitialized = false;
+  }
+
+  $(window).on('beforeunload', function() {
+      sessionStorage.removeItem('storedURL');
+  }); 
+
     // fit container to page
     var body = document.body,
       html = document.documentElement;
@@ -354,25 +372,7 @@ window.mwdet = window.mwdet || (function() {
 
     if (vcontrol.getPlayerIDs().length === 0) {
       return;
-    }
-
-    // if visiting a new URL or refreshing same page
-    if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
-        sessionStorage.setItem('storedURL', document.URL);
-        sessionStorage.setItem('unitsVisited', 1);
-        if (sessionStorage.getItem('sessionId')) {
-            sessionStorage.removeItem('sessionId');
-        }
-    } else {
-        // if changing units
-        var ucount = parseInt(sessionStorage.getItem('unitsVisited'));
-        sessionStorage.setItem('unitsVisited', ucount+1);
-        widgetInitialized = false;
-    }
-
-    $(window).on('beforeunload', function() {
-        sessionStorage.removeItem('storedURL');
-    });    
+    }  
 
     updateIndicator();
     mwdet_logger.init();
