@@ -111,6 +111,7 @@ window.Gazer = window.Gazer || (function () {
   }
 
   function closeFacecheckContinue() {
+    $('.overlay').hide();
     onFinishFacecheck();    
   }
 
