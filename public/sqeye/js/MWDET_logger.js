@@ -252,18 +252,18 @@ window.mwdet_logger = window.mwdet_logger || (function() {
     function updateFocus(fState) {
         if ($('.video').length > 0) {
             if (fState === false) {         
-                if (vcontrol.getCurrentPlayerStatus() === 'play') {
+                if (vcontrol.getCurrentPlayerStatus() === 'play' && mwdet.mwdetIsEnabled()) {
                     mwdet.visualAlertLoop();
                     mwdet.audioAlertLoop();
+                    module.logException({
+                        'videoID': vcontrol.getCurrentPlayerID(),
+                        'exceptionType': 1,
+                        'exceptionDescription': 'focus-out',
+                        'videoStatus': vcontrol.getCurrentPlayerStatus(),
+                        'videoTime': vcontrol.getCurrentTime(),
+                        'videoDuration': vcontrol.getDuration(),                
+                    });                    
                 }
-
-                module.logException({
-                    'videoID': vcontrol.getCurrentPlayerID(),
-                    'exceptionType': 1,
-                    'exceptionDescription': 'focus-out',
-                    'videoTime': vcontrol.getCurrentTime(),
-                    'videoDuration': vcontrol.getDuration(),                
-                });
             } else {
                 mwdet.stopAudioAlertLoop();
                 mwdet.stopVisualAlertLoop();

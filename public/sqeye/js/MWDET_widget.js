@@ -224,9 +224,6 @@ window.mwdet = window.mwdet || (function() {
    * loops audio alert when focus out
    */
   function audioAlertLoop() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }
     clearInterval(audioloop);
     audioloop = setInterval(function() {
       audioAlert();
@@ -236,10 +233,7 @@ window.mwdet = window.mwdet || (function() {
   /**
    * stops audio alert loop
    */
-  function stopAudioAlertLoop() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }    
+  function stopAudioAlertLoop() {    
     clearInterval(audioloop);
     audioloop = null;
   }
@@ -247,10 +241,7 @@ window.mwdet = window.mwdet || (function() {
   /**
    * loops visual alert when focus out
    */
-  function visualAlertLoop() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }    
+  function visualAlertLoop() {    
     // currently not in fullscreen mode
     if ($('.add-fullscreen').attr('title') === 'Fill browser') {
       $('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink');
@@ -263,10 +254,7 @@ window.mwdet = window.mwdet || (function() {
   /**
    * stops visual alert loop
    */
-  function stopVisualAlertLoop() {
-    if (!mwdetIsEnabled()) {
-      return;
-    }    
+  function stopVisualAlertLoop() {    
     removeVisualAlert();
   }
 
@@ -394,6 +382,10 @@ window.mwdet = window.mwdet || (function() {
     showIntroMessage();
   };
 
+  module.mwdetIsEnabled = function() {
+    return mwdetIsEnabled();
+  };
+
   /**
    * handles the user's choice whether to use the widget.
    * @param {bool} userAccepts whether the user chooses to use widget.
@@ -475,8 +467,9 @@ window.mwdet = window.mwdet || (function() {
     if ($('.MWDET-setup').is(':visible') || $('.MWDET-setup').css('display') === 'none') {
       $('.MWDET-setup').hide();
     }
-    
-    module.handleUsersChoice(false, true);
+    module.stopWidget();
+    widgetInitialized = true;
+    // module.handleUsersChoice(false, true);
   };
 
   module.startWidget = function() {
