@@ -468,9 +468,8 @@ window.mwdet = window.mwdet || (function() {
     if ($('.MWDET-setup').is(':visible') || $('.MWDET-setup').css('display') === 'none') {
       $('.MWDET-setup').hide();
     }
-    module.stopWidget();
+    module.handleUsersChoice(false, true);
     widgetInitialized = true;
-    // module.handleUsersChoice(false, true);
   };
 
   module.startWidget = function() {
