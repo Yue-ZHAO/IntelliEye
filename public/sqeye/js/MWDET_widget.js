@@ -295,6 +295,7 @@ window.mwdet = window.mwdet || (function() {
     if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
       sessionStorage.setItem('storedURL', document.URL);
       sessionStorage.setItem('unitsVisited', 1);
+      sessionStorage.setItem('facecheckInitialized', 'false');
       if (sessionStorage.getItem('sessionId')) {
           sessionStorage.removeItem('sessionId');
       }
@@ -306,6 +307,7 @@ window.mwdet = window.mwdet || (function() {
   }
 
   $(window).on('beforeunload', function() {
+      sessionStorage.removeItem('facecheckInitialized');
       sessionStorage.removeItem('storedURL');
   }); 
 
@@ -454,8 +456,7 @@ window.mwdet = window.mwdet || (function() {
   };
 
   module.initWidget = function() {
-    console.log(" >>> units visited: " + sessionStorage.getItem("unitsVisited"));
-    if (widgetInitialized || parseInt(sessionStorage.getItem('unitsVisited')) > 1) {
+    if (widgetInitialized || sessionStorage.getItem('facecheckInitialized') == 'true') {
       return;
     }
 
@@ -463,6 +464,7 @@ window.mwdet = window.mwdet || (function() {
     moocwidget.envChecker.webcamState();
     Gazer.initFacecheck(facecheckComplete);
     widgetInitialized = true;
+    sessionStorage.setItem('facecheckInitialized', true);
   };
 
   module.stopInit = function() {

@@ -34,12 +34,12 @@ window.Gazer = window.Gazer || (function () {
       `
       <div>
         <div class='mw_tooltip'>
-        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
-        <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
-        </div>
-        <div class='mw_tooltip'>
         <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckAndRefresh();'>Refresh this page</button>
         <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
+        </div>      
+        <div class='mw_tooltip'>
+        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
+        <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
         </div>
       </div>
     `);    
