@@ -29,7 +29,9 @@ window.mwdet_logger = window.mwdet_logger || (function() {
 
     // environment
     var _windowSizes = [];
+    var _windowDataSentBusy = false;
     var _videoStatus = [];
+    var _videoDataSentBusy = false;
 
     // video
     var pauseCount = 0;
@@ -41,11 +43,15 @@ window.mwdet_logger = window.mwdet_logger || (function() {
     var LOG_ENABLED = true; // determines if log should be sent to server. Sessions are still kept with this disabled.
     // var METRIC_UPDATE = null;
     const METRIC_UPDATE_INTERVAL = 1000; // interval to update in ms
-    const MAX_METRIC_COUNT = 10; // # metrics to store locally before sending
+    
+    // # metrics to store locally before sending
+    // 1 means immidiate sending
+    const MAX_METRIC_COUNT = 1; 
 
     // time of heartbeat messages (ms) to send.
     // MUST BE SMALLER THAN SERVER'S CHECKTIME VALUE (300000)
     const HEARTBEAT_TIME = 30000; 
+    var _heartbeatBusy = false;
 
     /**
      * Initialize logger
@@ -105,7 +111,12 @@ window.mwdet_logger = window.mwdet_logger || (function() {
                 }, METRIC_UPDATE_INTERVAL);
 
                 HEARTBEAT_UPDATE = setInterval(function() {
-                    $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()});
+                    if (!_heartbeatBusy) {
+                        _heartbeatBusy = true;
+                        $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()}, function() {
+                            _heartbeatBusy = false;
+                        });
+                    }
                 }, HEARTBEAT_TIME);                     
 
                 isReady = true;                
@@ -157,11 +168,13 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             vcontrol.updateOverlay();
         }
 
-        if (forceSend || _windowSizes.length >= MAX_METRIC_COUNT) {
+        if ((forceSend || _windowSizes.length >= MAX_METRIC_COUNT) && !_windowDataSentBusy) {
             console.log('send server window sizes: ' + _windowSizes);
+            _windowDataSentBusy = true;
             $.post(dataRoute + '/environment', {sessionID: getSessionId(), data: _windowSizes}, function() {
                 console.log('send success');
                 _windowSizes = [];
+                _windowDataSentBusy = false;
             });
         }        
     }
@@ -224,14 +237,16 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             });            
         }
 
-        if (forceSend || _videoStatus.length >= MAX_METRIC_COUNT) {
+        if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
             console.log(forceSend);
             console.log(_videoStatus.length);
+            _videoDataSentBusy = true;
             // TODO: send to server
             console.log('send server video status: ' + _videoStatus);
             $.post(dataRoute + '/video', {sessionID: getSessionId(), data: _videoStatus}, function() {
                 console.log('Send success');
                 _videoStatus = [];
+                _videoDataSentBusy = false;
                 console.log(_videoStatus.length);
             });
         }           

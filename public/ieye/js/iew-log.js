@@ -31,7 +31,7 @@ window.IEWLogger = window.IEWLogger || (function() {
     // settings
     var METRIC_UPDATE = null;
     const METRIC_UPDATE_INTERVAL = 1000; // interval to update in ms
-    const MAX_METRIC_COUNT = 10; // # metrics to store locally before sending
+    const MAX_METRIC_COUNT = 1; // # metrics to store locally before sending
 
     // time of heartbeat messages (ms) to send.
     // MUST BE SMALLER THAN SERVER'S CHECKTIME VALUE (300000)
@@ -44,22 +44,6 @@ window.IEWLogger = window.IEWLogger || (function() {
     function init() {
         readyCheck = setInterval(function() {
                 clearInterval(readyCheck);
-                // if visiting a new URL or refreshing same page
-                if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
-                    sessionStorage.setItem('storedURL', document.URL);
-                    sessionStorage.setItem('unitsVisited', 1);
-                    if (sessionStorage.getItem('sessionId')) {
-                        sessionStorage.removeItem('sessionId');
-                    }
-                } else {
-                    // if changing units
-                    var ucount = parseInt(sessionStorage.getItem('unitsVisited'));
-                    sessionStorage.setItem('unitsVisited', ucount+1);
-                }
-
-                $(window).on('beforeunload', function() {
-                    sessionStorage.removeItem('storedURL');
-                });
 
                 sessionStartDate = new Date();
                 referenceNumber = createReferenceNumber();
@@ -97,7 +81,7 @@ window.IEWLogger = window.IEWLogger || (function() {
 
                 HEARTBEAT_UPDATE = setInterval(function() {
                     if (!_heartbeatBusy) {
-                        console.log(getSessionId());
+                        _heartbeatBusy = true;
                         $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()}, function() {
                             _heartbeatBusy = false;
                         });
@@ -149,6 +133,7 @@ window.IEWLogger = window.IEWLogger || (function() {
 
        if ((forceSend || _windowSizes.length >= MAX_METRIC_COUNT) && !_windowDataSentBusy) {
             console.log('send server window sizes: ' + _windowSizes);
+            _windowDataSentBusy = true;
             $.post(dataRoute + '/environment', {sessionID: getSessionId(), data: _windowSizes}, function() {
                 console.log('send success');
                 _windowSizes = [];
