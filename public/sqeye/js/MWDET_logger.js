@@ -28,8 +28,10 @@ window.mwdet_logger = window.mwdet_logger || (function() {
     var sessionStartDate = '';
 
     // environment
+    var _prevWindow = undefined;
     var _windowSizes = [];
     var _windowDataSentBusy = false;
+    var _prevVideoStatus = undefined;
     var _videoStatus = [];
     var _videoDataSentBusy = false;
 
@@ -146,21 +148,23 @@ window.mwdet_logger = window.mwdet_logger || (function() {
         var h = window.innerHeight;
 
         var changed = false;
-        if (_windowSizes.length === 0) {
+        if (_prevWindow === undefined) {
             changed = true;
         } else {
-            var last = _windowSizes[_windowSizes.length - 1];
+            var last =_prevWindow;
             if (last.winHeight !== h || last.winWidth !== w) {
                 changed = true;
             }
         }
 
         if (changed) {
-            _windowSizes.push({
+            var chndObject = {
                 'winHeight': h,
                 'winWidth': w,
                 'time': Date.now(),
-            });       
+            };
+            _windowSizes.push(chndObject);
+            _prevWindow = chndObject;
 
             $('#msgOverlay').css('width', w);
             $('.MWDET-overlay').css('width', w);
@@ -201,10 +205,10 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             return;
         }
         var changed = false;
-        if (_videoStatus.length === 0) {
+        if (_prevVideoStatus === undefined) {
             changed = true;
         } else {
-            var last = _videoStatus[_videoStatus.length - 1];
+            var last = _prevVideoStatus;
             
             var id = vcontrol.getCurrentPlayerID();
             var speed = pState.speed;
@@ -224,7 +228,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
 
         if (changed) {
             vcontrol.updateOverlay();
-            _videoStatus.push({
+            var chndObject = {
                 'ID': vcontrol.getCurrentPlayerID(),
                 'time': Date.now(),
                 'videoStatus': vcontrol.getCurrentPlayerStatus(), 
@@ -234,7 +238,9 @@ window.mwdet_logger = window.mwdet_logger || (function() {
                 'speed': pState.speed,
                 'subtitles': !pState.captionsHidden,
                 'fullscreen': pState.videoFullScreen.fullScreenState ? 'Y' : 'N',
-            });            
+            };
+            _prevVideoStatus = chndObject;
+            _videoStatus.push(chndObject);            
         }
 
         if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
