@@ -32,13 +32,15 @@ window.Gazer = window.Gazer || (function () {
     `);
     $('#fc_infobox').append(
       `
-      <div class='mw_tooltip'>
-      <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
-      <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
-      </div>
-      <div class='mw_tooltip'>
-      <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckAndRefresh();'>Refresh this page</button>
-      <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
+      <div>
+        <div class='mw_tooltip'>
+        <button id='fc_cont' class='edx-button mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckContinue()'>Continue</button>
+        <span class='mw_tooltiptext'>I can see that my face and eyes are tracked sufficiently.</span>
+        </div>
+        <div class='mw_tooltip'>
+        <button id='fc_disable' class='edx-button-faded mw_tooltip' style='margin-top: 10px;' onclick='Gazer.closeFacecheckAndRefresh();'>Refresh this page</button>
+        <span class='mw_tooltiptext'>I cannot see my face or I am unable to get my face or eyes tracked sufficiently.</span>
+        </div>
       </div>
     `);    
 
@@ -50,14 +52,10 @@ window.Gazer = window.Gazer || (function () {
     var setup = function () {
       var video = document.getElementById('webgazerVideoFeed');
       video.style.display = 'block';
-      // video.style.position = 'absolute';
-      // video.style.top = topDist;
-      // video.style.left = leftDist;
       video.style.zIndex = 2;
       video.width = width;
       video.height = height;
       video.style.margin = '0px';
-      video.style.marginTop = '40px';
 
       webgazer.params.imgWidth = width;
       webgazer.params.imgHeight = height;
@@ -68,8 +66,6 @@ window.Gazer = window.Gazer || (function () {
       overlay.width = width;
       overlay.height = height;
       overlay.style.zIndex = 3;
-      // overlay.style.top = topDist;
-      // overlay.style.left = leftDist;
       overlay.style.margin = '0px';
    
 
@@ -106,6 +102,7 @@ window.Gazer = window.Gazer || (function () {
   }
 
   function closeFacecheckAndRefresh() {
+    mwdet.handleUsersChoice(false, true);
     window.location.href=document.URL;
   }
 

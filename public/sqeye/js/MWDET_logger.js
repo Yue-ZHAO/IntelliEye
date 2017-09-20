@@ -152,6 +152,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             });       
 
             $('#msgOverlay').css('width', w);
+            $('.MWDET-overlay').css('width', w);
             
             vcontrol.updateOverlay();
         }
