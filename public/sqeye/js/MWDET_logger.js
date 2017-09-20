@@ -41,7 +41,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
     var LOG_ENABLED = true; // determines if log should be sent to server. Sessions are still kept with this disabled.
     // var METRIC_UPDATE = null;
     const METRIC_UPDATE_INTERVAL = 1000; // interval to update in ms
-    const MAX_METRIC_COUNT = 1; // # metrics to store locally before sending
+    const MAX_METRIC_COUNT = 10; // # metrics to store locally before sending
 
     // time of heartbeat messages (ms) to send.
     // MUST BE SMALLER THAN SERVER'S CHECKTIME VALUE (300000)

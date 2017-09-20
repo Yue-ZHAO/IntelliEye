@@ -270,14 +270,16 @@ window.Gazerdata = window.Gazerdata || (function() {
     
     if (!collectionInterval) {
       collectionInterval = setInterval(function() {
-        var gazer = webgazer.getCurrentPrediction();
-        if (gazer && !Gazer.gazerIsPaused()) {
-          gazer = {
-            'GazeX': gazer.x,
-            'GazeY': gazer.y,
-            'time': new Date(),
-          };
-          stepContainer.push(gazer);
+        if ($('.video').data().videoPlayerState.videoPlayer.isPlaying()) {
+          var gazer = webgazer.getCurrentPrediction();
+          if (gazer && !Gazer.gazerIsPaused()) {
+            gazer = {
+              'GazeX': gazer.x,
+              'GazeY': gazer.y,
+              'time': new Date(),
+            };
+            stepContainer.push(gazer);
+          }
         }       
       }, collectionTime);
     }
