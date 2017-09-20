@@ -119,6 +119,7 @@ window.Gazer = window.Gazer || (function () {
     if (gazerIsStarted)
       return;
     gazerIsStarted = true;
+    gazerIsPaused = false;
     Gazerdata.startPolling();
     window.webgazer = webgazer;
     webgazer.setRegression('ridge') /* currently must set regression and tracker */
@@ -141,6 +142,7 @@ window.Gazer = window.Gazer || (function () {
       }      
     }
     gazerIsStarted = false;
+    gazerIsPaused = false;
   }
 
   function pauseGazer() {
