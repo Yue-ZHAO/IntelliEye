@@ -270,7 +270,7 @@ window.Gazerdata = window.Gazerdata || (function() {
     
     if (!collectionInterval) {
       collectionInterval = setInterval(function() {
-        if ($('.video').data().videoPlayerState.videoPlayer.isPlaying()) {
+        if (vcontrol.getCurrentPlayerStatus() === 'play') {
           var gazer = webgazer.getCurrentPrediction();
           if (gazer && !Gazer.gazerIsPaused()) {
             gazer = {
@@ -280,7 +280,7 @@ window.Gazerdata = window.Gazerdata || (function() {
             };
             stepContainer.push(gazer);
           }
-        }       
+        }
       }, collectionTime);
     }
 
