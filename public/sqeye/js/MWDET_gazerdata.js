@@ -225,7 +225,7 @@ window.Gazerdata = window.Gazerdata || (function() {
   // =========================================================================
   // private
   // =========================================================================
-  var window = [];
+  var wd = [];
   var stepContainer = [];
 
   var pollingStarted = false;
@@ -245,17 +245,19 @@ window.Gazerdata = window.Gazerdata || (function() {
   function updateWindow(step) {
     ADDTOTEMP({"title": "new step data", "data": JSON.stringify(step)});
 
-    window = mwdet_preprocessor.windowFill(window, step);
-    ADDTOTEMP({"title": "window fill with step", "data": JSON.stringify(window)});
+    wd = mwdet_preprocessor.windowFill(wd, step);
+    ADDTOTEMP({"title": "wd fill with step", "data": JSON.stringify(wd)});
 
     // notify callback of new data
-    // onNewDataWindow(_.flatten(window));
+    // onNewDataWindow(_.flatten(wd));
     if (onNewDataWindow) {
-      onNewDataWindow(window);
+      onNewDataWindow(wd);
     }
   }
 
   function stopPolling() {
+    wd = [];
+    stepContainer = [];
     clearInterval(collectionInterval);
     collectionInterval = false;
     clearInterval(stepInterval);
@@ -265,6 +267,11 @@ window.Gazerdata = window.Gazerdata || (function() {
   }
 
   function startPolling() {
+    wd = [];
+    stepContainer = [];
+    if (vcontrol.getCurrentPlayerStatus() !== 'play') {
+      return;
+    }
     if (!collectionInterval) {
       collectionInterval = setInterval(function() {
         var gazer = webgazer.getCurrentPrediction();
@@ -309,7 +316,7 @@ window.Gazerdata = window.Gazerdata || (function() {
   };
 
   module.getWindow = function() {
-    // return _.flatten(window);
+    // return _.flatten(wd);
     return window;
   };
 

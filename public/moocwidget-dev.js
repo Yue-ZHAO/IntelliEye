@@ -278,6 +278,7 @@
     moocwidget.UI = (function() {
         return {
             initIeyeHTML: function() {
+                // TODO: check if we need to check units visited
                 $('body').append(`
                     <div class="msgOverlay" id="msgOverlay">
                         <div class="msgBox">
@@ -293,6 +294,9 @@
             },
 
             initSqeyeHTML: function() {
+                if (parseInt(sessionStorage.getItem('unitsVisited')) > 1) {
+                    return;
+                }
                 $('body').append(`
                     <div class="mwdet-main">
                         <div class="MWDET-setup">
