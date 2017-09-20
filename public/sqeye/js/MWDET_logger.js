@@ -31,6 +31,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
     var _prevWindow = undefined;
     var _windowSizes = [];
     var _windowDataSentBusy = false;
+
     var _prevVideoStatus = undefined;
     var _videoStatus = [];
     var _videoDataSentBusy = false;
