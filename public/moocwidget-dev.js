@@ -30,10 +30,9 @@
      * Starts sqeye widget
      */
     function _useSqeye() {
-        moocwidget.UI.initSqeyeHTML();
-
         var validEnvironment = moocwidget.envChecker.isValidEnvironment();
         if (validEnvironment) {
+            moocwidget.UI.initSqeyeHTML();        
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/sqeye/css/MWDET.css'));
 
@@ -75,10 +74,9 @@
      * Starts ieye widget
      */
     function _useIeye() {
-        moocwidget.UI.initIeyeHTML();
-
         var validEnvironment = moocwidget.envChecker.isValidEnvironment();
         if (validEnvironment) {
+            moocwidget.UI.initIeyeHTML();
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
 
@@ -112,36 +110,45 @@
     }
 
     moocwidget.init = function() {
-        console.log('Initializing MOOCWidgets.');
-
-        // if in studio, we don't start any widgets.
-        if (document.URL.includes('studio.edge.edx.org')) {
-            return;
-        }
-
-        if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
-            // A/B
-            var check = setInterval(function() {
-                if (analytics && analytics.user) {
-                    clearInterval(check);
-                    var remainder = parseInt(analytics.user().id()) % 5;
-                    switch (remainder) {
-                        case 0: case 1:
-                            _useSqeye(); break;
-                        case 2: case 3:
-                            _useIeye(); break;
-                        default: // no widgets used
+        var setup = function() {
+            console.log('Initializing MOOCWidgets.');
+            
+                    // if in studio, we don't start any widgets.
+                    if (document.URL.includes('studio.edge.edx.org')) {
+                        return;
                     }
-                }
-            }, 200);
-            console.log('A/B/C testing');
-        } else if (MW_ENABLE_SQUIRRELEYE) {
-            _useSqeye();
-        } else if (MW_ENABLE_INTELLIEYE) {
-            _useIeye();
-        } else {
-            // none
-        }
+            
+                    if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
+                        // A/B
+                        var check = setInterval(function() {
+                            if (analytics && analytics.user) {
+                                clearInterval(check);
+                                var remainder = parseInt(analytics.user().id()) % 5;
+                                switch (remainder) {
+                                    case 0: case 1:
+                                        _useSqeye(); break;
+                                    case 2: case 3:
+                                        _useIeye(); break;
+                                    default: // no widgets used
+                                }
+                            }
+                        }, 200);
+                        console.log('A/B/C testing');
+                    } else if (MW_ENABLE_SQUIRRELEYE) {
+                        _useSqeye();
+                    } else if (MW_ENABLE_INTELLIEYE) {
+                        _useIeye();
+                    } else {
+                        // none
+                    }            
+        };
+
+        var edxCheck = setInterval(function() {
+            if ($('.video').length > 0) {
+                clearInterval(edxCheck);
+                setup();
+            }
+        }, 200);
     };
 
     // =========================================================================
