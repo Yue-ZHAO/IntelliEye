@@ -270,7 +270,7 @@ window.Gazerdata = window.Gazerdata || (function() {
     
     if (!collectionInterval) {
       collectionInterval = setInterval(function() {
-        if (vcontrol.getCurrentPlayerStatus() === 'play') {
+        if ($('.video').data().videoPlayerState.videoPlayer.isPlaying()) {
           var gazer = webgazer.getCurrentPrediction();
           if (gazer && !Gazer.gazerIsPaused()) {
             gazer = {
