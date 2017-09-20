@@ -110,6 +110,25 @@
     }
 
     moocwidget.init = function() {
+        // if visiting a new URL or refreshing same page
+        if (!sessionStorage.getItem('storedURL') || sessionStorage.getItem('storedURL') !== document.URL) {
+            sessionStorage.setItem('storedURL', document.URL);
+            sessionStorage.setItem('unitsVisited', 1);
+            sessionStorage.setItem('facecheckInitialized', 'false');
+            if (sessionStorage.getItem('sessionId')) {
+                sessionStorage.removeItem('sessionId');
+            }
+        } else {
+            // if changing units
+            var ucount = parseInt(sessionStorage.getItem('unitsVisited'));
+            sessionStorage.setItem('unitsVisited', ucount+1);
+        }
+    
+        $(window).on('beforeunload', function() {
+            sessionStorage.removeItem('facecheckInitialized');
+            sessionStorage.removeItem('storedURL');
+        }); 
+
         var setup = function() {
             console.log('Initializing MOOCWidgets.');
             
