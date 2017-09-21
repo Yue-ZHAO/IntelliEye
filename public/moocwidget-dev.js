@@ -85,10 +85,14 @@
                 IEyeController.init();
             });
         } else {
+            console.log(">>>>> banned user");
             _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build.min.js'], function() {
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
                 var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
                 var browserInfo = moocwidget.envChecker.isValidBrowser();             
+                console.log(">>>>>" + webcam);
+                console.log(">>>>>" + desktop);
+                console.log(">>>>>" + browserInfo);
                 if (!desktop) {
                     IEWLogger.logBannedUser('Mobile');                       
                 }                      
@@ -180,7 +184,7 @@
             }
         }
       
-        /**
+        /** 
          * Places an alert if the webcam is denied by user.
          * @param {function} callIfFail call this function if permission to webcam is denied.
          */
