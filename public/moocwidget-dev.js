@@ -85,14 +85,10 @@
                 IEyeController.init();
             });
         } else {
-            console.log(">>>>> banned user");
             _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build.min.js'], function() {
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
                 var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
-                var browserInfo = moocwidget.envChecker.isValidBrowser();             
-                console.log(">>>>>" + webcam);
-                console.log(">>>>>" + desktop);
-                console.log(">>>>>" + browserInfo);
+                var browserInfo = moocwidget.envChecker.isValidBrowser();
                 if (!desktop) {
                     IEWLogger.logBannedUser('Mobile');                       
                 }                      
@@ -254,7 +250,7 @@
             var firefox = client.isFirefox() && (client.getBrowserMajorVersion() > 44);
             var chrome = client.isChrome() && (client.getBrowserMajorVersion() > 53);
             var browserOK = opera || firefox || chrome;
-            return [browserOK, client.getBrowser(), client.getBrowserMajorVersion];
+            return [browserOK, client.getBrowser(), client.getBrowserMajorVersion()];
         }
         
         /**
