@@ -148,9 +148,19 @@
                         }, 200);
                         console.log('A/B/C testing');
                     } else if (MW_ENABLE_SQUIRRELEYE) {
-                        _useSqeye();
+                        var check = setInterval(function() {
+                            if (analytics && analytics.user) {
+                                clearInterval(check);
+                                _useSqeye();
+                            }
+                        }, 200);                        
                     } else if (MW_ENABLE_INTELLIEYE) {
-                        _useIeye();
+                        var check = setInterval(function() {
+                            if (analytics && analytics.user) {
+                                clearInterval(check);
+                                _useIeye();
+                            }
+                        }, 200);                        
                     } else {
                         // none
                     }            
@@ -359,7 +369,7 @@
                 if (events !== 'undefined') {
                     eval(events);
                 }
-                $('#msgOverlay').css('height', $('body').outerHeight() + 'px');
+                $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');
                 $('#msgOverlay').css('display', 'flex');
                 $(window).scrollTop(0);
             },
