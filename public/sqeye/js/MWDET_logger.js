@@ -403,6 +403,9 @@ window.mwdet_logger = window.mwdet_logger || (function() {
 
     module.logBannedUser = function(reason) {
         console.log("[sqeye] logging banned user...");
+        sessionStartDate = new Date();
+        referenceNumber = createReferenceNumber();
+        sessionId = getSessionId();        
         var initialLog = {
             'userID': getUserId(),
             'sessionID': getSessionId(),

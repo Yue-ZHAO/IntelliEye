@@ -382,6 +382,9 @@ window.IEWLogger = window.IEWLogger || (function() {
 
     module.logBannedUser = function(reason) {
         console.log("[ieye] Logging banned user...");
+        sessionStartDate = new Date();
+        referenceNumber = createReferenceNumber();
+        sessionId = getSessionId();        
         var initialLog = {
             'userID': getUserId(),
             'sessionID': getSessionId(),
