@@ -292,6 +292,14 @@ window.mwdet_logger = window.mwdet_logger || (function() {
             } else {
                 mwdet.stopAudioAlertLoop();
                 mwdet.stopVisualAlertLoop();
+                module.logException({
+                    'videoID': vcontrol.getCurrentPlayerID(),
+                    'exceptionType': 0,
+                    'exceptionDescription': 'focus-in',
+                    'videoStatus': vcontrol.getCurrentPlayerStatus(),
+                    'videoTime': vcontrol.getCurrentTime(),
+                    'videoDuration': vcontrol.getDuration(),                
+                });                   
             }
         }
         // update prev focus
@@ -392,11 +400,13 @@ window.mwdet_logger = window.mwdet_logger || (function() {
         sendLog('prediction', data);
     };
 
+    // ['', 'allow', 'skip', 'start', 'pause', 'resume', 'end', 'disallow'];
+    // eventType is the index of the eventDescription above.
     module.logWidgetStatus = function(data) {
         sendLog('widget', data);
     };
 
-    // focus-out [1], low/no gaze data [2]
+    // focus-in[0] focus-out [1], low/no gaze data [2]
     module.logException = function(data) {
         sendLog('exception', data);       
     }; 
