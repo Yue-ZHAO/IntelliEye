@@ -48,9 +48,7 @@
                 mwdet.init();
             });
         } else {
-            var logCheck = setInterval(function() {
-            if (mwdet_logger.isReady()) {
-                clearInterval(logCheck);
+            _loadjs(['https://moocwidgets.cc/static/sqeye/js/sqeye-build.min.js'], function() {
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
                 var desktop = (moocwidget.envChecker.getEnvironment().mobile == false); 
                 var browserInfo = moocwidget.envChecker.isValidBrowser();   
@@ -65,8 +63,7 @@
                 if (!browserInfo[0]) {
                     mwdet_logger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
                 }
-            }
-            }, 200);              
+            });           
         }
     }
 
@@ -88,24 +85,21 @@
                 IEyeController.init();
             });
         } else {
-            var logCheck = setInterval(function() {
-                if (IEWLogger.isReady()) {
-                    clearInterval(logCheck);
-                    var webcam = moocwidget.envChecker.webcamIsAvailable();
-                    var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
-                    var browserInfo = moocwidget.envChecker.isValidBrowser();             
-                    if (!desktop) {
-                        IEWLogger.logBannedUser('Mobile');                       
-                    }                      
-                    if (!webcam) {
-                        IEWLogger.logBannedUser('No webcam');
-                    }                          
+            _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build.min.js'], function() {
+                var webcam = moocwidget.envChecker.webcamIsAvailable();
+                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
+                var browserInfo = moocwidget.envChecker.isValidBrowser();             
+                if (!desktop) {
+                    IEWLogger.logBannedUser('Mobile');                       
+                }                      
+                if (!webcam) {
+                    IEWLogger.logBannedUser('No webcam');
+                }                          
 
-                    if (!browserInfo[0]) {
-                        IEWLogger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
-                    }
-                }
-            }, 200);              
+                if (!browserInfo[0]) {
+                    IEWLogger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                }                
+            });            
         }
     }
 
@@ -167,7 +161,7 @@
                 clearInterval(edxCheck);
                 setup();
             }
-        }, 200);
+        }, 500);
     };
 
     // =========================================================================
@@ -385,12 +379,10 @@
                                     <br>
                                 </div>
                                 <div id='ol-box-content'>
-                                    <p>For this course we offer you IntelliEye, an experimental widget developed at TU Delft. 
-                                    IntelliEye will help you during watching MOOC videos. Whenever you lose focus watching the video playing, 
-                                    IntelliEye will detect it and pause the video for you. Once you are focusing on the video again, 
+                                    <p>For this course, we offer you IntelliEye, an experimental widget developed at TU Delft. IntelliEye will help you during watching MOOC videos. 
+                                    Whenever you lose focus watching the video playing, IntelliEye will detect it and pause the video for you. Once you are focusing on the video again, 
                                     the video will be rewound a few seconds to a familiar section for you and resumed. 
-                                    IntelliEye is an automated privacy-aware assistant (i.e. none of the webcam data leaves your computer) 
-                                    for you on the edX platform.
+                                    IntelliEye is an automated privacy-aware assistant (i.e. none of the webcam data leaves your computer) for you on the edX platform.
                                     </p>
                                     <div id="intro-howto-cont">
                                     <div>
@@ -421,12 +413,12 @@
                                     <div class='ieye_descr' id='lm2-d'>
                                         <ul>
                                             <li>IntelliEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
-                                            <li>You can use IntelliEye with any modern web browser, e.g., latest version on Firefox, Opera, Chrome, and Microsoft Edge. Internet Explorer is not supported.</li>
-                                            <li>We need your permission to use your camera on your machine. External camera should be aligned with the screen you are watching the video on.</li>
+                                            <li>You can use IntelliEye with some modern web browsers, e.g., the latest version of Firefox, Opera and Chrome. Internet Explorer, Microsoft Edge and Safari are not supported currently.</li>
+                                            <li>We need your permission to use the built-in camera or the external camera on your machine. The camera should be aligned with the screen you are watching the video on.</li>
                                         </ul>                                        
                                     </div>
                                     <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
-                                    <div class='ieye_descr' id='lm3-d'>As Intellieye depends on face detection in the web camera video feed, you should pay attention to the following:
+                                    <div class='ieye_descr' id='lm3-d'>As Intellieye depends on the face detection in the web camera video feed, you should pay attention to the following:
                                         <ul>
                                             <li>Enable your webcam once asked.</li>
                                             <li>Sit normally facing the camera.</li>
@@ -490,12 +482,12 @@
                         </div>
                     </div>
 
-                <span class="sq-intro-span" onclick="$('#what-a').slideToggle()"><h2 class='h2-section'>What do I need to use SquirrelEye?<span style='margin-left:5px'>Learn more</span></h2></span>
+                <span class="sq-intro-span" onclick="$('#what-a').slideToggle()"><h2 class='h2-section'>What are required for using SquirrelEye?<span style='margin-left:5px'>Learn more</span></h2></span>
                     <div id="what-a" style="display:none">
                         <ol>
                         <li>SquirrelEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
-                        <li>You can use SquirrelEye with any modern web browser, e.g., latest version on Firefox, Opera, Chrome, and Microsoft Edge. Internet Explorer is not supported.</li>
-                        <li>We need your permission to use the built-in camera on your machine. External camera should be aligned with the screen you are watching the video on.</li>
+                        <li>You can use SquirrelEye with some modern web browsers, e.g., the latest version of Firefox, Opera and Chrome. Internet Explorer, Microsoft Edge and Safari are not supported currently. </li>
+                        <li>We need your permission to use the built-in camera or the external camera on your machine. The camera should be aligned with the screen you are watching the video on.</li>
                         </ol>
                     </div>
 
