@@ -60,7 +60,7 @@ window.IEWLogger = window.IEWLogger || (function() {
                     var initialLog = {
                         'userID': getUserId(),
                         'sessionID': getSessionId(),
-                        'sessionStartTime': sessionStartDate.toISOString(),
+                        'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
                         'pageTitle': document.title,
                         'pageURL': document.URL,
                         'environment': moocwidget.envChecker.getEnvironment(),
@@ -385,7 +385,7 @@ window.IEWLogger = window.IEWLogger || (function() {
         var initialLog = {
             'userID': getUserId(),
             'sessionID': getSessionId(),
-            'sessionStartTime': sessionStartDate.toISOString(),
+            'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
             'pageTitle': document.title,
             'pageURL': document.URL,
             'environment': moocwidget.envChecker.getEnvironment(),

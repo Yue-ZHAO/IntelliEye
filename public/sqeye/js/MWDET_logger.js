@@ -76,7 +76,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
                     var initialLog = {
                         'userID': getUserId(),
                         'sessionID': getSessionId(),
-                        'sessionStartTime': sessionStartDate.toISOString(),
+                        'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
                         'pageTitle': document.title,
                         'pageURL': document.URL,
                         'environment': moocwidget.envChecker.getEnvironment(),
@@ -406,7 +406,7 @@ window.mwdet_logger = window.mwdet_logger || (function() {
         var initialLog = {
             'userID': getUserId(),
             'sessionID': getSessionId(),
-            'sessionStartTime': sessionStartDate.toISOString(),
+            'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
             'pageTitle': document.title,
             'pageURL': document.URL,
             'environment': moocwidget.envChecker.getEnvironment(),
