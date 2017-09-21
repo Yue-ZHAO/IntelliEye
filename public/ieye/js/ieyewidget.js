@@ -447,6 +447,7 @@
 	// collect all metrics for server
 	function getAllMetrics () {
 		return {
+			'metricTimeStamp': Date.now(),
 			'streamTJS': streamTjs,
 			'streamVis': streamVis,
 			'streamFoc': streamFoc,
