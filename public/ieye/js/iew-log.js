@@ -274,12 +274,12 @@ window.IEWLogger = window.IEWLogger || (function() {
      * @return {String} formatted date
      */
     function getFormattedDate(dt) {
-        var d = ('0' + dt.getDate()).slice(-2);
-        var m = ('0' + (dt.getMonth()+1)).slice(-2);
-        var y = dt.getFullYear();
-        var hh = ('0' + dt.getHours()).slice(-2);
-        var mm = ('0' + dt.getMinutes()).slice(-2);
-        var ss = ('0' + dt.getSeconds()).slice(-2);
+        var d = ('0' + (new Date(dt)).getDate()).slice(-2);
+        var m = ('0' + ((new Date(dt)).getMonth()+1)).slice(-2);
+        var y = (new Date(dt)).getFullYear();
+        var hh = ('0' + (new Date(dt)).getHours()).slice(-2);
+        var mm = ('0' + (new Date(dt)).getMinutes()).slice(-2);
+        var ss = ('0' + (new Date(dt)).getSeconds()).slice(-2);
         return d+m+y+hh+mm+ss;
     }
 
@@ -381,6 +381,7 @@ window.IEWLogger = window.IEWLogger || (function() {
     };
 
     module.logBannedUser = function(reason) {
+        console.log("[ieye] Logging banned user...");
         var initialLog = {
             'userID': getUserId(),
             'sessionID': getSessionId(),
