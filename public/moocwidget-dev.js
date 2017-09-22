@@ -453,7 +453,12 @@
             },
 
             mwdet_intro: function() {
-                moocwidget.UI.placeAlert('SquirrelEye',
+                moocwidget.UI.placeAlert(
+                    `
+                    <div id="hd-img"></div>
+                    <h1 class="customh1" >Welcome to SquirrelEye</h1>
+                    <br>                
+                    `,
                     `
                     For this course, we offer you an experimental widget <b>SquirrelEye</b> for inattention-detection during the lecture video playing. 
                     <br>
@@ -515,8 +520,8 @@
                 `,
                 ['<button id=\'bEnable\' class=\'edx-button\' onclick=\'mwdet.handleUsersChoice(true); moocwidget.UI.hideAlert()\'> Enable SquirrelEye </button>',
                     '<button id=\'bDisable\' class=\'edx-button-faded\' onclick=\'mwdet.handleUsersChoice(false); moocwidget.UI.hideAlert()\'> Disable SquirrelEye </button>',
-                    '<input id=\'intro_askAgain\' name=\'i_remember\' type=\'radio\' checked>Always ask me</input>',
-                    '<input name=\'i_remember\' type=\'radio\'> Remember this choice </input>'
+                    '<input id=\'intro_askAgain\' name=\'i_remember\' type=\'radio\' checked> <label for="intro_askAgain">Always ask me</label>',
+                    '<input id=\'intro_remember\' name=\'i_remember\' type=\'radio\'> <lbal for="intro_remember"> Remember this choice </label>'
                     +
                     `
                 <i style="display:block;margin-top:20px">If you want to change the choice you have made here, 

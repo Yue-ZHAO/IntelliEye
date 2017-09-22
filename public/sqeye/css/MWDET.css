@@ -245,6 +245,15 @@ body {
     margin-bottom: 0px;
 }
 
+#hd-img {
+	background: rgba(0, 0, 0, 0) url("https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue.png") no-repeat scroll 0 0;
+	height: 60px;
+	width: 80px;
+	/*margin: 10px 0;*/
+	color: var(--edx-base) !important;
+	font-size: 22px;
+}
+
 .h2-section span {
 	font-size: 12px;
 	color: var(--edx-text);
