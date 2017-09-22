@@ -325,6 +325,10 @@ body {
     padding: 1.25rem;
 }
 
+.mwdet-msg-inputs input[type="checkbox"] {
+    margin-left:20px;
+}
+
 .edx-button, #bEnable {
     background-color: var(--edx-base);
     background-image: none;
