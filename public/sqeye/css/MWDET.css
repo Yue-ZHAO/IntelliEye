@@ -240,7 +240,7 @@ body {
 
 .customh1 {
     /*margin: 0 0 0 90px;*/
-    padding-top: 12px;
+    margin-top: 12px;
     color: var(--edx-base) !important;
     margin-bottom: 0px;
 }
@@ -316,6 +316,7 @@ body {
 }
 
 .mwdet-msg-title img {
+    margin-top: 12px;
     margin-right: 20px;
     width: 60px;
 }
