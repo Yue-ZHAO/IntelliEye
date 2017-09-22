@@ -342,7 +342,10 @@
 
                         <div class="mwdet-msg-overlay" id="msgOverlay" style="display:none">
                             <div class="mwdet-msg-box" id="msgBox">
-                                <div class="mwdet-msg-title"><h1 class="customh1" id="msgH1">Title</h1></div>
+                                <div class="mwdet-msg-title" id="msgTitle">
+                                    <img src="https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue.png">
+                                    <h1 class="customh1" id="msgH1">Title</h1>
+                                </div>
                                 <div class="mwdet-msg-content" id="msgContent">Test Message</div>
                                 <div class="mwdet-msg-inputs" id="msgInputs">
                                     <button class="edx-button"> Confirm </button>
@@ -453,12 +456,7 @@
             },
 
             mwdet_intro: function() {
-                moocwidget.UI.placeAlert(
-                    `
-                    <div id="hd-img"></div>
-                    <h1 class="customh1" >Welcome to SquirrelEye</h1>
-                    <br>                
-                    `,
+                moocwidget.UI.placeAlert('Welcome to SquirrelEye',
                     `
                     For this course, we offer you an experimental widget <b>SquirrelEye</b> for inattention-detection during the lecture video playing. 
                     <br>
@@ -521,7 +519,7 @@
                 ['<button id=\'bEnable\' class=\'edx-button\' onclick=\'mwdet.handleUsersChoice(true); moocwidget.UI.hideAlert()\'> Enable SquirrelEye </button>',
                     '<button id=\'bDisable\' class=\'edx-button-faded\' onclick=\'mwdet.handleUsersChoice(false); moocwidget.UI.hideAlert()\'> Disable SquirrelEye </button>',
                     '<input id=\'intro_askAgain\' name=\'i_remember\' type=\'radio\' checked> <label for="intro_askAgain">Always ask me</label>',
-                    '<input id=\'intro_remember\' name=\'i_remember\' type=\'radio\'> <lbal for="intro_remember"> Remember this choice </label>'
+                    '<input id=\'intro_remember\' name=\'i_remember\' type=\'radio\'> <label for="intro_remember"> Remember this choice </label>'
                     +
                     `
                 <i style="display:block;margin-top:20px">If you want to change the choice you have made here, 

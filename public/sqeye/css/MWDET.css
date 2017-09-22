@@ -315,6 +315,11 @@ body {
 
 }
 
+.mwdet-msg-title img {
+    margin-right: 20px;
+    width: 60px;
+}
+
 .mwdet-msg-content, .mwdet-msg-inputs {
     padding: 1.25rem;
 }
