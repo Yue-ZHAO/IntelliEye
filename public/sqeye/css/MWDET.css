@@ -325,7 +325,7 @@ body {
     padding: 1.25rem;
 }
 
-.mwdet-msg-inputs input[type="checkbox"] {
+.mwdet-msg-inputs input[type="radio"] {
     margin-left:20px;
 }
 
