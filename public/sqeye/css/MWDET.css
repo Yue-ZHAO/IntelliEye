@@ -577,3 +577,22 @@ body {
 .mw_tooltip:hover .mw_tooltiptext {
     visibility: visible;
 }
+
+@-moz-document url-prefix() {
+    .mw_tooltip .mw_tooltiptext {
+        visibility: hidden;
+        width: 300%;
+        background-color: rgba(0, 0, 0, 0.90);
+        color: #fff;
+        font-size:10pt;
+        margin-left: -200%;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 10px;
+        bottom:120%;
+    
+        /* Position the mw_tooltip */
+        position: absolute;
+        z-index: 9999;
+    }
+}
