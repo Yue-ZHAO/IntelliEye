@@ -17,7 +17,7 @@ window.IEyeController = window.IEyeController || (function() {
         $(window).scrollTop(0);
         
         $('#overlay').css('height', $('body').outerHeight() + 'px');
-        moocwidget.UI.ieye_intro();
+
         $('#i_dont_remember').prop('checked', true);
 
         // setting up correct layout (sizes)
@@ -46,7 +46,7 @@ window.IEyeController = window.IEyeController || (function() {
         updateIndicator();
 
         if (!localStorage.use_ieye)
-            $('#overlay').show();
+            moocwidget.UI.ieye_intro();
     }
 
     /**
