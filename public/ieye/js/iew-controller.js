@@ -68,7 +68,7 @@ window.IEyeController = window.IEyeController || (function() {
     function setChoice(widgetIsUsed, fromSwitch=false) {
         vcontrol.pauseVideo();
 
-        var iremember = fromSwitch || $('input#i_remember').is(':checked');
+        var iremember = !fromSwitch || $('input#i_remember').is(':checked');
 
         localStorage.use_ieye = widgetIsUsed;
         sessionStorage.use_ieye = widgetIsUsed;
