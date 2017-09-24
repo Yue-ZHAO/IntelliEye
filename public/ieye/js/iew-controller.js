@@ -239,7 +239,7 @@ window.IEyeController = window.IEyeController || (function() {
 
                     // if choosed to use widget
                     if (useIEye() && sessionStorage.iEyeStarted !== 'true') {
-                        
+                        moocwidget.envChecker.webcamState();
                         sessionStorage.iEyeStarted = true;
                         ieyewidget.startiEye();
                         widgetStatus = 'start';
