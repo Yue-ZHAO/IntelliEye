@@ -80,7 +80,13 @@ window.IEyeController = window.IEyeController || (function() {
         $(window).scrollTop(0);
         $('#overlay').css('height', $('body').outerHeight() + 'px');
         $('#overlay').show();
-        vcontrol.pauseVideo();      
+        vcontrol.pauseVideo();  
+        
+        //TODO: test
+        // force fullscreen off to show intro
+        if (fullscreen) {
+            $('#'+vcontrol.getCurrentPlayerID()).find('button').closest('.control.add-fullscreen').click();
+        }
     }    
 
     // set user's choice of using ieye (true/false)
