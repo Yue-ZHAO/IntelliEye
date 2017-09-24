@@ -45,30 +45,6 @@ window.IEyeController = window.IEyeController || (function() {
 
         updateIndicator();
 
-        // Events
-        $.each($('.lm'), (i, o) => {
-            o.onclick = function() {
-                var eq_id = $(o).attr('id');
-                $('#' + eq_id + '-d').slideToggle();
-                var eq_text_id = eq_id + '-text';
-                if ($('#' + eq_text_id).text() === 'Learn more') {
-                    $('#' + eq_text_id).text('Hide');
-                } else {
-                    $('#' + eq_text_id).text('Learn more');
-                }
-            }
-        });
-
-        $('#start_ieye')[0].onclick = function () {
-            setChoice(true);
-            $('#overlay').hide();
-        };
-
-        $('#skip_ieye')[0].onclick = function () {
-            setChoice(false);
-            $('#overlay').hide();
-        };
-
         if (!localStorage.use_ieye)
             $('#overlay').show();
     }

@@ -223,6 +223,12 @@ body {
 
 }
 
+.msgTitle img {
+    margin-top: 12px;
+    margin-right: 20px;
+    width: 60px;	
+}
+
 .msgContent, .msgButtons {
 	padding: 1.25rem;
 }
@@ -263,6 +269,10 @@ body {
 	padding: 5px 8px 5px 8px;
 	margin-right: 10px;	
 	display: inline-block;	
+}
+
+.msgButtons input[type="radio"] {
+    margin-left:20px;
 }
 
 #msgOverlay {
