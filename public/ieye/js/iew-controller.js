@@ -75,8 +75,10 @@ window.IEyeController = window.IEyeController || (function() {
         $.cookie('use_ieye', widgetIsUsed);        
 
         if (!iremember) {
+            console.log('choice not remembered');
             localStorage.removeItem('use_ieye');
         } else {
+            console.log('choice remembered');
             IEWLogger.logChoice(widgetIsUsed);
         }
 
@@ -208,8 +210,8 @@ window.IEyeController = window.IEyeController || (function() {
         $('#msgOverlay').hide();
     };
 
-    module.setChoice = function (choice) {
-        setChoice(choice);
+    module.setChoice = function (choice, fromSwitch) {
+        setChoice(choice, fromSwitch);
     };
 
     module.recallOverlay = function() {
