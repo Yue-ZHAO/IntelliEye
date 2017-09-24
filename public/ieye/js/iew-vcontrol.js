@@ -135,7 +135,9 @@ window.vcontrol = window.vcontrol || (function() {
     };
 
     module.getPlayerStateFromID = function(ID) {
+      if ($('#' + ID).data()) {
         return $('#' + ID).data().videoPlayerState;
+      }
     };
 
     module.playVideo = function() {

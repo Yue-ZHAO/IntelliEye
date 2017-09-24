@@ -119,6 +119,9 @@ window.mwdet = window.mwdet || (function() {
    * Turns the introduction message visible.
    */
   function showIntroMessage() {
+    if (fullscreen) {
+        $('#'+vcontrol.getCurrentPlayerID()).find('button').closest('.control.add-fullscreen').click();
+    }
     moocwidget.UI.mwdet_intro();
   }
 
