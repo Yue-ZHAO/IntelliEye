@@ -54,9 +54,8 @@ window.IEyeController = window.IEyeController || (function() {
      */
     function recallOverlay() {
         $(window).scrollTop(0);
-        $('#overlay').css('height', $('body').outerHeight() + 'px');
-        $('#overlay').show();
-        vcontrol.pauseVideo();  
+        vcontrol.pauseVideo(); 
+        moocwidget.ieye_intro(); 
         
         //TODO: test
         // force fullscreen off to show intro
