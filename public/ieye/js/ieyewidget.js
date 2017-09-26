@@ -468,8 +468,6 @@
 
 	// public function, called in iew-controller.js when video status changes.
 	ieyewidget.updateAndLogMetrics = function() {
-		// can I call collectMetrics()?
-		collectMetrics();
 		var data = getAllMetrics();
 		if (ieyewidget.logMetricsEnabled) {
 			IEWLogger.logMetrics(data);
