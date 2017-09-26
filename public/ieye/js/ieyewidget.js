@@ -26,6 +26,7 @@
 	var mmoveCoords = {x: [0,0],y: [0,0]};		// mousemove coordinatest, present and previous
 	var defocusStartTimeMs;
 	var defocusStartTimeReset = true;
+	var defocusDurationTimeMS = 0; // added by wing
 
 	// scores
 	var scoreTjs = 0;
@@ -159,7 +160,14 @@
 		
 		// do some stuff 
 		if (isDefocus == true) {
-			if (defocusStartTimeReset == true) defocusStartTimeMs = Date.now();
+
+			if (defocusStartTimeReset == true) { 
+				defocusStartTimeMs = Date.now();
+				defocusDurationTimeMS = 0;
+			}
+
+			defocusDurationTimeMS = Date.now() - defocusStartTimeMs;
+
 			defocusStartTimeReset = false;
 			if (showCam()) {
 				console.log("------------DEFOCUS--------------");
@@ -460,6 +468,7 @@
 
 	// public function, called in iew-controller.js when video status changes.
 	ieyewidget.updateAndLogMetrics = function() {
+		// can I call collectMetrics()?
 		collectMetrics();
 		var data = getAllMetrics();
 		if (ieyewidget.logMetricsEnabled) {
@@ -467,8 +476,6 @@
 		}
 	};
 
-	// TODO: typo! calculateScrore()
-	// TODO: defocusDurationTimeMS missing.
 	// collect all metrics for server
 	function getAllMetrics () {
 		return {
@@ -481,6 +488,7 @@
 			'scoreTjsMem': JSON.stringify(scoreTjsMem),
 			'isVisible': !document.hidden,
 			'defocusStartTimeMs': defocusStartTimeMs,
+			'defocusDurationTimeMS': defocusDurationTimeMS,
 			'trend': getCurrentTrend(),
 			'iEyeHasFocus': iEyeHasFocus,
 			'pausedByIEye': ieyewidget.pausedByIEye,
