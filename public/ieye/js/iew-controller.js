@@ -68,13 +68,13 @@ window.IEyeController = window.IEyeController || (function() {
     function setChoice(widgetIsUsed, fromSwitch=false) {
         vcontrol.pauseVideo();
 
-        var iremember = !fromSwitch || $('input#i_remember').is(':checked');
+        var askAgain = fromSwitch || $('input#i_dont_remember').is(':checked');
 
         localStorage.use_ieye = widgetIsUsed;
         sessionStorage.use_ieye = widgetIsUsed;
         $.cookie('use_ieye', widgetIsUsed);        
 
-        if (!iremember) {
+        if (askAgain) {
             console.log('choice not remembered');
             localStorage.removeItem('use_ieye');
         } else {
@@ -96,7 +96,7 @@ window.IEyeController = window.IEyeController || (function() {
             $('#switchUseWidget').prop('checked', true);
         } else {
             console.log('not using vid playing');
-            if (!iremember) {
+            if (askAgain) {
                 IEWLogger.logWidgetStatus('skip');
             } else {
                 IEWLogger.logWidgetStatus('disallow');
