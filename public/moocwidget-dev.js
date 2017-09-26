@@ -306,7 +306,7 @@
                     <div class="msgOverlay" id="msgOverlay">
                         <div class="msgBox">
                             <div class="msgTitle">
-                                <img src="https://moocwidgets.cc/static/sqeye/img/sqeye-logo-blue.png">
+                                <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png">
                                 <h1 class="customh1" id="msgH1">Title</h1>
                             </div>
                             <div class="msgContent" id="msgContent">Test Message</div>
@@ -509,8 +509,8 @@
                         </div>                    
                     `,
                     [
-                        '<button class="msgButton" id="start_ieye">Enable IntelliEye</div>',
-                        '<button class="msgButtonFaded" id="skip_ieye">Disable IntelliEye</div>',
+                        '<div class="msgButton" id="start_ieye">Enable IntelliEye</div>',
+                        '<div class="msgButtonFaded" id="skip_ieye">Disable IntelliEye</div>',
                         `
                         <div id='remember_ieye'> For future:
                             <input name="r_remember" type="radio" value="no" id='i_dont_remember' checked><label for='i_dont_remember'>Always ask me</label>

@@ -14,8 +14,8 @@
 	var initiateTime;				// time of iEye initialization
 	var coldStartDelayTime = 5000;	// cold start delay to let the tjs initiialize; in ms
 	var streamLengthSeconds = 5;
-	var itemsInStream = 5 * ( 1000/iEyeIntervalMs );
-	var tjsThresholdDefocus = 2.92;		// below this value we call it defocus
+	var itemsInStream = streamLengthSeconds * ( 1000/iEyeIntervalMs );
+	var tjsThresholdDefocus = 2.6;		// below this value we call it defocus
 	var tjsThresholdFocus =4.4;		// below this value we call it defocus
 
 	// metrics
@@ -87,18 +87,24 @@
 	/** 
 	 *	----------------- Calculate the score value for a metric -----------------
 	*/
-	function calculateScrore(stream) {
+	function calculateScrore(stream, updTjsMem) {
+		if (updTjsMem === undefined) {
+			updTjsMem = false;
+		}
 		var i, score=0;
 		for (i=0; i<stream.length; i++) {
-			score = score + parseInt(stream[i])*(itemsInStream-1-i)/(itemsInStream-1);
+			score = Math.round( (score + parseInt(stream[i])*(itemsInStream-1-i)/(itemsInStream-1)) *100)/100;
 		}
-		
+			
 		// modify score memory
-		scoreTjsMem.unshift(scoreTjs);
-		if (scoreTjsMem.length > 3 ) scoreTjsMem.pop();
+		if (updTjsMem == true) {
+			scoreTjsMem.unshift(score);
+			if (scoreTjsMem.length > 3 ) scoreTjsMem.pop();
+		}
 		
 		return score;
 	}
+	
 
 	/**
 	 * ----------------- Finds the score trend and returns either -1 for decrease (i.e., towards defocus), or +1 as towards focused engagement -----------------
@@ -127,8 +133,8 @@
 		var hasFocus = document.hasFocus();
 		var isVisible = !document.hidden;
 		
-		scoreTjs = calculateScrore(streamTjs);
-		var scoreMou = calculateScrore(streamMou);
+		scoreTjs = calculateScrore(streamTjs, true);
+		var scoreMou = calculateScrore(streamMou, false);
 		
 		
 		if ( scoreTjs < tjsThresholdDefocus ) {	//defocus by tjs
@@ -178,12 +184,31 @@
 	function getRewindSeconds() {
 		var defocusTime = Date.now() - defocusStartTimeMs;
 		defocusStartTimeReset = true;
-		console.log (">>>>>>>>>>>>>>>>< defcustimev = " + defocusTime);
+		setColdReStart();
+		//console.log (">>>>>>>>>>>>>>>>< defcustimev = " + defocusTime);
 		if (defocusTime < 1500) return 0;
 		else if (defocusTime > 10000) return 10;
 		else return 3;
 		
 	}
+
+	/**
+	 * ----------------- Handles cold re-start by pushing into detection stream some values for the timeline of 2 seconds after ieye resumes -----------------
+	 */
+	function setColdReStart() {
+			var i;
+			for (i=0; i<8; i++) {
+				streamTjs = "1" + streamTjs; 
+				streamFoc = "1" + streamFoc;
+				streamMou = "1" + streamMou;
+				streamVis = "1" + streamVis;
+			}
+			//if paused, need to trim
+			if ( streamTjs.length > itemsInStream) streamTjs = streamTjs.substr(0, itemsInStream);
+			if ( streamFoc.length > itemsInStream) streamFoc = streamFoc.substr(0, itemsInStream);
+			if ( streamVis.length > itemsInStream) streamVis = streamVis.substr(0, itemsInStream);
+			if ( streamMou.length > itemsInStream) streamMou = streamMou.substr(0, itemsInStream);
+	}	
 
 	/** 
 	 * ----------------- Get debug parameter(s) from the URL -----------------
@@ -247,8 +272,8 @@
 				tracker = new tracking.ObjectTracker('face');
 			}
 
-			tracker.setInitialScale(4);  	// the smaller, the smaller faces it can discover, however small values are in trouble with big faces over all area.
-			tracker.setStepSize(1.7);			// how fast is the recognition
+			tracker.setInitialScale(3.2);  	// the smaller, the smaller faces it can discover, however small values are in trouble with big faces over all area.
+			tracker.setStepSize(1);			// how fast is the recognition
 			tracker.setEdgesDensity(0.1);	// the smaller the better; 0.1 would be ok
 			
 
