@@ -49,22 +49,56 @@ window.vcontrol = window.vcontrol || (function() {
 
                 currentPlayerID = newID;
                 // eslint-disable-next-line
-                setTimeout(() => {setOnStateChange('play');}, 1000);
+                // setTimeout(() => {setOnStateChange('play');}, 1000);
             }
 
+            currentPlayerState = 'play';
+            processStateChange('play');
             setOnStateChange('play');
+
             // onStateChange() is used by edX so this is 
             // a less neat but faster than an interval version of that:
             // external function setOnStateChange is set when initialized above (by controller).
-            
             /* eslint-disable */
-            $('#' + currentPlayerID).on('play', () => {currentPlayerState = 'play'; processStateChange('play'); setOnStateChange('play');  });
-            $('#' + currentPlayerID).on('pause', () => {currentPlayerState = 'pause'; processStateChange('pause'); setOnStateChange('pause');  });
-            $('#' + currentPlayerID).on('seek', () => {currentPlayerState = 'seek'; processStateChange('seek'); setOnStateChange('seek');  });
-            $('#' + currentPlayerID).on('ended', () => {currentPlayerState = 'ended'; processStateChange('ended'); setOnStateChange('ended');  });       
+
+            // $('#' + currentPlayerID).on('play', () => {currentPlayerState = 'play'; processStateChange('play'); setOnStateChange('play');  });
+            // $('#' + currentPlayerID).on('pause', () => {currentPlayerState = 'pause'; processStateChange('pause'); setOnStateChange('pause');  });
+            // $('#' + currentPlayerID).on('seek', () => {currentPlayerState = 'seek'; processStateChange('seek'); setOnStateChange('seek');  });
+            // $('#' + currentPlayerID).on('ended', () => {currentPlayerState = 'ended'; processStateChange('ended'); setOnStateChange('ended');  });    
+
             /* eslint-enable */               
             isReady = true;
         });
+
+        $('.video').on('pause', function(e) {
+            var id = e.currentTarget.getAttribute('id');
+            if (id !== currentPlayerID) {
+                return;
+            }
+            currentPlayerState = 'pause';
+            processStateChange('pause');
+            setOnStateChange('pause');
+        });
+
+        $('.video').on('seek', function(e) {
+            var id = e.currentTarget.getAttribute('id');
+            if (id !== currentPlayerID) {
+                return;
+            }
+            currentPlayerState = 'seek';
+            processStateChange('seek');
+            setOnStateChange('seek');
+        });
+        
+        $('.video').on('ended', function(e) {
+            var id = e.currentTarget.getAttribute('id');
+            if (id !== currentPlayerID) {
+                return;
+            }
+            currentPlayerState = 'ended';
+            processStateChange('ended');
+            setOnStateChange('ended');
+        });        
     }
 
     /**
