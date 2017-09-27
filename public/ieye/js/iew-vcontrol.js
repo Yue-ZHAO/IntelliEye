@@ -118,6 +118,8 @@ window.vcontrol = window.vcontrol || (function() {
             // update totalplaytime
             totalPlayTimes[playerIndex] = Math.round((now - firstPlayTimes[playerIndex]) / 1000);
         }
+
+        IEWLogger.updateVideoStatus();
     }
 
     /**
