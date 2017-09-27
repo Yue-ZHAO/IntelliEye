@@ -52,9 +52,9 @@ window.vcontrol = window.vcontrol || (function() {
                 // setTimeout(() => {setOnStateChange('play');}, 1000);
             }
 
-            currentPlayerState = 'play';
             processStateChange('play');
             setOnStateChange('play');
+            currentPlayerState = 'play';
 
             // onStateChange() is used by edX so this is 
             // a less neat but faster than an interval version of that:
@@ -75,9 +75,9 @@ window.vcontrol = window.vcontrol || (function() {
             if (id !== currentPlayerID) {
                 return;
             }
-            currentPlayerState = 'pause';
             processStateChange('pause');
             setOnStateChange('pause');
+            currentPlayerState = 'pause';
         });
 
         $('.video').on('seek', function(e) {
@@ -85,9 +85,9 @@ window.vcontrol = window.vcontrol || (function() {
             if (id !== currentPlayerID) {
                 return;
             }
-            currentPlayerState = 'seek';
             processStateChange('seek');
             setOnStateChange('seek');
+            currentPlayerState = 'seek';
         });
         
         $('.video').on('ended', function(e) {
@@ -95,9 +95,9 @@ window.vcontrol = window.vcontrol || (function() {
             if (id !== currentPlayerID) {
                 return;
             }
-            currentPlayerState = 'ended';
             processStateChange('ended');
             setOnStateChange('ended');
+            currentPlayerState = 'ended';
         });        
     }
 
@@ -175,19 +175,19 @@ window.vcontrol = window.vcontrol || (function() {
     };
 
     module.playVideo = function() {
-        if (currentPlayerStatus !== 'play') {
+        if (currentPlayerState !== 'play') {
             getCurrentPlayer().play();
         }
     };
 
     module.pauseVideo = function() {
-        if (currentPlayerStatus !== 'pause') {
+        if (currentPlayerState !== 'pause') {
             getCurrentPlayer().pause();
         }
     };
 
     module.toggleCurrentPlayer = function() {
-        if (currentPlayerStatus !== 'play') {
+        if (currentPlayerState !== 'play') {
         module.playVideo();
         } else {
         module.pauseVideo();
@@ -220,7 +220,7 @@ window.vcontrol = window.vcontrol || (function() {
         console.log('DUR= ' + totalDuration + ' Played= ' + secondsPlayed + 'FRewind to ' + restartVideoAt);
 
         getCurrentPlayer().seekTo(restartVideoAt); // had true as 2nd arg but seekTo here takes only 1
-        if (currentPlayerStatus !== 'play') {
+        if (currentPlayerState !== 'play') {
             getCurrentPlayer().play();
         }
     };
