@@ -175,11 +175,15 @@ window.vcontrol = window.vcontrol || (function() {
     };
 
     module.playVideo = function() {
-        getCurrentPlayer().play();
+        if (currentPlayerStatus !== 'play') {
+            getCurrentPlayer().play();
+        }
     };
 
     module.pauseVideo = function() {
-        getCurrentPlayer().pause();
+        if (currentPlayerStatus !== 'pause') {
+            getCurrentPlayer().pause();
+        }
     };
 
     module.toggleCurrentPlayer = function() {
@@ -216,7 +220,9 @@ window.vcontrol = window.vcontrol || (function() {
         console.log('DUR= ' + totalDuration + ' Played= ' + secondsPlayed + 'FRewind to ' + restartVideoAt);
 
         getCurrentPlayer().seekTo(restartVideoAt); // had true as 2nd arg but seekTo here takes only 1
-        getCurrentPlayer().play();
+        if (currentPlayerStatus !== 'play') {
+            getCurrentPlayer().play();
+        }
     };
 
     module.updateOverlay = function() {
