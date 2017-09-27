@@ -172,14 +172,14 @@
 
 			defocusStartTimeReset = false;
 			if (showCam()) {
-				console.log("------------DEFOCUS--------------" + (new Date()).toISOString());
+				console.log("------------DEFOCUS--------------|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString());
 			}
 			iEyeHasFocus = false;
 			ieyewidget.pausedByIEye = true;
 			iEyeVideoPause();
 		}
 		else {
-			if (showCam())  { console.log("**FOCUS**" + (new Date()).toISOString()); }
+			if (showCam())  { console.log("**FOCUS**|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString()); }
 			iEyeHasFocus = true;
 			ieyewidget.pausedByIEye = false;
 			iEyeVideoResume();

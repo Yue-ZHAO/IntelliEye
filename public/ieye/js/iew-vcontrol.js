@@ -210,6 +210,8 @@ window.vcontrol = window.vcontrol || (function() {
     };
 
     module.rewindAndPlay = function(secToRewind) {
+        console.log(">>>REWIND(): CURRENT VIDEO STATE = " + currentPlayerState);
+
         if (currentPlayerState === 'play') {
             return;
         }
