@@ -247,29 +247,27 @@ window.IEyeController = window.IEyeController || (function() {
                         ieyewidget.startiEye();
                         widgetStatus = 'start';
 
-                    } 
-                    
-                    /*else if (useIEye() && sessionStorage.iEyeStarted === 'true') {
+                    } else if (useIEye() && sessionStorage.iEyeStarted === 'true') {
                         ieyewidget.resumeiEye();
                         widgetStatus = 'resume';
-                    }*/
+                    }
 
                     break;
                 case 'pause':
 
                     // manual pause by user
-                    /*if (useIEye() && !ieyewidget.pausedByIEye) {
+                    if (useIEye() && !ieyewidget.pausedByIEye) {
                         ieyewidget.pauseiEye();
                         widgetStatus = 'pause';
-                    }*/
+                    }
 
                     break;
                 case 'ended':
-                    // if (useIEye()) {
-                    //     ieyewidget.stopiEye();
-                    //     widgetStatus = 'end';
-                    //     sessionStorage.iEyeStarted = false;
-                    // }
+                    if (useIEye()) {
+                        ieyewidget.stopiEye();
+                        widgetStatus = 'end';
+                        sessionStorage.iEyeStarted = false;
+                    }
                     break;
                 default: // none;
             }
