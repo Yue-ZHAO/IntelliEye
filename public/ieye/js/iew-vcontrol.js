@@ -179,12 +179,14 @@ window.vcontrol = window.vcontrol || (function() {
     module.playVideo = function() {
         if (currentPlayerState !== 'play') {
             getCurrentPlayer().play();
+            currentPlayerState = 'play';
         }
     };
 
     module.pauseVideo = function() {
         if (currentPlayerState !== 'pause') {
             getCurrentPlayer().pause();
+            currentPlayerState = 'pause';
         }
     };
 
