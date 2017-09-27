@@ -223,9 +223,8 @@ window.vcontrol = window.vcontrol || (function() {
              restartVideoAt = secondsPlayed;
         }
 
-        console.log('DUR= ' + totalDuration + ' Played= ' + secondsPlayed + 'FRewind to ' + restartVideoAt);
-
         if (currentPlayerState === 'pause') {
+            console.log('DUR= ' + totalDuration + ' Played= ' + secondsPlayed + 'FRewind to ' + restartVideoAt);
             getCurrentPlayer().seekTo(restartVideoAt); // had true as 2nd arg but seekTo here takes only 1
             getCurrentPlayer().play();
         }
