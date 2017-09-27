@@ -141,6 +141,8 @@
 		if ( scoreTjs < tjsThresholdDefocus ) {	//defocus by tjs
 			if (trend == 1) {	//presently defocused on cam, but trend is positive
 				//do nothing, wait
+				// YUE: If we want to do nothing, I think we should return and wait for another call next time
+                return isDefocus
 			}
 			else if (trend == 0 || trend == -1) {
 				//check visible and winfocus scores, mousemovement
@@ -446,7 +448,8 @@
 
 	// ----------------- Pause video ----------------- 
 	function iEyeVideoPause() {
-		vcontrol.pauseVideo();
+        // YUE: I add the if function
+		if (vcontrol.getCurrentPlayerState() != "pause") vcontrol.pauseVideo();
 	}
 
 	// ----------------- Resume video ----------------- 

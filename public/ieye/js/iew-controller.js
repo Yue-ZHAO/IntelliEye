@@ -234,6 +234,9 @@ window.IEyeController = window.IEyeController || (function() {
         // pass callback function which controls what happens for each state.
         // status can be: play pause seek ended.
         vcontrol.init(function (status)  {
+            // YUE, will this function be called every time when the status change?
+            // TODO, should we also consider previours status here? I am not sure
+            // Since I received some video status from Youtube like "play -> play" in my crowdsourcing task before
             switch (status) {
                 case 'play':
 
