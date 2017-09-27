@@ -208,6 +208,10 @@ window.vcontrol = window.vcontrol || (function() {
     };
 
     module.rewindAndPlay = function(secToRewind) {
+        if (currentPlayerState === 'play') {
+            return;
+        }
+
         var secondsPlayed = getCurrentPlayer().currentTime;
         var totalDuration = getCurrentPlayer().duration();
         var restartVideoAt;
@@ -220,9 +224,7 @@ window.vcontrol = window.vcontrol || (function() {
         console.log('DUR= ' + totalDuration + ' Played= ' + secondsPlayed + 'FRewind to ' + restartVideoAt);
 
         getCurrentPlayer().seekTo(restartVideoAt); // had true as 2nd arg but seekTo here takes only 1
-        if (currentPlayerState !== 'play') {
-            getCurrentPlayer().play();
-        }
+        getCurrentPlayer().play();
     };
 
     module.updateOverlay = function() {
