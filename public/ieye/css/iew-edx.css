@@ -459,3 +459,53 @@ body {
   transform: translateX(26px);
   content: "On";
 }
+
+.video_overlay {
+    position:absolute;
+    background-color: gray;
+    opacity: 0;    
+    z-index: 99;
+}
+
+/* ========================================================================== */
+/* VISUL ALERT */
+/* ========================================================================== */
+@keyframes blink {
+    0% { box-shadow: 0 0 35px red; }
+    50% { box-shadow: none; }
+    100% { box-shadow: 0 0 35px red; }
+}
+
+@-webkit-keyframes blink {
+    0% { box-shadow: 0 0 35px red; }
+    50% { box-shadow: 0 0 0; }
+    100% { box-shadow: 0 0 35px red; }
+}
+
+.blink {
+    -webkit-animation: blink 1.5s linear infinite;
+    -moz-animation: blink 1.5s linear infinite;
+    -ms-animation: blink 1.5s linear infinite;
+    -o-animation: blink 1.5s linear infinite;
+    animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink-fs {
+    0% { box-shadow: inset 0 -15px 150px 20px red; }
+    50% { box-shadow: none; }
+    100% { box-shadow: inset 0 -15px 150px 20px red; }
+}
+
+@-webkit-keyframes blink-fs {
+    0% { box-shadow: inset 0 -15px 150px 20px red; }
+    50% { box-shadow: inset 0 0 0; }
+    100% { box-shadow: inset 0 -15px 150px 20px red; }
+}
+
+.blink-fs {
+    -webkit-animation: blink-fs 1.5s linear infinite;
+    -moz-animation: blink-fs 1.5s linear infinite;
+    -ms-animation: blink-fs 1.5s linear infinite;
+    -o-animation: blink-fs 1.5s linear infinite;
+    animation: blink-fs 1.5s linear infinite;
+}

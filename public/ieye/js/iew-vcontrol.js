@@ -170,7 +170,7 @@ window.vcontrol = window.vcontrol || (function() {
         return $('#' + ID).data().videoPlayerState.videoPlayer;
     };
 
-    module.getPlayerStateFromID = function(ID) {
+    module.getPlayerDataStateFromID = function(ID) {
       if ($('#' + ID).data()) {
         return $('#' + ID).data().videoPlayerState;
       }
@@ -245,7 +245,7 @@ window.vcontrol = window.vcontrol || (function() {
             $('#' + overlayid).css('width', '100%');
             $('#' + overlayid).css('heigth', '100%');
         } else if ($('#' + overlayid).length === 0) {
-            if (module.getPlayerStateFromID(ID) && module.getPlayerStateFromID(ID).isYoutubeType()) {
+            if (module.getPlayerDataStateFromID(ID) && module.getPlayerDataStateFromID(ID).isYoutubeType()) {
             var wrapper = $('#' + ID).closest('div').find('.video-wrapper');
             var vIframe = $('#' + ID).find('iframe');
             var overlay = $('<div class="video_overlay" id='+overlayid+'></div>');

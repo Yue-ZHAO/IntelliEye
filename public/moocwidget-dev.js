@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 (function(window) {
     window.moocwidget = window.moocwidget || {};
 
@@ -69,39 +70,54 @@
 
     /**
      * Starts ieye widget
+     * @param {String} reaction_type which type ieye to enable (pause, visualAlert, auditoryAlert)
      */
-    function _useIeye() {
+    function _useIeye(reaction_type) {
         var validEnvironment = moocwidget.envChecker.isValidEnvironment();
         if (validEnvironment) {
             moocwidget.UI.initIeyeHTML();
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
-
-            var files = [             
-                'https://moocwidgets.cc/static/ieye/js/ieye-build.min.js',              
-            ];
-
+     
+            var files = [];
+            if (reaction_type = 'Pause') {
+                files = [
+                    'https://moocwidgets.cc/static/ieye/js/ieye-build-pause.min.js',             
+                ];
+             }
+            if (reaction_type = 'VisualAlert') {
+                files = [
+                    'https://moocwidgets.cc/static/ieye/js/ieye-build-visualAlert.min.js',             
+                ];
+             }
+            if (reaction_type = 'AuditoryAlert') {
+                files = [
+                    'https://moocwidgets.cc/static/ieye/js/ieye-build-auditoryAlert.min.js',             
+                ];
+             }
+     
             _loadjs(files, function() {
                 IEyeController.init();
             });
         } else {
-            _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build.min.js'], function() {
+            _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build-pause.min.js'], function() {
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
-                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
+                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);  
                 var browserInfo = moocwidget.envChecker.isValidBrowser();
                 if (!desktop) {
-                    IEWLogger.logBannedUser('Mobile');                       
-                }                      
+                    IEWLogger.logBannedUser('Mobile');                      
+                }                     
                 if (!webcam) {
                     IEWLogger.logBannedUser('No webcam');
-                }                          
-
+                }                         
+     
                 if (!browserInfo[0]) {
                     IEWLogger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
-                }                
-            });            
+                }               
+            });           
         }
-    }
+     }
+     
 
     moocwidget.init = function() {
         // if visiting a new URL or refreshing same page
@@ -126,44 +142,40 @@
         var setup = function() {
             console.log('Initializing MOOCWidgets.');
             
-                    // if in studio, we don't start any widgets.
-                    if (document.URL.includes('studio.edge.edx.org')) {
-                        return;
-                    }
-            
-                    if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
-                        // A/B
-                        var check = setInterval(function() {
-                            if (analytics && analytics.user) {
-                                clearInterval(check);
-                                var remainder = parseInt(analytics.user().id()) % 5;
-                                switch (remainder) {
-                                    case 0: case 1:
-                                        _useSqeye(); break;
-                                    case 2: case 3:
-                                        _useIeye(); break;
-                                    default: // no widgets used
-                                }
+            // if in studio, we don't start any widgets.
+            if (document.URL.includes('studio.edge.edx.org')) {
+                return;
+            }
+            if (MW_ENABLE_INTELLIEYE) {
+                if (IEYE_Reaction_Type == 'Pause') {
+                    _useIeye('Pause');
+                    console.log('Pause');
+                } else if (IEYE_Reaction_Type == 'VisualAlert') {
+                    _useIeye('VisualAlert');
+                    console.log(VisualAlert);
+                } else if (IEYE_Reaction_Type == 'AuditoryAlert') {
+                    _useIeye('AuditoryAlert');
+                    console.log(AuditoryAlert);
+                } else if (IEYE_Reaction_Type == 'ABCTesting') {
+                    // A/B
+                    var check = setInterval(function() {
+                        if (analytics && analytics.user) {
+                            clearInterval(check);
+                            var remainder = parseInt(analytics.user().id()) % 53;
+                            switch (remainder) {
+                                case 0:
+                                        _useIeye('Pause'); break;
+                                case 1:
+                                    _useIeye('VisualAlert'); break;
+                                case 2:
+                                    _useIeye('AuditoryAlert'); break;
+                                default: // no widgets used
                             }
-                        }, 200);
-                        console.log('A/B/C testing');
-                    } else if (MW_ENABLE_SQUIRRELEYE) {
-                        var check = setInterval(function() {
-                            if (analytics && analytics.user) {
-                                clearInterval(check);
-                                _useSqeye();
-                            }
-                        }, 200);                        
-                    } else if (MW_ENABLE_INTELLIEYE) {
-                        var check = setInterval(function() {
-                            if (analytics && analytics.user) {
-                                clearInterval(check);
-                                _useIeye();
-                            }
-                        }, 200);                        
-                    } else {
-                        // none
-                    }            
+                        }
+                    }, 200);
+                    console.log('A/B/C testing');
+                } 
+            }                                        
         };
 
         var edxCheck = setInterval(function() {
@@ -301,7 +313,6 @@
     moocwidget.UI = (function() {
         return {
             initIeyeHTML: function() {
-                // TODO: check if we need to check units visited
                 $('body').append(`
                     <div class="msgOverlay" id="msgOverlay">
                         <div class="msgBox">

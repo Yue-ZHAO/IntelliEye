@@ -164,7 +164,7 @@ window.IEWLogger = window.IEWLogger || (function() {
      */
     function _updateVideoStatus(forceSend=false) {
         // console.log('update: ' + _videoStatus.length);
-        var pState = vcontrol.getPlayerStateFromID(vcontrol.getCurrentPlayerID());
+        var pState = vcontrol.getPlayerDataStateFromID(vcontrol.getCurrentPlayerID());
         if (typeof pState === 'undefined') {
             return;
         }

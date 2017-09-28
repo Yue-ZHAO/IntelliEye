@@ -8,6 +8,8 @@ var rename = require('gulp-rename');
 
 var sqeye = (argv.sqeye === undefined) ? false : true;
 var ieye = (argv.ieye === undefined) ? false :true;
+// ieyemode, choose 1: ['pause', 'visualAlert', 'auditoryAlert']
+var ieyemode = (argv.ieyemode === undefined) ? '' : argv.ieyemode;
 var driver = (argv.driver === undefined) ? false :true;
 
  // Concatenate & Minify JS
@@ -30,19 +32,19 @@ if (sqeye) {
   });
   // Default Task
   gulp.task('default', ['scripts']);
-} else if (ieye) {
+} else if (ieye && ieyemode !== '') {
   gulp.task('scripts', function() {
           return gulp.src([
             './public/ieye/js/tracking-mod.js',
             './public/ieye/js/face-min.js',
             './public/ieye/js/client.min.js',              
             './public/ieye/js/iew-vcontrol.js',              
-            './public/ieye/js/ieyewidget.js',              
+            './public/ieye/js/ieyewidget-'+ieyemode+'.js',              
             './public/ieye/js/iew-log.js',              
             './public/ieye/js/iew-controller.js',
           ])
         .pipe(concat('ieye-build.js'))
-          .pipe(rename({suffix: '.min'}))
+          .pipe(rename({suffix: '-'+ieyemode+'.min'}))
           .pipe(uglify())
           .pipe(gulp.dest('./public/ieye/js/'));
   });
@@ -61,7 +63,7 @@ if (sqeye) {
   // Default Task
   gulp.task('default', ['scripts']);
 } else {
-  console.log('invalid params choose either: --sqeye or --ieye');
+  console.log('invalid params choose either: --sqeye or --ieye --ieyemode=[pause, visualAlert, auditoryAlert]');
   process.exit(1);
 }
 
