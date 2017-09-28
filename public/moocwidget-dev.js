@@ -80,17 +80,17 @@
                 .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
      
             var files = [];
-            if (reaction_type = 'Pause') {
+            if (reaction_type === 'Pause') {
                 files = [
                     'https://moocwidgets.cc/static/ieye/js/ieye-build-pause.min.js',             
                 ];
              }
-            if (reaction_type = 'VisualAlert') {
+            if (reaction_type === 'VisualAlert') {
                 files = [
                     'https://moocwidgets.cc/static/ieye/js/ieye-build-visualAlert.min.js',             
                 ];
              }
-            if (reaction_type = 'AuditoryAlert') {
+            if (reaction_type === 'AuditoryAlert') {
                 files = [
                     'https://moocwidgets.cc/static/ieye/js/ieye-build-auditoryAlert.min.js',             
                 ];
