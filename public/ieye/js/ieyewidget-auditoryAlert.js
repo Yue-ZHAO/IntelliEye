@@ -462,9 +462,9 @@
 
 	// ----------------- Start auditory alert ----------------- 
 	function iEyeAuditoryAlertStart() {
-		var audio = new Audio('https://moocwidgets.cc/static/ieye/alert.mp3');
-		audio.play();
 		if (auditoryAlertIntRef === null) {
+			var audio = new Audio('https://moocwidgets.cc/static/ieye/alert.mp3');
+			audio.play();			
 			auditoryAlertIntRef = setInterval(() => {
                 audio.play();
 			}, 5000);		
