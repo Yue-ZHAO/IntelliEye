@@ -296,7 +296,7 @@ window.vcontrol = window.vcontrol || (function() {
           var w = $('#'+ID).outerWidth();
           var h =$('#'+ID).outerHeight()
           $('#' + overlayid).css('width', '100%');
-          $('#' + overlayid).css('heigth', '100%');
+          $('#' + overlayid).css('height', '100%');
           wrapper.prepend(overlay);        
         }
       }

@@ -152,10 +152,10 @@
 					isDefocus = true;
 			}
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible) {
+		else if (scoreTjs > tjsThresholdFocus && isVisible && hasFocus) {
 			isDefocus = false;	
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible == false) {
+		else if (scoreTjs > tjsThresholdFocus && (isVisible == false || hasFocus == false)) {
 			isDefocus = true;			
 		}
 		
@@ -453,14 +453,16 @@
 
 	// ----------------- Start visual alert ----------------- 
 	function iEyeVisualAlertStart() {
-		// fullscreen state, false if not in fullscreen, true if in fullscreen.
-		var fstate = vcontrol.getPlayerDataStateFromID(vcontrol.getCurrentPlayerID()).videoFullScreen.fullScreenState;		
-		// currently not in fullscreen mode
-		if (!fstate) {
-			$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink');
-		} else {
-			// fullscreen mode
-			$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink-fs');
+		if (vcontrol.getCurrentPlayerState() === 'play') {
+			// fullscreen state, false if not in fullscreen, true if in fullscreen.
+			var fstate = vcontrol.getPlayerDataStateFromID(vcontrol.getCurrentPlayerID()).videoFullScreen.fullScreenState;		
+			// currently not in fullscreen mode
+			if (!fstate) {
+				$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink');
+			} else {
+				// fullscreen mode
+				$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink-fs');
+			}
 		}
 	}
 

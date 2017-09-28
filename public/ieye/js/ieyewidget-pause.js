@@ -153,10 +153,10 @@
 					isDefocus = true;
 			}
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible) {
+		else if (scoreTjs > tjsThresholdFocus && isVisible && hasFocus) {
 			isDefocus = false;	
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible == false) {
+		else if (scoreTjs > tjsThresholdFocus && (isVisible == false || hasFocus == false)) {
 			isDefocus = true;			
 		}
 		

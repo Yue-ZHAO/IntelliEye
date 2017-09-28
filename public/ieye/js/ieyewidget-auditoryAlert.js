@@ -156,10 +156,10 @@
 					isDefocus = true;
 			}
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible) {
+		else if (scoreTjs > tjsThresholdFocus && isVisible && hasFocus) {
 			isDefocus = false;	
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible == false) {
+		else if (scoreTjs > tjsThresholdFocus && (isVisible == false || hasFocus == false)) {
 			isDefocus = true;			
 		}
 		
@@ -462,7 +462,7 @@
 
 	// ----------------- Start auditory alert ----------------- 
 	function iEyeAuditoryAlertStart() {
-		if (auditoryAlertIntRef === null) {
+		if (auditoryAlertIntRef === null && vcontrol.getCurrentPlayerState() === 'play') {
 			var audio = new Audio('https://moocwidgets.cc/static/ieye/alert.mp3');
 			audio.play();			
 			auditoryAlertIntRef = setInterval(() => {
