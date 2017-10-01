@@ -15,7 +15,7 @@ INTROTEMPLATES['pauseIntro.html'] = "<div class=\"introOverlay\">\n" +
     "                IntelliEye will help you during watching MOOC videos. Whenever you lose focus watching the video playing, \n" +
     "                IntelliEye will detect it and pause the video for you. Once you are focusing on the video again, \n" +
     "                the video will be rewound a few seconds to a familiar section for you and resumed. \n" +
-    "                IntelliEye is an automated privacy-aware assistant (i.e. none of the webcam data leaves your computer) for you on the edX platform.\n" +
+    "                IntelliEye is an automated <b>privacy-aware</b> assistant (i.e. none of the webcam data leaves your computer) for you on the edX platform.\n" +
     "            </p>\n" +
     "\n" +
     "            <p>\n" +
