@@ -14,7 +14,7 @@ INTROTEMPLATES['visualAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "                For this course, we offer you IntelliEye, an experimental widget developed at TU Delft. \n" +
     "                IntelliEye will help you during watching MOOC videos. Whenever you lose focus watching the video playing, \n" +
     "                IntelliEye will detect it and flash a red border around the video. Once you are focusing on the video again, \n" +
-    "                the flashing will stop. IntelliEye is an automated privacy-aware assistant (i.e. none of the webcam data leaves your computer) \n" +
+    "                the flashing will stop. IntelliEye is an automated <b>privacy-aware</b> assistant (i.e. none of the webcam data leaves your computer) \n" +
     "                for you on the edX platform.\n" +
     "            </p>\n" +
     "\n" +
@@ -53,7 +53,7 @@ INTROTEMPLATES['visualAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "            <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>\n" +
     "            <p class='ieye_descr' id='lm1-d'>\n" +
     "            IntelliEye uses your computer webcam, with your permission, and looks for a face frame in the camera feed. \n" +
-    "            Based on detected face frame, IntelliEye can estimate whether you are watching at the video, and then decide to pause/play the video. \n" +
+    "            Based on detected face frame, IntelliEye can estimate whether you are watching at the video, and then decide to alert you. \n" +
     "            IntelliEye is <b>privacy aware</b> - no videofeed leaves your computer.            \n" +
     "            <br>\n" +
     "            <img src=\"https://moocwidgets.cc/static/ieye/img/ieye_instructions3.png\" width=\"400px\" style=\"margin-top:10px\">\n" +

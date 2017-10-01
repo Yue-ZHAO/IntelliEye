@@ -55,7 +55,7 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "            <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>\n" +
     "            <p class='ieye_descr' id='lm1-d'>\n" +
     "            IntelliEye uses your computer webcam, with your permission, and looks for a face frame in the camera feed. \n" +
-    "            Based on detected face frame, IntelliEye can estimate whether you are watching at the video, and then decide to pause/play the video. \n" +
+    "            Based on detected face frame, IntelliEye can estimate whether you are watching at the video, and then decide alert you. \n" +
     "            IntelliEye is <b>privacy aware</b> - no videofeed leaves your computer.            \n" +
     "            <br>\n" +
     "            <img src=\"https://moocwidgets.cc/static/ieye/img/ieye_instructions3.png\" width=\"400px\" style=\"margin-top:10px\">\n" +
