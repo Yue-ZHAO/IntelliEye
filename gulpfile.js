@@ -32,7 +32,7 @@ gulp.task('html2js', function() {
  
 gulp.task('ieye-pause', ['html2js'], function() {
         return gulp.src([
-        './public/ieye/templates/pauseIntro.js',
+        './public/ieye/templates/pauseIntro-build.js',
         './public/ieye/js/tracking-mod.js',
         './public/ieye/js/face-min.js',
         './public/ieye/js/client.min.js',              
@@ -49,7 +49,7 @@ gulp.task('ieye-pause', ['html2js'], function() {
 
 gulp.task('ieye-auditory', ['html2js'], function() {
         return gulp.src([
-        './public/ieye/templates/auditoryAlertIntro.js',
+        './public/ieye/templates/auditoryAlertIntro-build.js',
         './public/ieye/js/tracking-mod.js',
         './public/ieye/js/face-min.js',
         './public/ieye/js/client.min.js',              
@@ -66,7 +66,7 @@ gulp.task('ieye-auditory', ['html2js'], function() {
 
 gulp.task('ieye-visual', ['html2js'], function() {
         return gulp.src([
-        './public/ieye/templates/visualAlertIntro.js',
+        './public/ieye/templates/visualAlertIntro-build.js',
         './public/ieye/js/tracking-mod.js',
         './public/ieye/js/face-min.js',
         './public/ieye/js/client.min.js',              

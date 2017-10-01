@@ -2,7 +2,7 @@
 'use strict';
 (function () {
 	window.ieyewidget = window.ieyewidget || {};
-	window.ieye_intro_content = window.INTROTEMPLATES['auditoryAlertIntro-build.html'];
+	window.ieye_intro_content = window.INTROTEMPLATES['auditoryAlertIntro.html'];
 
 	ieyewidget.logMetricsEnabled = true;
 
