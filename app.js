@@ -82,6 +82,6 @@ app.use('/ieye', ieyeRoutes);
 // });
 
 app.listen(port, ipaddress, function() {
-    logger.info('[%s] Node server started on %s:%d, %s mode',
-        (new Date()).toLocaleTimeString(), ipaddress, port, mode);
+    logger.info('[%s] Node server started on %s:%d',
+        (new Date()).toLocaleTimeString(), ipaddress, port);
 });
