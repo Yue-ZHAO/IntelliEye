@@ -13,7 +13,8 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "            <p>\n" +
     "                For this course, we offer you IntelliEye, an experimental widget developed at TU Delft. \n" +
     "                IntelliEye will help you during watching MOOC videos. Whenever you lose focus watching the video playing, \n" +
-    "                IntelliEye will detect it and alert you with a beeping sound <img id=\"intro_alert_click\" src=\"https://moocwidgets.cc/static/ieye/img/ieye_alert_icon.png\" width=\"20\" height:\"20\" style=\"vertical-align:middle\">. \n" +
+    "                IntelliEye will detect it and alert you with a beeping sound \n" +
+    "                (<img id=\"intro_alert_click\" style=\"cursor:pointer\" src=\"https://moocwidgets.cc/static/ieye/img/ieye_alert_icon.png\" width=\"20\" height:\"20\" style=\"vertical-align:middle\"> try me). \n" +
     "                Once you are focusing on the video again, the alert will stop. IntelliEye is an automated privacy-aware assistant \n" +
     "                (i.e. none of the webcam data leaves your computer) for you on the edX platform.\n" +
     "            </p>\n" +
