@@ -2,7 +2,7 @@
 'use strict';
 (function () {
 	window.ieyewidget = window.ieyewidget || {};
-	window.ieye_intro_content = window.INTROTEMPLATES['pauseIntro.html'];
+	window.ieye_intro_content = window.INTROTEMPLATES['pauseIntro-build.html'];
 
 	ieyewidget.logMetricsEnabled = true;
 

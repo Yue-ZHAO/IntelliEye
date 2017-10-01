@@ -295,8 +295,12 @@ body {
     width: 60px;	
 }
 
-.introContent {
+.introContent, .introInputs {
 	padding: 1.25rem;
+}
+
+.introInputs input[type="radio"] {
+    margin-left:20px;
 }
 
 /* buttons  */

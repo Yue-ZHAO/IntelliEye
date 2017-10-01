@@ -26,7 +26,7 @@ gulp.task('html2js', function() {
         objName: 'INTROTEMPLATES', // Name of the global template store variable 
                               // say the converted string for myTemplate.html will be saved to TEMPLATE['myTemplate.html'] 
       }))
-      .pipe(rename({extname: '.js'}))
+      .pipe(rename({suffix: '-build', extname: '.js'}))
       .pipe(gulp.dest('./public/ieye/templates/')); // Output folder 
   });
  
