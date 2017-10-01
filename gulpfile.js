@@ -5,65 +5,80 @@ var argv = require('yargs').argv;
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify-es').default;
 var rename = require('gulp-rename');
+var html2string = require('gulp-html2string');
 
-var sqeye = (argv.sqeye === undefined) ? false : true;
-var ieye = (argv.ieye === undefined) ? false :true;
-// ieyemode, choose 1: ['pause', 'visualAlert', 'auditoryAlert']
-var ieyemode = (argv.ieyemode === undefined) ? '' : argv.ieyemode;
-var driver = (argv.driver === undefined) ? false :true;
+gulp.task('driver', function() {
+        return gulp.src([
+        './public/client.min.js',
+        './public/moocwidget-dev.js',
+        ])
+    .pipe(concat('moocwidget.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/'));
+});
 
- // Concatenate & Minify JS
-if (sqeye) {
-  gulp.task('scripts', function() {
-          return gulp.src([
-            './public/sqeye/js/RTP.js',
-            './public/sqeye/js/webgazer_mod.js',
-            './public/sqeye/js/MWDET_gazer.js',
-            './public/sqeye/js/MWDET_calibration.js',
-            './public/sqeye/js/MWDET_gazerdata.js',
-            './public/sqeye/js/MWDET_vcontrol.js',
-            './public/sqeye/js/MWDET_logger.js',
-            './public/sqeye/js/MWDET_widget.js',        
-          ])
-        .pipe(concat('sqeye-build.js'))
-          .pipe(rename({suffix: '.min'}))
-          .pipe(uglify())
-          .pipe(gulp.dest('./public/sqeye/js/'));
+gulp.task('html2js', function() {
+    return gulp.src('./public/ieye/templates/*.html')
+      .pipe(html2string({
+        base: './public/ieye/templates/', // The base path of HTML templates 
+        createObj: true, // Indicate wether to define the global object that stores 
+                         // the global template strings 
+        objName: 'INTROTEMPLATES', // Name of the global template store variable 
+                              // say the converted string for myTemplate.html will be saved to TEMPLATE['myTemplate.html'] 
+      }))
+      .pipe(rename({extname: '.js'}))
+      .pipe(gulp.dest('./public/ieye/templates/')); // Output folder 
   });
-  // Default Task
-  gulp.task('default', ['scripts']);
-} else if (ieye && ieyemode !== '') {
-  gulp.task('scripts', function() {
-          return gulp.src([
-            './public/ieye/js/tracking-mod.js',
-            './public/ieye/js/face-min.js',
-            './public/ieye/js/client.min.js',              
-            './public/ieye/js/iew-vcontrol.js',              
-            './public/ieye/js/ieyewidget-'+ieyemode+'.js',              
-            './public/ieye/js/iew-log.js',              
-            './public/ieye/js/iew-controller.js',
-          ])
-        .pipe(concat('ieye-build.js'))
-          .pipe(rename({suffix: '-'+ieyemode+'.min'}))
-          .pipe(uglify())
-          .pipe(gulp.dest('./public/ieye/js/'));
-  });
-  // Default Task
-  gulp.task('default', ['scripts']);
-} else if (driver) {
-  gulp.task('scripts', function() {
-          return gulp.src([
-            './public/client.min.js',
-            './public/moocwidget-dev.js',
-          ])
-        .pipe(concat('moocwidget.js'))
-          .pipe(uglify())
-          .pipe(gulp.dest('./public/'));
-  });
-  // Default Task
-  gulp.task('default', ['scripts']);
-} else {
-  console.log('invalid params choose either: --sqeye or --ieye --ieyemode=[pause, visualAlert, auditoryAlert]');
-  process.exit(1);
-}
+ 
+gulp.task('ieye-pause', ['html2js'], function() {
+        return gulp.src([
+        './public/ieye/templates/pauseIntro.js',
+        './public/ieye/js/tracking-mod.js',
+        './public/ieye/js/face-min.js',
+        './public/ieye/js/client.min.js',              
+        './public/ieye/js/iew-vcontrol.js',              
+        './public/ieye/js/ieyewidget-pause.js',              
+        './public/ieye/js/iew-log.js',              
+        './public/ieye/js/iew-controller.js',
+        ])
+    .pipe(concat('ieye-build.js'))
+        .pipe(rename({suffix: '-pause.min'}))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/ieye/js/'));
+});
 
+gulp.task('ieye-auditory', ['html2js'], function() {
+        return gulp.src([
+        './public/ieye/templates/auditoryAlertIntro.js',
+        './public/ieye/js/tracking-mod.js',
+        './public/ieye/js/face-min.js',
+        './public/ieye/js/client.min.js',              
+        './public/ieye/js/iew-vcontrol.js',              
+        './public/ieye/js/ieyewidget-auditoryAlert.js',              
+        './public/ieye/js/iew-log.js',              
+        './public/ieye/js/iew-controller.js',
+        ])
+    .pipe(concat('ieye-build.js'))
+        .pipe(rename({suffix: '-auditoryAlert.min'}))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/ieye/js/'));
+});
+
+gulp.task('ieye-visual', ['html2js'], function() {
+        return gulp.src([
+        './public/ieye/templates/visualAlertIntro.js',
+        './public/ieye/js/tracking-mod.js',
+        './public/ieye/js/face-min.js',
+        './public/ieye/js/client.min.js',              
+        './public/ieye/js/iew-vcontrol.js',              
+        './public/ieye/js/ieyewidget-visualAlert.js',              
+        './public/ieye/js/iew-log.js',              
+        './public/ieye/js/iew-controller.js',
+        ])
+    .pipe(concat('ieye-build.js'))
+        .pipe(rename({suffix: '-visualAlert.min'}))
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/ieye/js/'));
+});
+
+gulp.task('default', ['driver', 'ieye-pause', 'ieye-auditory', 'ieye-visual']);

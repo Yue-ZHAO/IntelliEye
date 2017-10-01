@@ -233,6 +233,74 @@ body {
 	padding: 1.25rem;
 }
 
+/* intro */
+
+.introOverlay {
+	background: rgba(153,153,153,0.5) scroll;
+	position: absolute; 	
+	top: 0;
+	left: 0;
+	/* display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex; */
+	display:none;
+    align-items: flex-start;
+    justify-content: center;
+	margin: 0;
+	width: 100%;
+	height: 200%;	
+	z-index: 9999;
+}
+
+.introBox {
+	background: var(--edx-background);
+	border: .0625rem solid #a0a0a0;
+	box-shadow: 0 0 5px rgba(0,0,0,.25);
+	color: var(--edx-text);
+	display: block;
+	line-height: 1.6;
+	position: absolute;
+	margin: 50px auto;
+	min-width: 500px;
+    width:100%;
+	/*width: 500px; */
+    max-width:1000px;
+	z-index: 99999;
+}
+
+.introTitle {
+	/*background: rgba(0, 0, 0, 0) url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	height: 60px;
+	margin: 10px 0;
+	color: var(--edx-base) !important;
+	font-size: 22px;*/
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+	line-height: 1;
+    align-items: center;
+    justify-content: left;
+	background-color: var(--edx-lightgray);
+	padding: 1.25rem;
+
+}
+
+.introTitle img {
+    margin-top: 12px;
+    margin-right: 20px;
+    width: 60px;	
+}
+
+.introContent {
+	padding: 1.25rem;
+}
+
+/* buttons  */
+
 .msgButton {
 	background-color: var(--edx-base);
 	background-image: none;

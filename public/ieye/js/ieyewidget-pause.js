@@ -2,6 +2,8 @@
 'use strict';
 (function () {
 	window.ieyewidget = window.ieyewidget || {};
+	window.ieye_intro_content = window.INTROTEMPLATES['pauseIntro.html'];
+
 	ieyewidget.logMetricsEnabled = true;
 
 	var trackerTaskReference;
