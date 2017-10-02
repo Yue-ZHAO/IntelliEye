@@ -85,15 +85,14 @@ window.IEyeController = window.IEyeController || (function() {
             // log if widget allowed, and whether it choice is remembered.
             IEWLogger.logWidgetStatus('allow', !askAgain);
 
-            if (sessionStorage.iEyeStarted == 'false') {
-                ieyewidget.startiEye();
-                sessionStorage.iEyeStarted = true;            
-            }
+            // if (sessionStorage.iEyeStarted == 'false') {
+            //     ieyewidget.startiEye();
+            //     sessionStorage.iEyeStarted = true;            
+            // }
             $('#switchUseWidget').prop('checked', true);
         } else {
-            console.log('not using vid playing');
             if (askAgain) {
-                IEWLogger.logWidgetStatus('skip', false);
+                IEWLogger.logWidgetStatus('disallow', false);
             } else {
                 IEWLogger.logWidgetStatus('disallow', true);
 
@@ -278,16 +277,15 @@ window.IEyeController = window.IEyeController || (function() {
                     // manual pause by user
                     if (useIEye() && !ieyewidget.pausedByIEye()) {
                         ieyewidget.pauseiEye();
-                        IEWLogger.logWidgetStatus('pause');
                     }
-
+                    IEWLogger.logWidgetStatus('pause');                    
                     break;
                 case 'ended':
                     if (useIEye()) {
                         ieyewidget.stopiEye();
-                        IEWLogger.logWidgetStatus('end');
                         sessionStorage.iEyeStarted = false;
                     }
+                    IEWLogger.logWidgetStatus('end');
                     break;
                 default: //none
             }
