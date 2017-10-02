@@ -38,6 +38,8 @@
 	var iEyeHasFocus = false;	// detected status
 	var pausedByIEye = false;	// has iEye paused the video
 
+	var _prevDefocus = null;
+
 	// preflightcheck notifications
 	var preflightNote;
 
@@ -191,6 +193,12 @@
 			pausedByIEye = null;
 			iEyeAuditoryAlertStop();
 		}
+
+		// log metrics when defocus changes
+		if (_prevDefocus !== isDefocus) {
+			ieyewidget.updateAndLogMetrics();
+			_prevDefocus = isDefocus;			
+		}		
 			
 		return isDefocus;
 	}

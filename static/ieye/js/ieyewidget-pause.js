@@ -37,6 +37,8 @@
 	// iEye global vars
 	var iEyeHasFocus = false;	// detected status
 	var pausedByIEye = false;	// has iEye paused the video
+	
+	var _prevDefocus = null;
 
 	// preflightcheck notifications
 	var preflightNote;
@@ -176,17 +178,21 @@
 			if (showCam()) {
 				console.log("------------DEFOCUS--------------|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString());
 			}
-			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = false;
 			pausedByIEye = true;
 			iEyeVideoPause();
 		}
 		else {
 			if (showCam())  { console.log("**FOCUS**|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString()); }
-			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = true;
 			pausedByIEye = false;
 			iEyeVideoResume();
+		}
+
+		// log metrics when defocus changes
+		if (_prevDefocus !== isDefocus) {
+			ieyewidget.updateAndLogMetrics();
+			_prevDefocus = isDefocus;			
 		}
 			
 		return isDefocus;
@@ -453,12 +459,18 @@
 	// ----------------- Pause video ----------------- 
 	function iEyeVideoPause() {
         // YUE: I add the if function
-		if (vcontrol.getCurrentPlayerState() != "pause") vcontrol.pauseVideo();
+		if (vcontrol.getCurrentPlayerState() != "pause") {
+			 vcontrol.pauseVideo();
+			ieyewidget.updateAndLogMetrics();
+		}
 	}
 
 	// ----------------- Resume video ----------------- 
 	function iEyeVideoResume() {
-		if (vcontrol.getCurrentPlayerState() == "pause") vcontrol.rewindAndPlay(getRewindSeconds());
+		if (vcontrol.getCurrentPlayerState() == "pause") {
+			vcontrol.rewindAndPlay(getRewindSeconds());
+			ieyewidget.updateAndLogMetrics();			
+		}
 	}
 
 	/**

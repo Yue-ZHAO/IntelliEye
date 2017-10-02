@@ -38,6 +38,8 @@
 	var iEyeHasFocus = false;	// detected status
 	var pausedByIEye = false;	// has iEye paused the video
 
+	var _prevDefocus = null;
+
 	// preflightcheck notifications
 	var preflightNote;
 
@@ -175,18 +177,22 @@
 			if (showCam()) {
 				console.log("------------DEFOCUS--------------|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString());
 			}
-			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = false;
 			pausedByIEye = null;
 			iEyeVisualAlertStart();
 		}
 		else {
 			if (showCam())  { console.log("**FOCUS**|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString()); }
-			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = true;
 			pausedByIEye = null;
 			iEyeVisualAlertStop();
 		}
+
+		// log metrics when defocus changes
+		if (_prevDefocus !== isDefocus) {
+			ieyewidget.updateAndLogMetrics();
+			_prevDefocus = isDefocus;			
+		}		
 			
 		return isDefocus;
 	}

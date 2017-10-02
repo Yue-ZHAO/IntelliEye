@@ -362,6 +362,7 @@ window.IEWLogger = window.IEWLogger || (function() {
         }
 
         if (status === 'pause') { 
+            console.log(">>>>>>>" + ieyewidget.pausedByIEye());
             isIEyeEvent = (ieyewidget.pausedByIEye()) ? '1' : '0';
         } else if (status === 'resume') {
             isIEyeEvent = (isIEyeEvent === '1') ? isIEyeEvent : '0';
