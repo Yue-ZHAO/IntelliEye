@@ -181,14 +181,12 @@
 			if (showCam()) {
 				console.log("------------DEFOCUS--------------|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString());
 			}
-			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = false;
 			pausedByIEye = null;
 			iEyeAuditoryAlertStart();
 		}
 		else {
 			if (showCam())  { console.log("**FOCUS**|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString()); }
-			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = true;
 			pausedByIEye = null;
 			iEyeAuditoryAlertStop();
