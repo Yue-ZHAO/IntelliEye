@@ -103,7 +103,7 @@ window.IEyeController = window.IEyeController || (function() {
                 moocwidget.UI.placeAlert('You have disabled the widget',
                 `
                     <p> Please tell us the reason you chose to disable the widget </p>
-                    <textarea id="ieyeFeedbackContent" rows="5" cols="80"></textarea>    
+                    <textarea id="ieyeFeedbackContent" rows="5" cols="80" style="height:150px;"></textarea>    
                     
                 `,
                 ['<div class="msgButton" id="ieyeSendFeedback" >Send feedback</div>'],
@@ -122,6 +122,7 @@ window.IEyeController = window.IEyeController || (function() {
                         };
 
                         IEWLogger.logFeedbackOnDisable(data);
+                        moocwidget.UI.hideAlert();
                     });
                 `);
             }
@@ -296,9 +297,9 @@ window.IEyeController = window.IEyeController || (function() {
                 default: // none;
             }
             // update the indicator with the correct status
-            IEWLogger.logWidgetStatus(widgetStatus);
-            ieyewidget.updateAndLogMetrics();
             updateIndicator(status);
+            IEWLogger.logWidgetStatus(widgetStatus);
+            ieyewidget.updateAndLogMetrics();            
         });
 
         // initialize controller

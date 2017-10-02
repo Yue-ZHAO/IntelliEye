@@ -52,9 +52,6 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).userID = userID;
     sessionData.get(sessionID).environment.windowResizes = [];
     sessionData.get(sessionID).video = [];
-    sessionData.get(sessionID).videoTotalPlayTime = new Map();
-    sessionData.get(sessionID).videoPlayStart = new Map();
-    sessionData.get(sessionID).videoPlayStop = new Map();
     sessionData.get(sessionID).widget = [];
     sessionData.get(sessionID).lastBeat = (new Date());
     sessionData.get(sessionID).exception = [];
@@ -80,9 +77,6 @@ router.post('/data/:type', function(req, res) {
             break;
         case 'video': // array of video statusses
             user.video = user.video.concat(data);
-            user.videoTotalPlayTime.set(data.ID, data.totalPlayTime);
-            user.videoPlayStart.set(data.ID, data.videoPlayStart);
-            user.videoPlayStop.set(data.ID, data.videoPlayStop);
             break;
         case 'prediction': // single prediction object
             user.prediction.push(data);
