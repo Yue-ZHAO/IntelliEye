@@ -77,9 +77,13 @@ window.IEyeController = window.IEyeController || (function() {
         if (askAgain) {
             console.log('choice not remembered');
             localStorage.removeItem('use_ieye');
+            // Yue: Maybe we should also add line here to logChoice
+            // like IEWLogger.logChoice(widgetIsUsed, fromSwitch);
         } else {
             console.log('choice remembered');
             IEWLogger.logChoice(widgetIsUsed);
+            // Yue: Maybe we can revise the above function as
+            // like IEWLogger.logChoice(widgetIsUsed, fromSwitch);
         }
 
         // when user changes decision when the video is playing
