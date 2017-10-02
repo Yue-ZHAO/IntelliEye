@@ -9,76 +9,76 @@ var html2string = require('gulp-html2string');
 
 gulp.task('driver', function() {
         return gulp.src([
-        './public/client.min.js',
-        './public/moocwidget-dev.js',
+        './static/client.min.js',
+        './static/moocwidget-dev.js',
         ])
     .pipe(concat('moocwidget.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./public/'));
+        .pipe(gulp.dest('./static/'));
 });
 
 gulp.task('html2js', function() {
-    return gulp.src('./public/ieye/templates/*.html')
+    return gulp.src('./static/ieye/templates/*.html')
       .pipe(html2string({
-        base: './public/ieye/templates/', // The base path of HTML templates 
+        base: './static/ieye/templates/', // The base path of HTML templates 
         createObj: true, // Indicate wether to define the global object that stores 
                          // the global template strings 
         objName: 'INTROTEMPLATES', // Name of the global template store variable 
                               // say the converted string for myTemplate.html will be saved to TEMPLATE['myTemplate.html'] 
       }))
       .pipe(rename({suffix: '-build', extname: '.js'}))
-      .pipe(gulp.dest('./public/ieye/templates/')); // Output folder 
+      .pipe(gulp.dest('./static/ieye/templates/')); // Output folder 
   });
  
 gulp.task('ieye-pause', ['html2js'], function() {
         return gulp.src([
-        './public/ieye/templates/pauseIntro-build.js',
-        './public/ieye/js/tracking-mod.js',
-        './public/ieye/js/face-min.js',
-        './public/ieye/js/client.min.js',              
-        './public/ieye/js/iew-vcontrol.js',              
-        './public/ieye/js/ieyewidget-pause.js',              
-        './public/ieye/js/iew-log.js',              
-        './public/ieye/js/iew-controller.js',
+        './static/ieye/templates/pauseIntro-build.js',
+        './static/ieye/js/tracking-mod.js',
+        './static/ieye/js/face-min.js',
+        './static/ieye/js/client.min.js',              
+        './static/ieye/js/iew-vcontrol.js',              
+        './static/ieye/js/ieyewidget-pause.js',              
+        './static/ieye/js/iew-log.js',              
+        './static/ieye/js/iew-controller.js',
         ])
     .pipe(concat('ieye-build.js'))
         .pipe(rename({suffix: '-pause.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('./public/ieye/js/'));
+        .pipe(gulp.dest('./static/ieye/js/'));
 });
 
 gulp.task('ieye-auditory', ['html2js'], function() {
         return gulp.src([
-        './public/ieye/templates/auditoryAlertIntro-build.js',
-        './public/ieye/js/tracking-mod.js',
-        './public/ieye/js/face-min.js',
-        './public/ieye/js/client.min.js',              
-        './public/ieye/js/iew-vcontrol.js',              
-        './public/ieye/js/ieyewidget-auditoryAlert.js',              
-        './public/ieye/js/iew-log.js',              
-        './public/ieye/js/iew-controller.js',
+        './static/ieye/templates/auditoryAlertIntro-build.js',
+        './static/ieye/js/tracking-mod.js',
+        './static/ieye/js/face-min.js',
+        './static/ieye/js/client.min.js',              
+        './static/ieye/js/iew-vcontrol.js',              
+        './static/ieye/js/ieyewidget-auditoryAlert.js',              
+        './static/ieye/js/iew-log.js',              
+        './static/ieye/js/iew-controller.js',
         ])
     .pipe(concat('ieye-build.js'))
         .pipe(rename({suffix: '-auditoryAlert.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('./public/ieye/js/'));
+        .pipe(gulp.dest('./static/ieye/js/'));
 });
 
 gulp.task('ieye-visual', ['html2js'], function() {
         return gulp.src([
-        './public/ieye/templates/visualAlertIntro-build.js',
-        './public/ieye/js/tracking-mod.js',
-        './public/ieye/js/face-min.js',
-        './public/ieye/js/client.min.js',              
-        './public/ieye/js/iew-vcontrol.js',              
-        './public/ieye/js/ieyewidget-visualAlert.js',              
-        './public/ieye/js/iew-log.js',              
-        './public/ieye/js/iew-controller.js',
+        './static/ieye/templates/visualAlertIntro-build.js',
+        './static/ieye/js/tracking-mod.js',
+        './static/ieye/js/face-min.js',
+        './static/ieye/js/client.min.js',              
+        './static/ieye/js/iew-vcontrol.js',              
+        './static/ieye/js/ieyewidget-visualAlert.js',              
+        './static/ieye/js/iew-log.js',              
+        './static/ieye/js/iew-controller.js',
         ])
     .pipe(concat('ieye-build.js'))
         .pipe(rename({suffix: '-visualAlert.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('./public/ieye/js/'));
+        .pipe(gulp.dest('./static/ieye/js/'));
 });
 
 gulp.task('default', ['driver', 'ieye-pause', 'ieye-auditory', 'ieye-visual']);
