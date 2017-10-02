@@ -329,6 +329,10 @@ window.IEWLogger = window.IEWLogger || (function() {
     }; 
 
     module.logChoice = function(choice) {
+        // Yue: This function need to be revise like
+        // 'choice': (choice) ? 'allow' : 'disallow',
+        // 'Remember': (fromSwitch) ? 'Remember' : 'Ask',
+        // 'choiceTimeStamp': Date.now(),
         var data = {
             'choiceRemembered': (choice) ? 'allow' : 'disallow',
             'choiceTimeStamp': Date.now(),
