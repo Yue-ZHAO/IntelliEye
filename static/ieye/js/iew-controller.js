@@ -3,7 +3,6 @@ var IEYEVERSION = '01';
 
 window.IEyeController = window.IEyeController || (function() {
     var module = {}; // store public functions here
-    var widgetStatus = 'end';
     var fullscreen = false;
     // =========================================================================
     // Private 
@@ -35,7 +34,6 @@ window.IEyeController = window.IEyeController || (function() {
         $('.seq_video').on('click', function() {
             if (useIEye()) {
                 ieyewidget.stopiEye();
-                widgetStatus = 'end';
                 sessionStorage.iEyeStarted = false;
             }
         });
@@ -259,9 +257,7 @@ window.IEyeController = window.IEyeController || (function() {
         // pass callback function which controls what happens for each state.
         // status can be: play pause seek ended.
         vcontrol.init(function (status)  {
-            // YUE, will this function be called every time when the status change?
-            // TODO, should we also consider previours status here? I am not sure
-            // Since I received some video status from Youtube like "play -> play" in my crowdsourcing task before
+            var widgetStatus;
             switch (status) {
                 case 'play':
 
@@ -294,7 +290,7 @@ window.IEyeController = window.IEyeController || (function() {
                         sessionStorage.iEyeStarted = false;
                     }
                     break;
-                default: // none;
+                default: widgetStatus = 'undefined';
             }
             // update the indicator with the correct status
             updateIndicator(status);
