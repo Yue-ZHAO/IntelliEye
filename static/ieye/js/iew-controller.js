@@ -113,7 +113,7 @@ window.IEyeController = window.IEyeController || (function() {
                             time: Date.now(),
                             userID: IEWLogger.getUserId(),
                             sessionID: IEWLogger.getSessionId(),
-                            feedbackContent: $('#ieyeFeedbackContent).val(),
+                            feedbackContent: $('#ieyeFeedbackContent').val(),
                             pageURL: document.URL,
                             pageTitle: document.title,
                             videoID: vcontrol.getCurrentPlayerID(),
