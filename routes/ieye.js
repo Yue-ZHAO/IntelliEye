@@ -57,6 +57,7 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).exception = [];
     sessionData.get(sessionID).pausedCountUser = 0;
     sessionData.get(sessionID).pausedCountWidget = 0;    
+    sessionData.get(sessionID).alerts = [];    
     sessionData.get(sessionID).metrics = [];    
 
     dp.createUserFile('ieye', userID);
@@ -98,6 +99,9 @@ router.post('/data/:type', function(req, res) {
             break;
         case 'metrics':
             user.metrics.push(data);
+            break;
+        case 'alert':
+            user.alerts.push(data);
             break;
         case 'feedback':
             dp.writeFeedback(data);

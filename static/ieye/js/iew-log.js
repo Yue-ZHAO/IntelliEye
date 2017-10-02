@@ -328,17 +328,8 @@ window.IEWLogger = window.IEWLogger || (function() {
         sendLog('exception', data);       
     }; 
 
-    module.logChoice = function(choice) {
-        // Yue: This function need to be revise like
-        // 'choice': (choice) ? 'allow' : 'disallow',
-        // 'Remember': (fromSwitch) ? 'Remember' : 'Ask',
-        // 'choiceTimeStamp': Date.now(),
-        var data = {
-            'choiceRemembered': (choice) ? 'allow' : 'disallow',
-            'choiceTimeStamp': Date.now(),
-        };
-
-        sendLog('choice', data);
+    module.logAlert = function(data) {
+        sendLog('alert', data);
     };
 
     module.logFeedbackOnDisable = function(data) {

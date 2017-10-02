@@ -473,6 +473,14 @@
 				// fullscreen mode
 				$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink-fs');
 			}
+
+			IEWLogger.logAlert({
+				'time': Date.now(),
+				'videoID': vcontrol.getCurrentPlayerID(),
+				'videoTime': vcontrol.getCurrentTime(),
+				'videoDuration': vcontrol.getDuration(),
+				'status': 'start',
+			});				
 		}
 	}
 
@@ -483,6 +491,13 @@
 		} else if ($('.tc-wrapper').hasClass('blink')) {
 			$('.tc-wrapper').removeClass('blink');
 		}
+		IEWLogger.logAlert({
+			'time': Date.now(),
+			'videoID': vcontrol.getCurrentPlayerID(),
+			'videoTime': vcontrol.getCurrentTime(),
+			'videoDuration': vcontrol.getDuration(),
+			'status': 'stop',
+		});			
 	}
 
 	/**
