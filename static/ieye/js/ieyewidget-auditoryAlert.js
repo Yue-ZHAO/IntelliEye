@@ -468,15 +468,18 @@
 
 	// ----------------- Stop auditory alert ----------------- 
 	function iEyeAuditoryAlertStop() {
-		clearInterval(auditoryAlertIntRef);
-		auditoryAlertIntRef = null;
-		IEWLogger.logAlert({
-			'time': Date.now(),
-			'videoID': vcontrol.getCurrentPlayerID(),
-			'videoTime': vcontrol.getCurrentTime(),
-			'videoDuration': vcontrol.getDuration(),
-			'status': 'stop',
-		});			
+		if (auditoryAlertIntRef !== null) {
+			clearInterval(auditoryAlertIntRef);
+			auditoryAlertIntRef = null;
+			IEWLogger.logAlert({
+				'time': Date.now(),
+				'videoID': vcontrol.getCurrentPlayerID(),
+				'videoTime': vcontrol.getCurrentTime(),
+				'videoDuration': vcontrol.getDuration(),
+				'status': 'stop',
+			});					
+		}
+	
 	}
 
 	// ----------------- Start auditory alert ----------------- 

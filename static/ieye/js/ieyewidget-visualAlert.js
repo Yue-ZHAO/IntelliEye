@@ -488,16 +488,23 @@
 	function iEyeVisualAlertStop() {
 		if ($('.tc-wrapper').hasClass('blink-fs')) {
 			$('.tc-wrapper').removeClass('blink-fs');
+			IEWLogger.logAlert({
+				'time': Date.now(),
+				'videoID': vcontrol.getCurrentPlayerID(),
+				'videoTime': vcontrol.getCurrentTime(),
+				'videoDuration': vcontrol.getDuration(),
+				'status': 'stop',
+			});				
 		} else if ($('.tc-wrapper').hasClass('blink')) {
 			$('.tc-wrapper').removeClass('blink');
-		}
-		IEWLogger.logAlert({
-			'time': Date.now(),
-			'videoID': vcontrol.getCurrentPlayerID(),
-			'videoTime': vcontrol.getCurrentTime(),
-			'videoDuration': vcontrol.getDuration(),
-			'status': 'stop',
-		});			
+			IEWLogger.logAlert({
+				'time': Date.now(),
+				'videoID': vcontrol.getCurrentPlayerID(),
+				'videoTime': vcontrol.getCurrentTime(),
+				'videoDuration': vcontrol.getDuration(),
+				'status': 'stop',
+			});				
+		}		
 	}
 
 	/**
