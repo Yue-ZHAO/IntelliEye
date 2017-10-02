@@ -36,7 +36,7 @@
 
 	// iEye global vars
 	var iEyeHasFocus = false;	// detected status
-	ieyewidget.pausedByIEye = false;	// has iEye paused the video
+	var pausedByIEye = false;	// has iEye paused the video
 
 	// preflightcheck notifications
 	var preflightNote;
@@ -179,14 +179,16 @@
 			if (showCam()) {
 				console.log("------------DEFOCUS--------------|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString());
 			}
+			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = false;
-			ieyewidget.pausedByIEye = null;
+			pausedByIEye = null;
 			iEyeAuditoryAlertStart();
 		}
 		else {
 			if (showCam())  { console.log("**FOCUS**|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString()); }
+			ieyewidget.updateAndLogMetrics();
 			iEyeHasFocus = true;
-			ieyewidget.pausedByIEye = null;
+			pausedByIEye = null;
 			iEyeAuditoryAlertStop();
 		}
 			
@@ -508,9 +510,13 @@
 			'defocusDurationTimeMS': defocusDurationTimeMS,
 			'trend': getCurrentTrend(),
 			'iEyeHasFocus': iEyeHasFocus,
-			'pausedByIEye': ieyewidget.pausedByIEye,
+			'pausedByIEye': pausedByIEye,
 			'tjsThresholdDefocus': tjsThresholdDefocus,
 			'tjsThresholdFocus': tjsThresholdFocus
 		};
 	}
+
+	ieyewidget.pausedByIEye = function() {
+		return pausedByIEye;
+	};	
 }) (window);

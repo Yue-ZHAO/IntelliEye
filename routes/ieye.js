@@ -55,7 +55,6 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).widget = [];
     sessionData.get(sessionID).lastBeat = (new Date());
     sessionData.get(sessionID).exception = [];
-    sessionData.get(sessionID).userChoices = [];
     sessionData.get(sessionID).pausedCountUser = 0;
     sessionData.get(sessionID).pausedCountWidget = 0;    
     sessionData.get(sessionID).metrics = [];    
@@ -96,9 +95,6 @@ router.post('/data/:type', function(req, res) {
             break;
         case 'exception':
             user.exception.push(data);
-            break;
-        case 'choice':
-            user.userChoices.push(data);
             break;
         case 'metrics':
             user.metrics.push(data);

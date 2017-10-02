@@ -257,7 +257,6 @@ window.IEyeController = window.IEyeController || (function() {
         // pass callback function which controls what happens for each state.
         // status can be: play pause seek ended.
         vcontrol.init(function (status)  {
-            var widgetStatus;
             switch (status) {
                 case 'play':
 
@@ -266,36 +265,34 @@ window.IEyeController = window.IEyeController || (function() {
                         moocwidget.envChecker.webcamState();
                         sessionStorage.iEyeStarted = true;
                         ieyewidget.startiEye();
-                        widgetStatus = 'start';
+                        IEWLogger.logWidgetStatus('start');
 
                     } else if (useIEye() && sessionStorage.iEyeStarted === 'true') {
                         ieyewidget.resumeiEye();
-                        widgetStatus = 'resume';
+                        IEWLogger.logWidgetStatus('resume');
                     }
 
                     break;
                 case 'pause':
 
                     // manual pause by user
-                    if (useIEye() && !ieyewidget.pausedByIEye) {
+                    if (useIEye() && !ieyewidget.pausedByIEye()) {
                         ieyewidget.pauseiEye();
-                        widgetStatus = 'pause';
+                        IEWLogger.logWidgetStatus('pause');
                     }
 
                     break;
                 case 'ended':
                     if (useIEye()) {
                         ieyewidget.stopiEye();
-                        widgetStatus = 'end';
+                        IEWLogger.logWidgetStatus('end');
                         sessionStorage.iEyeStarted = false;
                     }
                     break;
-                default: widgetStatus = 'undefined';
+                default: //none
             }
             // update the indicator with the correct status
-            updateIndicator(status);
-            IEWLogger.logWidgetStatus(widgetStatus);
-            ieyewidget.updateAndLogMetrics();            
+            updateIndicator(status);            
         });
 
         // initialize controller
