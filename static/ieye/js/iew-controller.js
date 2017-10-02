@@ -75,20 +75,18 @@ window.IEyeController = window.IEyeController || (function() {
         $.cookie('use_ieye', widgetIsUsed);        
 
         if (askAgain) {
-            console.log('choice not remembered');
             localStorage.removeItem('use_ieye');
-        } else {
-            console.log('choice remembered');
-            IEWLogger.logChoice(widgetIsUsed);
-        }
+        } 
 
         // when user changes decision when the video is playing
         // stop ieye if they chooses not to use the widget
         // start ieye if they chooses to use the widget
         if (widgetIsUsed) {
             moocwidget.envChecker.webcamState();
-            console.log('using vid playing');
-            IEWLogger.logWidgetStatus('allow');
+
+            // log if widget allowed, and whether it choice is remembered.
+            IEWLogger.logWidgetStatus('allow', !askAgain);
+
             if (sessionStorage.iEyeStarted == 'false') {
                 ieyewidget.startiEye();
                 sessionStorage.iEyeStarted = true;            
@@ -97,9 +95,35 @@ window.IEyeController = window.IEyeController || (function() {
         } else {
             console.log('not using vid playing');
             if (askAgain) {
-                IEWLogger.logWidgetStatus('skip');
+                IEWLogger.logWidgetStatus('skip', false);
             } else {
-                IEWLogger.logWidgetStatus('disallow');
+                IEWLogger.logWidgetStatus('disallow', true);
+
+                // when user disables widget and remembers the choice
+                moocwidget.UI.placeAlert('You have disabled the widget',
+                `
+                    <p> Please tell us the reason you chose to disable the widget </p>
+                    <textarea id="ieyeFeedbackContent" rows="5" cols="80"></textarea>    
+                    
+                `,
+                ['<div class="msgButton" id="ieyeSendFeedback" >Send feedback</div>'],
+                `
+                    $("#ieyeSendFeedback").on('click', function() {
+                        var data = {
+                            time: Date.now(),
+                            userID: IEWLogger.getUserId(),
+                            sessionID: IEWLogger.getSessionId(),
+                            feedbackContent: $('#ieyeFeedbackContent).val(),
+                            pageURL: document.URL,
+                            pageTitle: document.title,
+                            videoID: vcontrol.getCurrentPlayerID(),
+                            videoTime: vcontrol.getCurrentTime(),
+                            videoDuration: vcontrol.getDuration()
+                        };
+
+                        IEWLogger.logFeedbackOnDisable(data);
+                    });
+                `);
             }
 
             if (sessionStorage.iEyeStarted == 'true') {
@@ -272,6 +296,7 @@ window.IEyeController = window.IEyeController || (function() {
                 default: // none;
             }
             // update the indicator with the correct status
+            IEWLogger.logWidgetStatus(widgetStatus);
             ieyewidget.updateAndLogMetrics();
             updateIndicator(status);
         });

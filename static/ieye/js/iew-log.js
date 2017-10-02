@@ -190,16 +190,6 @@ window.IEWLogger = window.IEWLogger || (function() {
             }
         }
 
-        var videoPlayStart = 'n/a';
-        if (vcontrol.getCurrentPlayerState() === 'play') {
-            videoPlayStart = vcontrol.getCurrentPlayer().currentTime;
-        }
-
-        var videoPlayStop = 'n/a';
-        if (vcontrol.getCurrentPlayerState() === 'pause' || vcontrol.getCurrentPlayerState() === 'ended') {
-            videoPlayStop = vcontrol.getCurrentPlayer().currentTime;
-        }        
-
         if (changed) {
             vcontrol.updateOverlay();
             var chndObject = {
@@ -309,6 +299,10 @@ window.IEWLogger = window.IEWLogger || (function() {
         return isReady;
     };
 
+    module.getUserId = function() {
+        return getUserId();
+    };
+
     module.getSessionId = function() {
         return getSessionId();
     };
@@ -343,24 +337,28 @@ window.IEWLogger = window.IEWLogger || (function() {
         sendLog('choice', data);
     };
 
+    module.logFeedbackOnDisable = function(data) {
+        sendLog('feedback', data);
+    };
+
     /**
      * Logs the status of the widget
      * @param {*} status status of widget
-     * @param {*} isIEyeEvent if event is triggered by ieye
+     * @param {*} remembered whether the user chooses to remember choice (optional)
      */
-    module.logWidgetStatus = function(status) {
+    module.logWidgetStatus = function(status, remembered=undefined) {
         if (!vcontrol.isReady() || !vcontrol.getCurrentPlayer()) {
-        return;
+            return;
         }
 
         // eslint-disable-next-line
         function findStatusCode(s) {
-        var wstatus = ['', 'allow', 'skip', 'start', 'pause', 'resume', 'end', 'disallow'];
-        return wstatus.indexOf(s) > -1 ? wstatus.indexOf(s) : 'unknown';
+            var wstatus = ['', 'allow', 'skip', 'start', 'pause', 'resume', 'end', 'disallow'];
+            return wstatus.indexOf(s) > -1 ? wstatus.indexOf(s) : 'unknown';
         }
 
         if (status === 'pause') { 
-            isIEyeEvent = (pausedByIEye) ? '1' : '0';
+            isIEyeEvent = (ieyewidget.pausedByIEye) ? '1' : '0';
         } else if (status === 'resume') {
             isIEyeEvent = (isIEyeEvent === '1') ? isIEyeEvent : '0';
         } else {
@@ -374,6 +372,7 @@ window.IEWLogger = window.IEWLogger || (function() {
             'videoDuration': vcontrol.getDuration(),
             'eventTypeID': findStatusCode(status),
             'eventType': status,
+            'remembered': (remembered !== undefined) ? remembered : 'n/a',
             'isIEyeEvent': isIEyeEvent,
         };
 

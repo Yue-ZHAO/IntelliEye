@@ -89,23 +89,28 @@ router.post('/data/:type', function(req, res) {
             break;
         case 'widget': // single widget status object
             user.widget.push(data);
+            // if paused
+            if (data['eventTypeID'] == '4') {
+                // if paused by widget:
+                if (data['isIEyeEvent'] == '1') {
+                    user.pausedCountWidget += 1;
+                } else {
+                    // if paused by user
+                    user.pausedCountUser += 1;
+                }
+            }            
             break;
         case 'exception':
             user.exception.push(data);
             break;
         case 'choice':
             user.userChoices.push(data);
-            if (data['eventTypeID'] == '4') {
-                // if paused
-                if (data['isIEyeEvent'] == '1') {
-                    user.pausedCountWidget += 1;
-                } else {
-                    user.pausedCountUser += 1;
-                }
-            }
             break;
         case 'metrics':
             user.metrics.push(data);
+            break;
+        case 'feedback':
+            dp.writeFeedback(data);
             break;
         default: // none
     }
