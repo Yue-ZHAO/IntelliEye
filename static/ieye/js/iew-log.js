@@ -148,13 +148,13 @@ window.IEWLogger = window.IEWLogger || (function() {
             };
             _windowSizes.push(chndObject);
             _prevWindow = chndObject;          
+        } else {
+            return;
         }
 
        if ((forceSend || _windowSizes.length >= MAX_METRIC_COUNT) && !_windowDataSentBusy) {
-            console.log('send server window sizes: ' + _windowSizes);
             _windowDataSentBusy = true;
             $.post(dataRoute + '/environment', {sessionID: getSessionId(), data: _windowSizes}, function() {
-                console.log('send success');
                 _windowSizes = [];
                 _windowDataSentBusy = false;
             });
@@ -197,9 +197,7 @@ window.IEWLogger = window.IEWLogger || (function() {
                 changed = true;
             }
 
-            if (vcontrol.getCurrentPlayerState() != last.videoStatus) {
-                console.log('new status: ' + vcontrol.getCurrentPlayerState());
-                console.log('last: '+ last.videoStatus);  
+            if (vcontrol.getCurrentPlayerState() != last.videoStatus) { 
                 changed = true;
             }
         }
@@ -219,19 +217,15 @@ window.IEWLogger = window.IEWLogger || (function() {
             };
             _prevVideoStatus = chndObject;
             _videoStatus.push(chndObject);          
+        } else {
+            return;
         }
 
-        console.log(">>>" + forceSend);
-        console.log(">>>" + _videoStatus.length);
-        console.log(">>>" + _videoDataSentBusy);
         if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
             _videoDataSentBusy = true;
-            console.log('send server video status: ' + _videoStatus);
             $.post(dataRoute + '/video', {sessionID: getSessionId(), data: _videoStatus}, function() {
-                console.log('Send success');
                 _videoStatus = [];
                 _videoDataSentBusy = false;
-                console.log(_videoStatus.length);
             });
         }  
     }
@@ -416,7 +410,6 @@ window.IEWLogger = window.IEWLogger || (function() {
 
     module.logMetrics = function(data) {
         sendLog('metrics', data);
-        console.log('sending metrics...');
     };
 
     return module;
