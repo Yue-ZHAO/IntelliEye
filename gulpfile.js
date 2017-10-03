@@ -9,17 +9,25 @@ var uglify = require('gulp-uglify-es').default;
 var rename = require('gulp-rename');
 var html2string = require('gulp-html2string');
 
-gulp.task('driver', function() {
+gulp.task('moocwidget', function() {
     return gulp.src([
-    './static/client.min.js',
-    './static/moocwidget-dev.js',
+        './static/moocwidget-dev.js',
     ])
     .pipe(concat('moocwidget.js'))
-        .pipe(babel({
-            presets: ['es2015'],
-        }))
-        .pipe(uglify())
-        .pipe(gulp.dest('./static/'));
+    .pipe(babel({
+        presets: ['es2015'],
+    }))
+    .pipe(gulp.dest('./static/'));
+});
+
+gulp.task('driver', ['moocwidget'], function() {
+    return gulp.src([
+    './static/client.min.js',
+    './static/moocwidget.js',
+    ])
+    .pipe(concat('moocwidget.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./static/'));
 });
 
 gulp.task('html2js', function() {
