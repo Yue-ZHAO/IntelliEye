@@ -1,0 +1,26 @@
+html
+  head
+    title Sessions
+    link(rel='stylesheet', href='/static/ieye/css/bootstrap.min.css')
+
+    block scripts
+        script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
+        script.
+            $(document).ready(() => {
+                var key = prompt("", "");
+
+                if (key != null) {
+                    $.post('/ieye/check', {'key':key})
+                        .done((status) => {
+                            console.log(status);
+                            if (status === 'valid')
+                                window.location.href='/ieye/sessions'; 
+                            else
+                                window.location.href=document.URL;
+                        });
+                } 
+            });
+  body
+    block content
+    block foot
+footer(style="margin:auto;margin-bottom:50px;width:50%;text-align:center")

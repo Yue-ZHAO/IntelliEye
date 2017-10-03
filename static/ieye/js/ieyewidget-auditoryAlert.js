@@ -2,6 +2,8 @@
 'use strict';
 (function () {
 	window.ieyewidget = window.ieyewidget || {};
+	window.ieye_intro_content = window.INTROTEMPLATES['auditoryAlertIntro.html'];
+
 	ieyewidget.logMetricsEnabled = true;
 
 	var trackerTaskReference;
@@ -34,10 +36,15 @@
 
 	// iEye global vars
 	var iEyeHasFocus = false;	// detected status
-	ieyewidget.pausedByIEye = false;	// has iEye paused the video
+	var pausedByIEye = false;	// has iEye paused the video
+
+	var _prevDefocus = null;
 
 	// preflightcheck notifications
 	var preflightNote;
+
+	// auditory alert
+	var auditoryAlertIntRef = null;
 
 
 	/** 
@@ -153,10 +160,10 @@
 					isDefocus = true;
 			}
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible) {
+		else if (scoreTjs > tjsThresholdFocus && isVisible && hasFocus) {
 			isDefocus = false;	
 		}
-		else if ( scoreTjs > tjsThresholdFocus && isVisible == false) {
+		else if (scoreTjs > tjsThresholdFocus && (isVisible == false || hasFocus == false)) {
 			isDefocus = true;			
 		}
 		
@@ -175,15 +182,21 @@
 				console.log("------------DEFOCUS--------------|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString());
 			}
 			iEyeHasFocus = false;
-			ieyewidget.pausedByIEye = true;
-			iEyeVideoPause();
+			pausedByIEye = null;
+			iEyeAuditoryAlertStart();
 		}
 		else {
 			if (showCam())  { console.log("**FOCUS**|" + vcontrol.getCurrentPlayerState() + '|' + (new Date()).toISOString()); }
 			iEyeHasFocus = true;
-			ieyewidget.pausedByIEye = false;
-			iEyeVideoResume();
+			pausedByIEye = null;
+			iEyeAuditoryAlertStop();
 		}
+
+		// log metrics when defocus changes
+		if (_prevDefocus !== isDefocus) {
+			ieyewidget.updateAndLogMetrics();
+			_prevDefocus = isDefocus;			
+		}		
 			
 		return isDefocus;
 	}
@@ -353,6 +366,8 @@
 		iEyeIntervalRef = null;
 		clearInterval(iEyeIntervalRef2);
 		iEyeIntervalRef2 = null;
+		// clean auditory alert, if any.
+		iEyeAuditoryAlertStop();
 	};
 
 	// ----------------- RESUME -----------------
@@ -400,6 +415,9 @@
 		iEyeIntervalRef = null;
 		clearInterval(iEyeIntervalRef2);
 		iEyeIntervalRef2 = null;
+
+		//clean auditory alert, if any.
+		iEyeAuditoryAlertStop();
 	};
 
 
@@ -443,18 +461,41 @@
 	}
 
 	/**
-	 * ---------VIDEO PLAYER MANIPULATION BELOW ----------
+	 * ---------AUDITORY ALERT BELOW ----------
 	 */
 
-	// ----------------- Pause video ----------------- 
-	function iEyeVideoPause() {
-        // YUE: I add the if function
-		if (vcontrol.getCurrentPlayerState() != "pause") vcontrol.pauseVideo();
+	// ----------------- Stop auditory alert ----------------- 
+	function iEyeAuditoryAlertStop() {
+		if (auditoryAlertIntRef !== null) {
+			clearInterval(auditoryAlertIntRef);
+			auditoryAlertIntRef = null;
+			IEWLogger.logAlert({
+				'time': Date.now(),
+				'videoID': vcontrol.getCurrentPlayerID(),
+				'videoTime': vcontrol.getCurrentTime(),
+				'videoDuration': vcontrol.getDuration(),
+				'status': 'stop',
+			});					
+		}
+	
 	}
 
-	// ----------------- Resume video ----------------- 
-	function iEyeVideoResume() {
-		if (vcontrol.getCurrentPlayerState() == "pause") vcontrol.rewindAndPlay(getRewindSeconds());
+	// ----------------- Start auditory alert ----------------- 
+	function iEyeAuditoryAlertStart() {
+		if (auditoryAlertIntRef === null && vcontrol.getCurrentPlayerState() === 'play') {
+			var audio = new Audio('https://moocwidgets.cc/static/ieye/alert.mp3');
+			audio.play();			
+			auditoryAlertIntRef = setInterval(() => {
+                audio.play();
+			}, 5000);
+			IEWLogger.logAlert({
+				'time': Date.now(),
+				'videoID': vcontrol.getCurrentPlayerID(),
+				'videoTime': vcontrol.getCurrentTime(),
+				'videoDuration': vcontrol.getDuration(),
+				'status': 'start',
+			});	
+		}
 	}
 
 	/**
@@ -492,9 +533,13 @@
 			'defocusDurationTimeMS': defocusDurationTimeMS,
 			'trend': getCurrentTrend(),
 			'iEyeHasFocus': iEyeHasFocus,
-			'pausedByIEye': ieyewidget.pausedByIEye,
+			'pausedByIEye': pausedByIEye,
 			'tjsThresholdDefocus': tjsThresholdDefocus,
 			'tjsThresholdFocus': tjsThresholdFocus
 		};
 	}
+
+	ieyewidget.pausedByIEye = function() {
+		return pausedByIEye;
+	};	
 }) (window);

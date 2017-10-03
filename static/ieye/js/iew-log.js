@@ -6,6 +6,10 @@ window.IEWLogger = window.IEWLogger || (function() {
     //
     // IEYEVERSION IS DEFINED IN CONTROLLER MODULE
     // =========================================================================
+    // module ready status
+    var isReady;
+
+    // check edx's readiness
     var readyCheck;
 
     var LOG_ENABLED = true;
@@ -39,13 +43,16 @@ window.IEWLogger = window.IEWLogger || (function() {
     // time of heartbeat messages (ms) to send.
     // MUST BE SMALLER THAN SERVER'S CHECKTIME VALUE (300000)
     const HEARTBEAT_TIME = 30000; 
+    var HEARTBEAT_UPDATE = null;
     var _heartbeatBusy = false;
 
     /**
      * Initialize logger
+     * @param {function} next Calls the next function (iew-controller) after initializing logger has been finished.
      */
-    function init() {
+    function init(next) {
         readyCheck = setInterval(function() {
+            if (analytics && analytics.user()) {
                 clearInterval(readyCheck);
 
                 sessionStartDate = new Date();
@@ -61,8 +68,11 @@ window.IEWLogger = window.IEWLogger || (function() {
                         'userID': getUserId(),
                         'sessionID': getSessionId(),
                         'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
+                        'reactionType': moocwidget.WIDGET_TYPE,
                         'pageTitle': document.title,
                         'pageURL': document.URL,
+                        'banned': false,
+                        'banReasons': [],
                         'environment': moocwidget.envChecker.getEnvironment(),
                     };
 
@@ -76,13 +86,13 @@ window.IEWLogger = window.IEWLogger || (function() {
                     clearInterval(HEARTBEAT_UPDATE);
                 }           
 
-                METRIC_UPDATE = setInterval(function() {
+                METRIC_UPDATE = (METRIC_UPDATE !== null) ? METRIC_UPDATE : setInterval(function() {
                     // console.log(getSessionId());
                     _updateEnvironment();
                     _updateVideoStatus();
                 }, METRIC_UPDATE_INTERVAL);
 
-                HEARTBEAT_UPDATE = setInterval(function() {
+                HEARTBEAT_UPDATE = (HEARTBEAT_UPDATE !== null) ? HEARTBEAT_UPDATE : setInterval(function() {
                     if (!_heartbeatBusy) {
                         _heartbeatBusy = true;
                         $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()}, function() {
@@ -91,7 +101,11 @@ window.IEWLogger = window.IEWLogger || (function() {
                     }
                 }, HEARTBEAT_TIME);                     
                 
-                isReady = true;                     
+                if (typeof next !== undefined) {
+                    next();
+                }
+                isReady = true;      
+            }               
         }, 100);
     }
 
@@ -134,13 +148,13 @@ window.IEWLogger = window.IEWLogger || (function() {
             };
             _windowSizes.push(chndObject);
             _prevWindow = chndObject;          
+        } else {
+            return;
         }
 
        if ((forceSend || _windowSizes.length >= MAX_METRIC_COUNT) && !_windowDataSentBusy) {
-            console.log('send server window sizes: ' + _windowSizes);
             _windowDataSentBusy = true;
             $.post(dataRoute + '/environment', {sessionID: getSessionId(), data: _windowSizes}, function() {
-                console.log('send success');
                 _windowSizes = [];
                 _windowDataSentBusy = false;
             });
@@ -164,7 +178,7 @@ window.IEWLogger = window.IEWLogger || (function() {
      */
     function _updateVideoStatus(forceSend=false) {
         // console.log('update: ' + _videoStatus.length);
-        var pState = vcontrol.getPlayerStateFromID(vcontrol.getCurrentPlayerID());
+        var pState = vcontrol.getPlayerDataStateFromID(vcontrol.getCurrentPlayerID());
         if (typeof pState === 'undefined') {
             return;
         }
@@ -183,22 +197,10 @@ window.IEWLogger = window.IEWLogger || (function() {
                 changed = true;
             }
 
-            if (vcontrol.getCurrentPlayerState() != last.videoStatus) {
-                console.log('new status: ' + vcontrol.getCurrentPlayerState());
-                console.log('last: '+ last.videoStatus);  
+            if (vcontrol.getCurrentPlayerState() != last.videoStatus) { 
                 changed = true;
             }
         }
-
-        var videoPlayStart = 'n/a';
-        if (vcontrol.getCurrentPlayerState() === 'play') {
-            videoPlayStart = vcontrol.getCurrentPlayer().currentTime;
-        }
-
-        var videoPlayStop = 'n/a';
-        if (vcontrol.getCurrentPlayerState() === 'pause' || vcontrol.getCurrentPlayerState() === 'ended') {
-            videoPlayStop = vcontrol.getCurrentPlayer().currentTime;
-        }        
 
         if (changed) {
             vcontrol.updateOverlay();
@@ -208,26 +210,22 @@ window.IEWLogger = window.IEWLogger || (function() {
                 'videoStatus': vcontrol.getCurrentPlayerState(), 
                 'currentTime': vcontrol.getCurrentPlayer().currentTime,
                 'length': vcontrol.getCurrentPlayer().duration(),
-                'size': 'unknown',
+                'size': JSON.stringify($('#'+vcontrol.getCurrentPlayerID())[0].getBoundingClientRect()),
                 'speed': pState.speed,
                 'subtitles': !pState.captionsHidden,
                 'fullscreen': pState.videoFullScreen.fullScreenState ? 'Y' : 'N',
             };
             _prevVideoStatus = chndObject;
             _videoStatus.push(chndObject);          
+        } else {
+            return;
         }
 
         if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
-            console.log(forceSend);
-            console.log(_videoStatus.length);
             _videoDataSentBusy = true;
-            // TODO: send to server
-            console.log('send server video status: ' + _videoStatus);
             $.post(dataRoute + '/video', {sessionID: getSessionId(), data: _videoStatus}, function() {
-                console.log('Send success');
                 _videoStatus = [];
                 _videoDataSentBusy = false;
-                console.log(_videoStatus.length);
             });
         }  
     }
@@ -301,12 +299,16 @@ window.IEWLogger = window.IEWLogger || (function() {
     // =========================================================================
     // public
     // =========================================================================
-    module.init = function() {
-        init();
+    module.init = function(next) {
+        init(next);
     };
 
     module.isReady = function() {
         return isReady;
+    };
+
+    module.getUserId = function() {
+        return getUserId();
     };
 
     module.getSessionId = function() {
@@ -334,33 +336,32 @@ window.IEWLogger = window.IEWLogger || (function() {
         sendLog('exception', data);       
     }; 
 
-    module.logChoice = function(choice) {
-        var data = {
-            'choiceRemembered': (choice) ? 'allow' : 'disallow',
-            'choiceTimeStamp': Date.now(),
-        };
+    module.logAlert = function(data) {
+        sendLog('alert', data);
+    };
 
-        sendLog('choice', data);
+    module.logFeedbackOnDisable = function(data) {
+        sendLog('feedback', data);
     };
 
     /**
      * Logs the status of the widget
      * @param {*} status status of widget
-     * @param {*} isIEyeEvent if event is triggered by ieye
+     * @param {*} remembered whether the user chooses to remember choice (optional)
      */
-    module.logWidgetStatus = function(status) {
+    module.logWidgetStatus = function(status, remembered=undefined) {
         if (!vcontrol.isReady() || !vcontrol.getCurrentPlayer()) {
-        return;
+            return;
         }
 
         // eslint-disable-next-line
         function findStatusCode(s) {
-        var wstatus = ['', 'allow', 'skip', 'start', 'pause', 'resume', 'end', 'disallow'];
-        return wstatus.indexOf(s) > -1 ? wstatus.indexOf(s) : 'unknown';
+            var wstatus = ['', 'allow', 'start', 'pause', 'resume', 'end', 'disallow'];
+            return wstatus.indexOf(s) > -1 ? wstatus.indexOf(s) : 'unknown';
         }
 
         if (status === 'pause') { 
-            isIEyeEvent = (pausedByIEye) ? '1' : '0';
+            isIEyeEvent = (ieyewidget.pausedByIEye()) ? '1' : '0';
         } else if (status === 'resume') {
             isIEyeEvent = (isIEyeEvent === '1') ? isIEyeEvent : '0';
         } else {
@@ -374,13 +375,14 @@ window.IEWLogger = window.IEWLogger || (function() {
             'videoDuration': vcontrol.getDuration(),
             'eventTypeID': findStatusCode(status),
             'eventType': status,
+            'remembered': (remembered !== undefined) ? remembered : 'n/a',
             'isIEyeEvent': isIEyeEvent,
         };
 
         sendLog('widget', data);
     };
 
-    module.logBannedUser = function(reason) {
+    module.logBannedUser = function(reasons) {
         console.log("[ieye] Logging banned user...");
         sessionStartDate = new Date();
         referenceNumber = createReferenceNumber();
@@ -389,11 +391,12 @@ window.IEWLogger = window.IEWLogger || (function() {
             'userID': getUserId(),
             'sessionID': getSessionId(),
             'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
+            'reactionType': moocwidget.WIDGET_TYPE,
             'pageTitle': document.title,
             'pageURL': document.URL,
             'environment': moocwidget.envChecker.getEnvironment(),
             'banned': true,
-            'reason': reason,
+            'banReasons': reasons,
         };
 
         $.post(userRoute, {data: initialLog}, function() {
@@ -407,7 +410,6 @@ window.IEWLogger = window.IEWLogger || (function() {
 
     module.logMetrics = function(data) {
         sendLog('metrics', data);
-        console.log('sending metrics...');
     };
 
     return module;

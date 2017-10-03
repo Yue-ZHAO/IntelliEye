@@ -3,7 +3,6 @@ var IEYEVERSION = '01';
 
 window.IEyeController = window.IEyeController || (function() {
     var module = {}; // store public functions here
-    var widgetStatus = 'end';
     var fullscreen = false;
     // =========================================================================
     // Private 
@@ -35,7 +34,6 @@ window.IEyeController = window.IEyeController || (function() {
         $('.seq_video').on('click', function() {
             if (useIEye()) {
                 ieyewidget.stopiEye();
-                widgetStatus = 'end';
                 sessionStorage.iEyeStarted = false;
             }
         });
@@ -45,8 +43,14 @@ window.IEyeController = window.IEyeController || (function() {
 
         updateIndicator();
 
-        if (!localStorage.use_ieye)
+        if (!localStorage.use_ieye) {
             moocwidget.UI.ieye_intro();
+        } else if (localStorage.use_ieye === 'true') {
+            // when the choice has been remembered, log this as well
+            IEWLogger.logWidgetStatus('allow', true);
+        } else if (localStorage.use_ieye === 'false') {
+            IEWLogger.logWidgetStatus('disallow', true);            
+        }
     }
 
     /**
@@ -75,31 +79,55 @@ window.IEyeController = window.IEyeController || (function() {
         $.cookie('use_ieye', widgetIsUsed);        
 
         if (askAgain) {
-            console.log('choice not remembered');
             localStorage.removeItem('use_ieye');
-        } else {
-            console.log('choice remembered');
-            IEWLogger.logChoice(widgetIsUsed);
-        }
+        } 
 
         // when user changes decision when the video is playing
         // stop ieye if they chooses not to use the widget
         // start ieye if they chooses to use the widget
         if (widgetIsUsed) {
             moocwidget.envChecker.webcamState();
-            console.log('using vid playing');
-            IEWLogger.logWidgetStatus('allow');
-            if (sessionStorage.iEyeStarted == 'false') {
-                ieyewidget.startiEye();
-                sessionStorage.iEyeStarted = true;            
-            }
+
+            // log if widget allowed, and whether it choice is remembered.
+            IEWLogger.logWidgetStatus('allow', !askAgain);
+
+            // if (sessionStorage.iEyeStarted == 'false') {
+            //     ieyewidget.startiEye();
+            //     sessionStorage.iEyeStarted = true;            
+            // }
             $('#switchUseWidget').prop('checked', true);
         } else {
-            console.log('not using vid playing');
             if (askAgain) {
-                IEWLogger.logWidgetStatus('skip');
+                IEWLogger.logWidgetStatus('disallow', false);
             } else {
-                IEWLogger.logWidgetStatus('disallow');
+                IEWLogger.logWidgetStatus('disallow', true);
+
+                // when user disables widget and remembers the choice
+                moocwidget.UI.placeAlert('You have disabled the widget',
+                `
+                    <p> Please tell us the reason you chose to disable the widget: </p>
+                    <textarea id="ieyeFeedbackContent" rows="5" cols="80" style="height:150px;margin-top:10px"></textarea>    
+                    
+                `,
+                ['<div class="msgButton" id="ieyeSendFeedback" >Send feedback</div>'],
+                `
+                    $("#ieyeSendFeedback").on('click', function() {
+                        var data = {
+                            time: Date.now(),
+                            userID: IEWLogger.getUserId(),
+                            sessionID: IEWLogger.getSessionId(),
+                            feedbackContent: $('#ieyeFeedbackContent').val(),
+                            pageURL: document.URL,
+                            pageTitle: document.title,
+                            videoID: vcontrol.getCurrentPlayerID(),
+                            videoTime: vcontrol.getCurrentTime(),
+                            videoDuration: vcontrol.getDuration()
+                        };
+
+                        IEWLogger.logFeedbackOnDisable(data);
+                        moocwidget.UI.hideAlert();
+                    });
+                `);
             }
 
             if (sessionStorage.iEyeStarted == 'true') {
@@ -163,6 +191,7 @@ window.IEyeController = window.IEyeController || (function() {
             indicator.append('<div id="iEyeIndicator" class="indicator" onclick="vcontrol.pauseVideo();IEyeController.recallOverlay()"></div>');
             par.prepend(indicator);    
 
+            var currentIndicator;
             $('#iEyeIndicator').hover(function() {
                 currentIndicator = $(this).text();
                 $(this).text('Show menu');
@@ -234,9 +263,6 @@ window.IEyeController = window.IEyeController || (function() {
         // pass callback function which controls what happens for each state.
         // status can be: play pause seek ended.
         vcontrol.init(function (status)  {
-            // YUE, will this function be called every time when the status change?
-            // TODO, should we also consider previours status here? I am not sure
-            // Since I received some video status from Youtube like "play -> play" in my crowdsourcing task before
             switch (status) {
                 case 'play':
 
@@ -245,40 +271,41 @@ window.IEyeController = window.IEyeController || (function() {
                         moocwidget.envChecker.webcamState();
                         sessionStorage.iEyeStarted = true;
                         ieyewidget.startiEye();
-                        widgetStatus = 'start';
+                        IEWLogger.logWidgetStatus('start');
 
                     } else if (useIEye() && sessionStorage.iEyeStarted === 'true') {
                         ieyewidget.resumeiEye();
-                        widgetStatus = 'resume';
+                        IEWLogger.logWidgetStatus('resume');
                     }
 
                     break;
                 case 'pause':
 
                     // manual pause by user
-                    if (useIEye() && !ieyewidget.pausedByIEye) {
-                        ieyewidget.pauseiEye();
-                        widgetStatus = 'pause';
+                    if (useIEye()) {
+                        if (!ieyewidget.pausedByIEye()) {
+                            ieyewidget.pauseiEye();                            
+                        }
+                        IEWLogger.logWidgetStatus('pause');
                     }
-
                     break;
                 case 'ended':
                     if (useIEye()) {
                         ieyewidget.stopiEye();
-                        widgetStatus = 'end';
                         sessionStorage.iEyeStarted = false;
+                        IEWLogger.logWidgetStatus('end');
                     }
                     break;
-                default: // none;
+                default: //none
             }
             // update the indicator with the correct status
-            ieyewidget.updateAndLogMetrics();
-            updateIndicator(status);
+            updateIndicator(status);            
         });
 
         // initialize controller
-        IEWLogger.init();
-        init();
+        IEWLogger.init(function() {
+            init();
+        });
     };
 
     return module;

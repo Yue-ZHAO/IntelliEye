@@ -93,6 +93,7 @@ body {
 	padding-top: 12px;
 	color: var(--edx-base) !important;
 	margin-bottom: 0px;
+	font-size: 28px !important;
 }
 
 #ol-box-content {
@@ -195,7 +196,6 @@ body {
 	color: var(--edx-text);
 	display: block;
 	line-height: 1.6;
-	position: absolute;
 	margin: 50px auto;
 	min-width: 500px;
     width:100%;
@@ -232,6 +232,78 @@ body {
 .msgContent, .msgButtons {
 	padding: 1.25rem;
 }
+
+/* intro */
+
+.introOverlay {
+	background: rgba(153,153,153,0.5) scroll;
+	position: absolute; 	
+	top: 0;
+	left: 0;
+	/* display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex; */
+	display:none;
+    align-items: flex-start;
+    justify-content: center;
+	margin: 0;
+	width: 100%;
+	height: 200%;	
+	z-index: 9999;
+}
+
+.introBox {
+	background: var(--edx-background);
+	border: .0625rem solid #a0a0a0;
+	box-shadow: 0 0 5px rgba(0,0,0,.25);
+	color: var(--edx-text);
+	display: block;
+	line-height: 1.6;
+	position: absolute;
+	margin: 50px auto;
+	min-width: 500px;
+    width:100%;
+	/*width: 500px; */
+    max-width:1000px;
+	z-index: 99999;
+}
+
+.introTitle {
+	/*background: rgba(0, 0, 0, 0) url("https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png") no-repeat scroll 0 0;
+	height: 60px;
+	margin: 10px 0;
+	color: var(--edx-base) !important;
+	font-size: 22px;*/
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+	line-height: 1;
+    align-items: center;
+    justify-content: left;
+	background-color: var(--edx-lightgray);
+	padding: 1.25rem;
+
+}
+
+.introTitle img {
+    margin-top: 12px;
+    margin-right: 20px;
+    width: 60px;	
+}
+
+.introContent, .introInputs {
+	padding: 1.25rem;
+}
+
+.introInputs input[type="radio"] {
+    margin-left:20px;
+}
+
+/* buttons  */
 
 .msgButton {
 	background-color: var(--edx-base);
@@ -348,7 +420,7 @@ body {
 	box-shadow: -1px 0px 8px -2px rgba(0,0,0,.55);
     border-radius: 20px 0 0 20px;
 	cursor: pointer;
-    color: var(--edx-base);
+    color: var(--edx-text);
     width: 150px;
 	height: 32px;
 	line-height:2;
@@ -441,7 +513,9 @@ body {
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: 25px;    
-  padding-left:4px;
+  /* padding-left:4px; */
+  font-size: 12px;
+  text-align: center;
   box-shadow: 0 0 5px rgba(0,0,0,.25);
 }
 
@@ -458,4 +532,54 @@ body {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
   content: "On";
+}
+
+.video_overlay {
+    position:absolute;
+    background-color: gray;
+    opacity: 0;    
+    z-index: 99;
+}
+
+/* ========================================================================== */
+/* VISUL ALERT */
+/* ========================================================================== */
+@keyframes blink {
+    0% { box-shadow: 0 0 35px red; }
+    50% { box-shadow: none; }
+    100% { box-shadow: 0 0 35px red; }
+}
+
+@-webkit-keyframes blink {
+    0% { box-shadow: 0 0 35px red; }
+    50% { box-shadow: 0 0 0; }
+    100% { box-shadow: 0 0 35px red; }
+}
+
+.blink {
+    -webkit-animation: blink 1.5s linear infinite;
+    -moz-animation: blink 1.5s linear infinite;
+    -ms-animation: blink 1.5s linear infinite;
+    -o-animation: blink 1.5s linear infinite;
+    animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink-fs {
+    0% { box-shadow: inset 0 -15px 150px 20px red; }
+    50% { box-shadow: none; }
+    100% { box-shadow: inset 0 -15px 150px 20px red; }
+}
+
+@-webkit-keyframes blink-fs {
+    0% { box-shadow: inset 0 -15px 150px 20px red; }
+    50% { box-shadow: inset 0 0 0; }
+    100% { box-shadow: inset 0 -15px 150px 20px red; }
+}
+
+.blink-fs {
+    -webkit-animation: blink-fs 1.5s linear infinite;
+    -moz-animation: blink-fs 1.5s linear infinite;
+    -ms-animation: blink-fs 1.5s linear infinite;
+    -o-animation: blink-fs 1.5s linear infinite;
+    animation: blink-fs 1.5s linear infinite;
 }

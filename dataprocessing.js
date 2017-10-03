@@ -5,6 +5,8 @@ var path = require('path');
 
 var logsPath = 'logs/';
 var dataPath = '../moocdata/';
+var userFeedbackFile = path.join(dataPath, 'UserFeedback');
+
 var squirreleyePath = path.join(dataPath, 'squirreleye');
 var ieyePath = path.join(dataPath, 'ieye');
 
@@ -30,6 +32,15 @@ if (!fs.existsSync(dataPath)) {
         console.log('creating ' + ieyePath +' data folder');
         fs.mkdirSync(ieyePath);
     }
+
+    if (!fs.existsSync(userFeedbackFile)) {
+        fs.writeFile(userFeedbackFile, '', function(err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Create userFeedbackFile ' + userFeedbackFile + ' success');
+        });
+    }        
 
     console.log('Using' + dataPath + ' data folder');
 }    
@@ -77,5 +88,18 @@ var writeFile = function(widgetType, sessionID, userID, dataToWrite) {
     });    
 };
 
+/**
+ * Appends feedback to the feedback file
+ * @param {*} data Feedback from users on the widget.
+ */
+var writeFeedback = function(data) {
+    jsonfile.writeFile(userFeedbackFile, data, {flag: 'a'}, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+};
+
 module.exports.createUserFile = createUserFile;
 module.exports.writeFile = writeFile;
+module.exports.writeFeedback = writeFeedback;

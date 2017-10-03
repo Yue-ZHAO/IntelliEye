@@ -1,0 +1,103 @@
+<div class="introOverlay">
+    <div class="introBox">
+        <div class="introTitle">
+            <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png">
+            <h1 class="customh1">Welcome to IntelliEye</h1>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- INTRODUCTION PARAGRAPH -->
+        <!-- =============================================================== -->
+        <div class="introContent">
+            <p>
+Imagine someone looking over your shoulder while you learn in this MOOC, reminding you to pay attention and alerting you when you become distracted. This would probably make you learn more efficiently!
+<br>
+IntelliEye is a first step towards this vision: an intelligent video player add-on we have developed at the Delft University of Technology. It will become active when you watch a lecture video: whenever the add-on detects a loss of focus on your part it will visually alert you by repeatedly flashing a red border around the video until it detects your focus again.
+IntelliEye makes use of your Webcam to track your focus and attention. IntelliEye is privacy-aware: none of the Webcam data leaves your computer, all computations are made on your device.
+            </p>
+
+            <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions_visual.png" width="550px" style="margin-top:20px;margin-bottom:40px"><br>
+
+            <!-- =========================================================== -->
+            <!-- HOW DOES IT INTELLIEYE DO IT? -->
+            <!-- =========================================================== -->
+            <span class='lm' id='lm1'><h2 class='h2-section'>How does IntelliEye do it?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <p class='ieye_descr' id='lm1-d'>
+                IntelliEye makes use of the Webcam to track your face. 
+                If your face is not facing the screen (because you are talking to a friend, looking out of the window, wrapping your hands around it, leaning back heavily), 
+                IntelliEye assumes a loss of focus. If you are active in browser tabs/windows next to the video playing one (because you are checking your emails or browsing Reddit), 
+                IntelliEye also assumes a loss of focus.
+            </p>
+
+            <!-- =========================================================== -->
+            <!-- WHAT DO I NEED TO DO TO USE INTELLIEYE -->
+            <!-- =========================================================== -->
+            <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <ul class='ieye_descr' id='lm2-d'>
+                <li>Allow the edX site to make use of your Webcam when asked to do so (once more: none of the Webcam data leaves your machine).</li>
+                <li>Ensure that your webcam is pointing at your face from the front. If you have multiple webcams, make sure that the one facing you frontally is the default webcam of your system.</li>
+                <li>Face the camera and watch each lecture video as you normally would.</li>
+            </ul>                                        
+
+
+            <!-- =========================================================== -->
+            <!-- WHAT DO I NEED TO DO TO USE INTELLIEYE -->
+            <!-- =========================================================== -->
+            <span class='lm' id='lm3'><h2 class='h2-section'>Who do I contact in case of concerns/issues/ideas?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <div class='ieye_descr' id='lm3-d'>
+                IntelliEye is actively being developed at the Web Information Systems group of the Delft University of Technology. 
+                If you have feedback, please send us an email at <a href="mailto:intellieye-ewi@tudelft.nl">intellieye-ewi@tudelft.nl</a>
+            </div>     
+
+            <!-- =========================================================== -->
+            <!-- ANYTHING ELSE -->
+            <!-- =========================================================== -->
+            <span class='lm' id='lm4'><h2 class='h2-section'>Anything else?<span id='lm4-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <div class='ieye_descr' id='lm4-d'>
+                We currently only support laptop and desktop computers. IntelliEye is not supported on mobile platforms. We support a subset of the most popular browsers: Firefox, Opera and Chrome. Other browsers are not supported (if such browsers are detected, the IntelliEye add-on is deactivated). 
+            </div>     
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- BUTTONS -->
+        <!-- =============================================================== -->
+        <div class="introInputs">
+            <div class="msgButton" id="start_ieye">Enable IntelliEye</div>
+            <div class="msgButtonFaded" id="skip_ieye">Disable IntelliEye</div>
+            
+            <div id='remember_ieye'> For future:
+                <input name="r_remember" type="radio" value="no" id='i_dont_remember' checked><label for='i_dont_remember'>Always ask me</label>
+                <input name="r_remember" type="radio" value="yes" id='i_remember'><label for='i_remember'>Remember my choice</label>
+            </div>
+
+            <i style="display:block;margin-top:20px">Any choice you make in allowing/disallowing IntelliEye can be changed: a click on
+                 <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png" 
+                width="20" height:"20" style="vertical-align:middle"> will bring up this interface again.</i>
+        </div>
+    </div>
+</div>
+
+<script>
+    $.each($('.lm'), (i, o) => {
+        o.onclick = function() {
+            var eq_id = $(o).attr('id');
+            $('#' + eq_id + '-d').slideToggle();
+            var eq_text_id = eq_id + '-text';
+            if ($('#' + eq_text_id).text() === 'Learn more') {
+                $('#' + eq_text_id).text('Hide');
+            } else {
+                $('#' + eq_text_id).text('Learn more');
+            }
+        }
+    });
+
+    $('#start_ieye')[0].onclick = function () {
+        IEyeController.setChoice(true);
+        moocwidget.UI.ieye_intro_hide()
+    };
+
+    $('#skip_ieye')[0].onclick = function () {
+        IEyeController.setChoice(false);
+        moocwidget.UI.ieye_intro_hide()
+    };    
+</script>

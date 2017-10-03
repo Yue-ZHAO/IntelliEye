@@ -8,8 +8,6 @@ window.vcontrol = window.vcontrol || (function() {
     var module = {};
 
     var playerIDs = [];
-    var firstPlayTimes = [];
-    var totalPlayTimes = [];
 
     var currentPlayerID = '';
 
@@ -29,7 +27,6 @@ window.vcontrol = window.vcontrol || (function() {
         $.each($('.video'), function(i, v) {
             console.log('video id:' + v.getAttribute('id'));
             playerIDs[i] = v.getAttribute('id');
-            firstPlayTimes[i] = 0;
         });
 
         currentPlayerID = playerIDs[0];
@@ -54,20 +51,7 @@ window.vcontrol = window.vcontrol || (function() {
 
             processStateChange('play');
             setOnStateChange('play');
-            currentPlayerState = 'play';
-
-            // onStateChange() is used by edX so this is 
-            // a less neat but faster than an interval version of that:
-            // external function setOnStateChange is set when initialized above (by controller).
-            /* eslint-disable */
-
-            // $('#' + currentPlayerID).on('play', () => {currentPlayerState = 'play'; processStateChange('play'); setOnStateChange('play');  });
-            // $('#' + currentPlayerID).on('pause', () => {currentPlayerState = 'pause'; processStateChange('pause'); setOnStateChange('pause');  });
-            // $('#' + currentPlayerID).on('seek', () => {currentPlayerState = 'seek'; processStateChange('seek'); setOnStateChange('seek');  });
-            // $('#' + currentPlayerID).on('ended', () => {currentPlayerState = 'ended'; processStateChange('ended'); setOnStateChange('ended');  });    
-
-            /* eslint-enable */               
-            isReady = true;
+            currentPlayerState = 'play';              
         });
 
         $('.video').on('pause', function(e) {
@@ -98,7 +82,9 @@ window.vcontrol = window.vcontrol || (function() {
             processStateChange('ended');
             setOnStateChange('ended');
             currentPlayerState = 'ended';
-        });        
+        });      
+        
+        isReady = true;
     }
 
     /**
@@ -106,19 +92,6 @@ window.vcontrol = window.vcontrol || (function() {
      * @param {*} state 
      */
     function processStateChange(state) {
-        // set first play time
-        var playerIndex = playerIDs.indexOf(currentPlayerID);
-        if (state === 'play') {
-            if (firstPlayTimes[playerIndex] === 0) {
-                firstPlayTimes[playerIndex] = new Date();
-                totalPlayTimes[playerIndex] = 0;
-            }
-        } else if (state === 'pause' || state === 'ended') {
-            var now = new Date();
-            // update totalplaytime
-            totalPlayTimes[playerIndex] = Math.round((now - firstPlayTimes[playerIndex]) / 1000);
-        }
-
         IEWLogger.updateVideoStatus();
     }
 
@@ -147,14 +120,6 @@ window.vcontrol = window.vcontrol || (function() {
         return playerIDs;
     };
 
-    module.getFirstPlayTimeFromID = function(ID) {
-        return firstPlayTimes[playerIDs.indexOf(ID)];
-    };
-
-    module.getTotalPlayTimeFromID = function(ID) {
-        return totalPlayTimes[playerIDs.indexOf(ID)];
-    };
-
     module.getCurrentPlayer = function() {
         return getCurrentPlayer();
     };
@@ -170,7 +135,7 @@ window.vcontrol = window.vcontrol || (function() {
         return $('#' + ID).data().videoPlayerState.videoPlayer;
     };
 
-    module.getPlayerStateFromID = function(ID) {
+    module.getPlayerDataStateFromID = function(ID) {
       if ($('#' + ID).data()) {
         return $('#' + ID).data().videoPlayerState;
       }
@@ -245,7 +210,7 @@ window.vcontrol = window.vcontrol || (function() {
             $('#' + overlayid).css('width', '100%');
             $('#' + overlayid).css('heigth', '100%');
         } else if ($('#' + overlayid).length === 0) {
-            if (module.getPlayerStateFromID(ID) && module.getPlayerStateFromID(ID).isYoutubeType()) {
+            if (module.getPlayerDataStateFromID(ID) && module.getPlayerDataStateFromID(ID).isYoutubeType()) {
             var wrapper = $('#' + ID).closest('div').find('.video-wrapper');
             var vIframe = $('#' + ID).find('iframe');
             var overlay = $('<div class="video_overlay" id='+overlayid+'></div>');
@@ -255,7 +220,7 @@ window.vcontrol = window.vcontrol || (function() {
             var w = $('#'+ID).outerWidth();
             var h =$('#'+ID).outerHeight();
             $('#' + overlayid).css('width', '100%');
-            $('#' + overlayid).css('heigth', '100%');
+            $('#' + overlayid).css('height', '100%');
             wrapper.prepend(overlay);        
             }
         }

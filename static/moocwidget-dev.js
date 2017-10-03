@@ -1,5 +1,8 @@
+/* eslint-disable camelcase */
 (function(window) {
     window.moocwidget = window.moocwidget || {};
+
+    moocwidget.WIDGET_TYPE = IEYE_Reaction_Type;
 
     /**
      * Loads nesscessary js files
@@ -10,13 +13,21 @@
         var loaded = 0;
         var loadIntervalRef;
         files.forEach(function(src) {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = src;
-            script.onload = function() {
-                loaded+=1;
-            };
-            document.body.appendChild(script);
+            // var script = document.createElement('script');
+            // script.type = 'text/javascript';
+            // script.src = src;
+            // script.onload = function() {
+            //     loaded+=1;
+            // };
+            // document.body.appendChild(script);
+            $.getScript( src, function( data, textStatus, jqxhr ) {
+                console.log( data ); // Data returned
+                console.log( textStatus ); // Success
+                console.log( jqxhr.status ); // 200
+                if (jqxhr.status === 200) {
+                    loaded += 1;
+                }
+            });            
         });
         loadIntervalRef = setInterval(function() {
             if (loaded === files.length) {
@@ -49,59 +60,77 @@
             });
         } else {
             _loadjs(['https://moocwidgets.cc/static/sqeye/js/sqeye-build.min.js'], function() {
-                var webcam = moocwidget.envChecker.webcamIsAvailable();
-                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false); 
-                var browserInfo = moocwidget.envChecker.isValidBrowser();   
+                // var webcam = moocwidget.envChecker.webcamIsAvailable();
+                // var desktop = (moocwidget.envChecker.getEnvironment().mobile == false); 
+                // var browserInfo = moocwidget.envChecker.isValidBrowser();   
 
-                if (!desktop) {
-                    mwdet_logger.logBannedUser('Mobile');                       
-                }                      
-                if (!webcam) {
-                    mwdet_logger.logBannedUser('No webcam');
-                }                          
+                // if (!desktop) {
+                //     mwdet_logger.logBannedUser('Mobile');                       
+                // }                      
+                // if (!webcam) {
+                //     mwdet_logger.logBannedUser('No webcam');
+                // }                          
 
-                if (!browserInfo[0]) {
-                    mwdet_logger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
-                }
+                // if (!browserInfo[0]) {
+                //     mwdet_logger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                // }
             });           
         }
     }
 
     /**
      * Starts ieye widget
+     * @param {String} reaction_type which type ieye to enable (pause, visualAlert, auditoryAlert)
      */
-    function _useIeye() {
+    function _useIeye(reaction_type) {
         var validEnvironment = moocwidget.envChecker.isValidEnvironment();
         if (validEnvironment) {
             moocwidget.UI.initIeyeHTML();
             $('head').append( $('<link rel="stylesheet" type="text/css" />')
                 .attr('href', 'https://moocwidgets.cc/static/ieye/css/iew-edx.css'));
-
-            var files = [             
-                'https://moocwidgets.cc/static/ieye/js/ieye-build.min.js',              
-            ];
-
+     
+            var files = [];
+            if (reaction_type === 'Pause') {
+                files = [
+                    'https://moocwidgets.cc/static/ieye/js/ieye-build-pause.min.js',             
+                ];
+             }
+            if (reaction_type === 'VisualAlert') {
+                files = [
+                    'https://moocwidgets.cc/static/ieye/js/ieye-build-visualAlert.min.js',             
+                ];
+             }
+            if (reaction_type === 'AuditoryAlert') {
+                files = [
+                    'https://moocwidgets.cc/static/ieye/js/ieye-build-auditoryAlert.min.js',             
+                ];
+             }
+     
             _loadjs(files, function() {
                 IEyeController.init();
             });
         } else {
-            _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build.min.js'], function() {
+            _loadjs(['https://moocwidgets.cc/static/ieye/js/ieye-build-pause.min.js'], function() {
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
-                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);   
+                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);  
                 var browserInfo = moocwidget.envChecker.isValidBrowser();
+                var reasons = [];
                 if (!desktop) {
-                    IEWLogger.logBannedUser('Mobile');                       
-                }                      
+                    reasons.push('Mobile');
+                }                     
                 if (!webcam) {
-                    IEWLogger.logBannedUser('No webcam');
-                }                          
-
+                    reasons.push('No webcam');
+                }                         
+     
                 if (!browserInfo[0]) {
-                    IEWLogger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
-                }                
-            });            
+                    reasons.push('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                }               
+
+                IEWLogger.logBannedUser(reasons);
+            });           
         }
-    }
+     }
+     
 
     moocwidget.init = function() {
         // if visiting a new URL or refreshing same page
@@ -122,48 +151,50 @@
             sessionStorage.removeItem('facecheckInitialized');
             sessionStorage.removeItem('storedURL');
         }); 
+        
+        // ensure alert boxes are in correct position, have correct sizes
+        window.addEventListener('resize', function() {
+            $('#msgOverlay').css('width', $(window).width());
+            $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');            
+        }, true);        
 
         var setup = function() {
             console.log('Initializing MOOCWidgets.');
             
-                    // if in studio, we don't start any widgets.
-                    if (document.URL.includes('studio.edge.edx.org')) {
-                        return;
-                    }
-            
-                    if (MW_ENABLE_SQUIRRELEYE && MW_ENABLE_INTELLIEYE) {
-                        // A/B
-                        var check = setInterval(function() {
-                            if (analytics && analytics.user) {
-                                clearInterval(check);
-                                var remainder = parseInt(analytics.user().id()) % 5;
-                                switch (remainder) {
-                                    case 0: case 1:
-                                        _useSqeye(); break;
-                                    case 2: case 3:
-                                        _useIeye(); break;
-                                    default: // no widgets used
-                                }
+            // if in studio, we don't start any widgets.
+            if (document.URL.indexOf('studio.edge.edx.org') >= 0) {
+                return;
+            }
+            if (MW_ENABLE_INTELLIEYE) {
+                if (IEYE_Reaction_Type == 'Pause') {
+                    _useIeye('Pause');
+                } else if (IEYE_Reaction_Type == 'VisualAlert') {
+                    _useIeye('VisualAlert');
+                } else if (IEYE_Reaction_Type == 'AuditoryAlert') {
+                    _useIeye('AuditoryAlert');
+                } else if (IEYE_Reaction_Type == 'ABCTesting') {
+                    // A/B
+                    var check = setInterval(function() {
+                        if (analytics && analytics.user) {
+                            clearInterval(check);
+                            var remainder = parseInt(analytics.user().id()) % 3;
+                            switch (remainder) {
+                                case 0:
+                                    moocwidget.WIDGET_TYPE = 'Pause';
+                                    _useIeye('Pause'); break;
+                                case 1:
+                                    moocwidget.WIDGET_TYPE = 'VisualAlert';
+                                    _useIeye('VisualAlert'); break;
+                                case 2:
+                                    moocwidget.WIDGET_TYPE = 'AuditoryAlert';
+                                    _useIeye('AuditoryAlert'); break;
+                                default: // no widgets used
                             }
-                        }, 200);
-                        console.log('A/B/C testing');
-                    } else if (MW_ENABLE_SQUIRRELEYE) {
-                        var check = setInterval(function() {
-                            if (analytics && analytics.user) {
-                                clearInterval(check);
-                                _useSqeye();
-                            }
-                        }, 200);                        
-                    } else if (MW_ENABLE_INTELLIEYE) {
-                        var check = setInterval(function() {
-                            if (analytics && analytics.user) {
-                                clearInterval(check);
-                                _useIeye();
-                            }
-                        }, 200);                        
-                    } else {
-                        // none
-                    }            
+                        }
+                    }, 200);
+                    console.log('A/B/C testing');
+                } 
+            }                                        
         };
 
         var edxCheck = setInterval(function() {
@@ -194,7 +225,7 @@
          * Places an alert if the webcam is denied by user.
          * @param {function} callIfFail call this function if permission to webcam is denied.
          */
-        function checkWebcamState(callIfFail='undefined') {
+        function checkWebcamState(callIfFail) {
             navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
             if (navigator.getUserMedia) {
                 navigator.getUserMedia( {
@@ -211,7 +242,7 @@
                             'You need to grant permission to the webcam and refresh the page for the widget to work.', 
                             []
                         );
-                        if (callIfFail !== 'undefined') {
+                        if (typeof callIfFail !== 'undefined') {
                             callIfFail();
                         }
                     }
@@ -301,7 +332,6 @@
     moocwidget.UI = (function() {
         return {
             initIeyeHTML: function() {
-                // TODO: check if we need to check units visited
                 $('body').append(`
                     <div class="msgOverlay" id="msgOverlay">
                         <div class="msgBox">
@@ -375,7 +405,8 @@
                 if (events !== 'undefined') {
                     eval(events);
                 }
-                $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');
+                $('#msgOverlay').css('width', $(window).width());
+                $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');            
                 $('#msgOverlay').css('display', 'flex');
                 $(window).scrollTop(0);
             },
@@ -384,170 +415,18 @@
                 $('#msgOverlay').hide();
             },
 
-            ieye_intro: function() {
-                // $('body').append(`
-                //     <div id='overlay'>
-                //         <div id="overlay-container">
-                //             <div id='ol-box'>
-                //                 <div id='ol-box-heading'>
-                //                     <div id="hd-img"></div>
-                //                     <h1 class="customh1" >Welcome to IntelliEye</h1>
-                //                     <br>
-                //                 </div>
-                //                 <div id='ol-box-content'>
-                //                     <p>For this course, we offer you IntelliEye, an experimental widget developed at TU Delft. IntelliEye will help you during watching MOOC videos. 
-                //                     Whenever you lose focus watching the video playing, IntelliEye will detect it and pause the video for you. Once you are focusing on the video again, 
-                //                     the video will be rewound a few seconds to a familiar section for you and resumed. 
-                //                     IntelliEye is an automated privacy-aware assistant (i.e. none of the webcam data leaves your computer) for you on the edX platform.
-                //                     </p>
-                //                     <div id="intro-howto-cont">
-                //                     <div>
-                //                     <p>
-                //                     To use IntelliEye:
-                //                         <ul>
-                //                             <li>allow the edx site to use your webcam when you are asked to do so,</li>
-                //                             <li>face the camera and watch the video as you normally would.</li>
-                //                         </ul>
-                //                         By using IntelliEye you will also help us to improve our widgets in the future. 
-                //                         If you have any questions or feedback, please send email to 
-                //                         <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a> or <a href="mailto:y.zhao-1@tudelft.nl">t.robal@tudelft.nl</a>. 
-                //                         <br>
-                //                         <br>
-                //                     </p>
-                //                 </div>
-                //                     <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions.png" width="350px">
-                //                     </div>
-                //             <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>
-                //                     <p class='ieye_descr' id='lm1-d'>IntelliEye uses your computer webcam, with your permission, 
-                //                     and looks for a face frame in the camera feed. Based on the detected face frame and your presence in it, 
-                //                     IntelliEye decides over automatic video play control. IntelliEye is privacy aware – no video feed leaves your computer.  
-                //                     <br>
-                //                     <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions2.png" width="400px" style="margin-top:10px">
-                //                     </p>
-                            
-                //             <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>
-                //                     <div class='ieye_descr' id='lm2-d'>
-                //                         <ul>
-                //                             <li>IntelliEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
-                //                             <li>You can use IntelliEye with some modern web browsers, e.g., the latest version of Firefox, Opera and Chrome. Internet Explorer, Microsoft Edge and Safari are not supported currently.</li>
-                //                             <li>We need your permission to use the built-in camera or the external camera on your machine. The camera should be aligned with the screen you are watching the video on.</li>
-                //                         </ul>                                        
-                //                     </div>
-                //                     <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
-                //                     <div class='ieye_descr' id='lm3-d'>As Intellieye depends on the face detection in the web camera video feed, you should pay attention to the following:
-                //                         <ul>
-                //                             <li>Enable your webcam once asked.</li>
-                //                             <li>Sit normally facing the camera.</li>
-                //                             <li>Try not to put your hand around your face or between your face and the webcam.</li>
-                //                             <li>Try not to lean back or forward heavily.</li>
-                //                             <li>Focus on the video content as you would do in a regular classroom setting.</li>
-                //                         </ul>
-                //                     </div>
-                //                     <div id='ieye_choice'>
-                //                         <div id='start_ieye'>Enable IntelliEye</div>
-                //                         <div id='skip_ieye'>Disable IntelliEye</div>
-                //                         <div id='remember_ieye'> For future:
-                //                             <input name="r_remember" type="radio" value="no" id='i_dont_remember' checked><label for='i_dont_remember'>Always ask me</label>
-                //                             <input name="r_remember" type="radio" value="yes" id='i_remember'><label for='i_remember'>Remember my choice</label>
-                //                         </div>
-                //                     </div>
-                //                     <i style="display:block;margin-top:20px">To return to this window, or to change the choice you have made here, please click on the <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png" width="20" height:"20" style="vertical-align:middle"> icon above the video.</i>
-                //                 </div>
-                //             </div>
-                //         </div>        
-                // `);      
-                
-                moocwidget.UI.placeAlert('Welcome to IntelliEye',
-                    `
-                        <p>For this course, we offer you IntelliEye, an experimental widget developed at TU Delft. IntelliEye will help you during watching MOOC videos. 
-                        Whenever you lose focus watching the video playing, IntelliEye will detect it and pause the video for you. Once you are focusing on the video again, 
-                        the video will be rewound a few seconds to a familiar section for you and resumed. 
-                        IntelliEye is an automated privacy-aware assistant (i.e. none of the webcam data leaves your computer) for you on the edX platform.
-                        </p>
-                        <div id="intro-howto-cont">
-                            <div>
-                                <p>
-                                To use IntelliEye:
-                                    <ul>
-                                        <li>allow the edx site to use your webcam when you are asked to do so,</li>
-                                        <li>face the camera and watch the video as you normally would.</li>
-                                    </ul>
-                                    By using IntelliEye you will also help us to improve our widgets in the future. 
-                                    If you have any questions or feedback, please send email to 
-                                    <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a> or <a href="mailto:y.zhao-1@tudelft.nl">t.robal@tudelft.nl</a>. 
-                                    <br>
-                                    <br>
-                                </p>
-                            </div>
-                            <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions.png" width="350px">
-                        </div>
-                        <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>
-                        <p class='ieye_descr' id='lm1-d'>IntelliEye uses your computer webcam, with your permission, 
-                        and looks for a face frame in the camera feed. Based on the detected face frame and your presence in it, 
-                        IntelliEye decides over automatic video play control. IntelliEye is privacy aware – no video feed leaves your computer.  
-                        <br>
-                        <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions2.png" width="400px" style="margin-top:10px">
-                        </p>
-                
-                        <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to use Intellieye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>
-                        <div class='ieye_descr' id='lm2-d'>
-                            <ul>
-                                <li>IntelliEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
-                                <li>You can use IntelliEye with some modern web browsers, e.g., the latest version of Firefox, Opera and Chrome. Internet Explorer, Microsoft Edge and Safari are not supported currently.</li>
-                                <li>We need your permission to use the built-in camera or the external camera on your machine. The camera should be aligned with the screen you are watching the video on.</li>
-                            </ul>                                        
-                        </div>
-                        <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
-                        <div class='ieye_descr' id='lm3-d'>As Intellieye depends on the face detection in the web camera video feed, you should pay attention to the following:
-                            <ul>
-                                <li>Enable your webcam once asked.</li>
-                                <li>Sit normally facing the camera.</li>
-                                <li>Try not to put your hand around your face or between your face and the webcam.</li>
-                                <li>Try not to lean back or forward heavily.</li>
-                                <li>Focus on the video content as you would do in a regular classroom setting.</li>
-                            </ul>
-                        </div>                    
-                    `,
-                    [
-                        '<div class="msgButton" id="start_ieye">Enable IntelliEye</div>',
-                        '<div class="msgButtonFaded" id="skip_ieye">Disable IntelliEye</div>',
-                        `
-                        <div id='remember_ieye'> For future:
-                            <input name="r_remember" type="radio" value="no" id='i_dont_remember' checked><label for='i_dont_remember'>Always ask me</label>
-                            <input name="r_remember" type="radio" value="yes" id='i_remember'><label for='i_remember'>Remember my choice</label>
-                        </div>
-                        `,
-                        `<i style="display:block;margin-top:20px">To return to this window, or to change the choice you have made here, 
-                        please click on the <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png" 
-                        width="20" height:"20" style="vertical-align:middle"> icon above the video.</i>`,
-                    ],
+            ieye_intro: function() {               
+                if ($('.introOverlay').length === 0) {
+                    $('body').append('<div class="introOverlay"></div>');
+                    $('.introOverlay').append(ieye_intro_content); // in /templates folder, compiled into ieyewidget.js
+                }
+                $('.introOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');
+                $('.introOverlay').css('display', 'flex');
+                $(window).scrollTop(0);
+            },
 
-                    `
-                        // Events
-                        $.each($('.lm'), (i, o) => {
-                            o.onclick = function() {
-                                var eq_id = $(o).attr('id');
-                                $('#' + eq_id + '-d').slideToggle();
-                                var eq_text_id = eq_id + '-text';
-                                if ($('#' + eq_text_id).text() === 'Learn more') {
-                                    $('#' + eq_text_id).text('Hide');
-                                } else {
-                                    $('#' + eq_text_id).text('Learn more');
-                                }
-                            }
-                        });
-
-                        $('#start_ieye')[0].onclick = function () {
-                            IEyeController.setChoice(true);
-                            moocwidget.UI.hideAlert()
-                        };
-
-                        $('#skip_ieye')[0].onclick = function () {
-                            IEyeController.setChoice(false);
-                            moocwidget.UI.hideAlert()
-                        };                    
-                    `
-                );
+            ieye_intro_hide: function() {
+                $('.introOverlay').hide();
             },
 
             mwdet_intro: function() {
