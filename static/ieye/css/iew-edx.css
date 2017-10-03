@@ -421,7 +421,7 @@ body {
 	box-shadow: -1px 0px 8px -2px rgba(0,0,0,.55);
     border-radius: 20px 0 0 20px;
 	cursor: pointer;
-    color: var(--edx-base);
+    color: var(--edx-text);
     width: 150px;
 	height: 32px;
 	line-height:2;
@@ -514,7 +514,9 @@ body {
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: 25px;    
-  padding-left:4px;
+  /* padding-left:4px; */
+  font-size: 12px;
+  text-align: center;
   box-shadow: 0 0 5px rgba(0,0,0,.25);
 }
 
