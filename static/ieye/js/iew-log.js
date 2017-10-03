@@ -48,8 +48,9 @@ window.IEWLogger = window.IEWLogger || (function() {
 
     /**
      * Initialize logger
+     * @param {function} next Calls the next function (iew-controller) after initializing logger has been finished.
      */
-    function init() {
+    function init(next) {
         readyCheck = setInterval(function() {
             if (analytics && analytics.user()) {
                 clearInterval(readyCheck);
@@ -100,6 +101,9 @@ window.IEWLogger = window.IEWLogger || (function() {
                     }
                 }, HEARTBEAT_TIME);                     
                 
+                if (typeof next !== undefined) {
+                    next();
+                }
                 isReady = true;      
             }               
         }, 100);
@@ -301,8 +305,8 @@ window.IEWLogger = window.IEWLogger || (function() {
     // =========================================================================
     // public
     // =========================================================================
-    module.init = function() {
-        init();
+    module.init = function(next) {
+        init(next);
     };
 
     module.isReady = function() {

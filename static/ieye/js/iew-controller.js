@@ -301,8 +301,9 @@ window.IEyeController = window.IEyeController || (function() {
         });
 
         // initialize controller
-        IEWLogger.init();
-        init();
+        IEWLogger.init(function() {
+            init();
+        });
     };
 
     return module;
