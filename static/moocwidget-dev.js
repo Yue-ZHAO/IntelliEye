@@ -2,6 +2,8 @@
 (function(window) {
     window.moocwidget = window.moocwidget || {};
 
+    moocwidget.WIDGET_TYPE = IEYE_Reaction_Type;
+
     /**
      * Loads nesscessary js files
      * @param {*} files 
@@ -164,10 +166,13 @@
                             var remainder = parseInt(analytics.user().id()) % 3;
                             switch (remainder) {
                                 case 0:
+                                    moocwidget.WIDGET_TYPE = 'Pause';
                                     _useIeye('Pause'); break;
                                 case 1:
+                                    moocwidget.WIDGET_TYPE = 'VisualAlert';
                                     _useIeye('VisualAlert'); break;
                                 case 2:
+                                    moocwidget.WIDGET_TYPE = 'AuditoryAlert';
                                     _useIeye('AuditoryAlert'); break;
                                 default: // no widgets used
                             }

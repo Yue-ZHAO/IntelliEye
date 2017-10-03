@@ -22,6 +22,12 @@ html
                     hr(style="visibility:hidden")
                     .well
                         for session in sessionData
+                            - var useState = 'n/a';
+                             for wstate in session.widget
+                                if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
+                                    useState = wstate.eventType;
+                                }
+
                             - var sDate = (new Date(session.sessionStartTime));
                             - var h = ('0' + sDate.getHours()).slice(-2);
                             - var m = ('0' + sDate.getMinutes()).slice(-2);
@@ -29,11 +35,13 @@ html
                             div(style="display:flex; justify-content: space-between")
                                 p= session.userID
                                 p= session.sessionID
+                                p= session.reactionType
+                                p= useState
                                 p= sDate.toLocaleDateString() + ' ' + h + ':' + m + ':' + s
                                 p= 'mobile: ' + session.environment.mobile
                                 p= 'browser: ' + session.environment.browser
                                 p= 'version: ' + session.environment.browserVersion
-                                p= (session.banned) ? 'banned: true' : 'banned: false'                                     
+                                p= (session.banned) ? 'banned: true' : 'banned: false'                          
 
             .panel.panel-default
                 .panel-body
@@ -66,13 +74,21 @@ html
                                 = 'users: ' + usersPerHour.get(k).size                                
                                 hr
                                 -    b.forEach((session) => {
+                                        - var useState = 'n/a';
+                                        for wstate in session.widget
+                                            if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
+                                                useState = wstate.eventType;
+                                            }
+
                                         - var sDate = (new Date(session.sessionStartTime));
                                         - var h = ('0' + sDate.getHours()).slice(-2);
                                         - var m = ('0' + sDate.getMinutes()).slice(-2);
-                                        - var s = ('0' + sDate.getSeconds()).slice(-2);                                    
+                                        - var s = ('0' + sDate.getSeconds()).slice(-2);
                                         div(style="display:flex; justify-content: space-between")
                                             p= session.userID
                                             p= session.sessionID
+                                            p= session.reactionType
+                                            p= useState
                                             p= sDate.toLocaleDateString() + ' ' + h + ':' + m + ':' + s
                                             p= 'mobile: ' + session.environment.mobile
                                             p= 'browser: ' + session.environment.browser

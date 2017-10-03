@@ -61,6 +61,7 @@ window.IEWLogger = window.IEWLogger || (function() {
                         'userID': getUserId(),
                         'sessionID': getSessionId(),
                         'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
+                        'reactionType': moocwidget.WIDGET_TYPE,
                         'pageTitle': document.title,
                         'pageURL': document.URL,
                         'environment': moocwidget.envChecker.getEnvironment(),
@@ -348,7 +349,7 @@ window.IEWLogger = window.IEWLogger || (function() {
 
         // eslint-disable-next-line
         function findStatusCode(s) {
-            var wstatus = ['', 'allow', 'skip', 'start', 'pause', 'resume', 'end', 'disallow'];
+            var wstatus = ['', 'allow', 'start', 'pause', 'resume', 'end', 'disallow'];
             return wstatus.indexOf(s) > -1 ? wstatus.indexOf(s) : 'unknown';
         }
 
