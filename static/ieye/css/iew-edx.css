@@ -93,10 +93,7 @@ body {
 	padding-top: 12px;
 	color: var(--edx-base) !important;
 	margin-bottom: 0px;
-}
-
-.customh1 {
-	font-size: 28px;
+	font-size: 28px !important;
 }
 
 #ol-box-content {

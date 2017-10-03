@@ -3,7 +3,7 @@ INTROTEMPLATES['pauseIntro.html'] = "<div class=\"introOverlay\">\n" +
     "    <div class=\"introBox\">\n" +
     "        <div class=\"introTitle\">\n" +
     "            <img src=\"https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png\">\n" +
-    "            <p class=\"customh1\">IntelliEye: an experimental add-on to improve your learning</p>\n" +
+    "            <h1 class=\"customh1\">IntelliEye: an experimental add-on to improve your learning</h1>\n" +
     "        </div>\n" +
     "\n" +
     "        <!-- =============================================================== -->\n" +

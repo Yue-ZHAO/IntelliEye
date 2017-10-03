@@ -3,7 +3,7 @@ INTROTEMPLATES['visualAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "    <div class=\"introBox\">\n" +
     "        <div class=\"introTitle\">\n" +
     "            <img src=\"https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png\">\n" +
-    "            <p class=\"customh1\">Welcome to IntelliEye</p>\n" +
+    "            <h1 class=\"customh1\">Welcome to IntelliEye</h1>\n" +
     "        </div>\n" +
     "\n" +
     "        <!-- =============================================================== -->\n" +
