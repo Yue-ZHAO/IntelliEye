@@ -38,8 +38,8 @@ html
                                 p= session.reactionType
                                 p= useState
                                 p= h + ':' + m + ':' + s
-                                p= (session.environment.mobile == false)? 'no mobile' : 'mobile'
-                                p= session.environment.browser + ' ('+session.environment.browserVersion+')'
+                                p= session.environment.browser + ' ('+session.environment.browserVersion+')'                                            
+                                p= 'mobile: ' + session.environment.mobile
                                 p= (session.banned == true) ? 'banned: true' : 'banned: false'                          
 
             .panel.panel-default
@@ -88,8 +88,8 @@ html
                                             p= session.reactionType
                                             p= useState
                                             p= h + ':' + m + ':' + s
-                                            p= (session.environment.mobile == false)? 'no mobile' : 'mobile'
-                                            p= session.environment.browser + ' ('+session.environment.browserVersion+')'
+                                            p= session.environment.browser + ' ('+session.environment.browserVersion+')'                                            
+                                            p= 'mobile: ' + session.environment.mobile
                                             p= (session.banned == true) ? 'banned: true' : 'banned: false'    
                                 -    });
                         - });
