@@ -162,13 +162,10 @@
             if (MW_ENABLE_INTELLIEYE) {
                 if (IEYE_Reaction_Type == 'Pause') {
                     _useIeye('Pause');
-                    console.log('Pause');
                 } else if (IEYE_Reaction_Type == 'VisualAlert') {
                     _useIeye('VisualAlert');
-                    console.log(VisualAlert);
                 } else if (IEYE_Reaction_Type == 'AuditoryAlert') {
                     _useIeye('AuditoryAlert');
-                    console.log(AuditoryAlert);
                 } else if (IEYE_Reaction_Type == 'ABCTesting') {
                     // A/B
                     var check = setInterval(function() {

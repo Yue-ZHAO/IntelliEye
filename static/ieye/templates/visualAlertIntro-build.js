@@ -47,7 +47,7 @@ INTROTEMPLATES['visualAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "            <span class='lm' id='lm3'><h2 class='h2-section'>Who do I contact in case of concerns/issues/ideas?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>\n" +
     "            <div class='ieye_descr' id='lm3-d'>\n" +
     "                IntelliEye is actively being developed at the Web Information Systems group of the Delft University of Technology. \n" +
-    "                If you have feedback, please email Yue Zhao (one of the add-on developers) at <a href=\"mailto:y.zhao-1@tudelft.nl\">y.zhao-1@tudelft.nl</a>\n" +
+    "                If you have feedback, please send us an email at <a href=\"mailto:intellieye-ewi@tudelft.nl\">intellieye-ewi@tudelft.nl</a>\n" +
     "            </div>     \n" +
     "\n" +
     "            <!-- =========================================================== -->\n" +

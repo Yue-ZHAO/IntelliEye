@@ -105,8 +105,8 @@ window.IEyeController = window.IEyeController || (function() {
                 // when user disables widget and remembers the choice
                 moocwidget.UI.placeAlert('You have disabled the widget',
                 `
-                    <p> Please tell us the reason you chose to disable the widget </p>
-                    <textarea id="ieyeFeedbackContent" rows="5" cols="80" style="height:150px;"></textarea>    
+                    <p> Please tell us the reason you chose to disable the widget: </p>
+                    <textarea id="ieyeFeedbackContent" rows="5" cols="80" style="height:150px;margin-top:10px"></textarea>    
                     
                 `,
                 ['<div class="msgButton" id="ieyeSendFeedback" >Send feedback</div>'],
@@ -282,17 +282,19 @@ window.IEyeController = window.IEyeController || (function() {
                 case 'pause':
 
                     // manual pause by user
-                    if (useIEye() && !ieyewidget.pausedByIEye()) {
-                        ieyewidget.pauseiEye();
+                    if (useIEye()) {
+                        if (!ieyewidget.pausedByIEye()) {
+                            ieyewidget.pauseiEye();                            
+                        }
+                        IEWLogger.logWidgetStatus('pause');
                     }
-                    IEWLogger.logWidgetStatus('pause');                    
                     break;
                 case 'ended':
                     if (useIEye()) {
                         ieyewidget.stopiEye();
                         sessionStorage.iEyeStarted = false;
+                        IEWLogger.logWidgetStatus('end');
                     }
-                    IEWLogger.logWidgetStatus('end');
                     break;
                 default: //none
             }

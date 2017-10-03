@@ -221,9 +221,10 @@ window.IEWLogger = window.IEWLogger || (function() {
             _videoStatus.push(chndObject);          
         }
 
+        console.log(">>>" + forceSend);
+        console.log(">>>" + _videoStatus.length);
+        console.log(">>>" + _videoDataSentBusy);
         if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
-            console.log(forceSend);
-            console.log(_videoStatus.length);
             _videoDataSentBusy = true;
             // TODO: send to server
             console.log('send server video status: ' + _videoStatus);

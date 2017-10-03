@@ -100,7 +100,6 @@ router.post('/user', function(req, res) {
     sessionData.get(sessionID).video = [];
     sessionData.get(sessionID).widget = [];
     sessionData.get(sessionID).lastBeat = (new Date());
-    sessionData.get(sessionID).exception = [];
     sessionData.get(sessionID).pausedCountUser = 0;
     sessionData.get(sessionID).pausedCountWidget = 0;    
     sessionData.get(sessionID).alerts = [];    
@@ -124,9 +123,6 @@ router.post('/data/:type', function(req, res) {
         case 'video': // array of video statusses
             user.video = user.video.concat(data);
             break;
-        case 'prediction': // single prediction object
-            user.prediction.push(data);
-            break;
         case 'widget': // single widget status object
             user.widget.push(data);
             // if paused
@@ -139,9 +135,6 @@ router.post('/data/:type', function(req, res) {
                     user.pausedCountUser += 1;
                 }
             }            
-            break;
-        case 'exception':
-            user.exception.push(data);
             break;
         case 'metrics':
             user.metrics.push(data);
