@@ -48,6 +48,8 @@ window.IEyeController = window.IEyeController || (function() {
         } else if (localStorage.use_ieye === 'true') {
             // when the choice has been remembered, log this as well
             IEWLogger.logWidgetStatus('allow', true);
+        } else if (localStorage.use_ieye === 'false') {
+            IEWLogger.logWidgetStatus('disallow', true);            
         }
     }
 
