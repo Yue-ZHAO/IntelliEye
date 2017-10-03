@@ -151,6 +151,12 @@
             sessionStorage.removeItem('facecheckInitialized');
             sessionStorage.removeItem('storedURL');
         }); 
+        
+        // ensure alert boxes are in correct position, have correct sizes
+        window.addEventListener('resize', function() {
+            $('#msgOverlay').css('width', $(window).width());
+            $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');            
+        }, true);        
 
         var setup = function() {
             console.log('Initializing MOOCWidgets.');
@@ -399,8 +405,7 @@
                 if (events !== 'undefined') {
                     eval(events);
                 }
-                $('#msgOverlay').css('width', $(window).width());
-                $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');
+
                 $('#msgOverlay').css('display', 'flex');
                 $(window).scrollTop(0);
             },

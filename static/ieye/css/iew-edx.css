@@ -196,7 +196,6 @@ body {
 	color: var(--edx-text);
 	display: block;
 	line-height: 1.6;
-	position: absolute;
 	margin: 50px auto;
 	min-width: 500px;
     width:100%;
