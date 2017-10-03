@@ -64,6 +64,8 @@ window.IEWLogger = window.IEWLogger || (function() {
                         'reactionType': moocwidget.WIDGET_TYPE,
                         'pageTitle': document.title,
                         'pageURL': document.URL,
+                        'banned': false,
+                        'banReasons': [],
                         'environment': moocwidget.envChecker.getEnvironment(),
                     };
 
@@ -375,7 +377,7 @@ window.IEWLogger = window.IEWLogger || (function() {
         sendLog('widget', data);
     };
 
-    module.logBannedUser = function(reason) {
+    module.logBannedUser = function(reasons) {
         console.log("[ieye] Logging banned user...");
         sessionStartDate = new Date();
         referenceNumber = createReferenceNumber();
@@ -388,7 +390,7 @@ window.IEWLogger = window.IEWLogger || (function() {
             'pageURL': document.URL,
             'environment': moocwidget.envChecker.getEnvironment(),
             'banned': true,
-            'reason': reason,
+            'banReasons': reasons,
         };
 
         $.post(userRoute, {data: initialLog}, function() {

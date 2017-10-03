@@ -172,11 +172,17 @@ function getMocks() {
         var log = {
             'userID': 'user'+i,
             'sessionID': '1111.2222.AAAA.BBBB||'+i,
+            'reactionType': 'Pause',
+            'banned': false,
+            'banReasons': [],
             'environment': {
                 'browser': 'Chrome',
                 'browserVersion': '11',
                 'mobile': false,                
             },
+            'widget': [{
+                'eventType': 'allow',
+            }],
             'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
         };
         var userID = log.userID;
@@ -190,12 +196,17 @@ function getMocks() {
         var logA = {
             'userID': 'user'+i,
             'sessionID': '1111.2222.AAAA.BBBB||bannedA',
+            'reactionType': 'AuditoryAlert',
             'banned': true,
+            'banReasons': ['Mobile'],
             'environment': {
                 'browser': 'Chrome',
                 'browserVersion': '11',
                 'mobile': true,                
             },
+            'widget': [{
+                'eventType': 'disallow',
+            }],            
             'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
         };
         var userID = logA.userID;
@@ -208,12 +219,17 @@ function getMocks() {
         var logB = {
             'userID': 'user'+i,
             'sessionID': '1111.2222.AAAA.BBBB||bannedB',
+            'reactionType': 'VisualAlert',
             'banned': true,
+            'banReasons': ['Browser'],
             'environment': {
                 'browser': 'Safari',
                 'browserVersion': '11',
                 'mobile': false,                
             },
+            'widget': [{
+                'eventType': 'disallow',
+            }],            
             'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
         };
         var userID = logB.userID;

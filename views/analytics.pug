@@ -16,20 +16,18 @@ html
                         -     users.set(session.userID, '');
 
                     h2 Sessions
-                    = 'current sessions: ' +  Object.keys(sessionData).length
-                    br
-                    = 'current users: ' + users.size                 
+                    h5= (new Date()).toLocaleDateString()
+                    h5= 'current sessions: ' +  Object.keys(sessionData).length
+                    h5= 'current users: ' + users.size                 
                     hr(style="visibility:hidden")
                     .well
                         for session in sessionData
                             - var useState = 'n/a';
-                            for (var w in session.widget) {
-                                var wstate = session.widget[w];
-                                if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
-                                    useState = wstate.eventType;
-                                }
-                            }
-
+                            for wstate in session.widget
+                                - 
+                                    if (wstate.eventType === 'allow' || wstate.eventType === 'disallow')
+                                        useState = wstate.eventType;
+                                
                             - var sDate = (new Date(session.sessionStartTime));
                             - var h = ('0' + sDate.getHours()).slice(-2);
                             - var m = ('0' + sDate.getMinutes()).slice(-2);
@@ -39,11 +37,10 @@ html
                                 p= session.sessionID
                                 p= session.reactionType
                                 p= useState
-                                p= sDate.toLocaleDateString() + ' ' + h + ':' + m + ':' + s
-                                p= 'mobile: ' + session.environment.mobile
-                                p= 'browser: ' + session.environment.browser
-                                p= 'version: ' + session.environment.browserVersion
-                                p= (session.banned) ? 'banned: true' : 'banned: false'                          
+                                p= h + ':' + m + ':' + s
+                                p= (session.environment.mobile == false)? 'no mobile' : 'mobile'
+                                p= session.environment.browser + ' ('+session.environment.browserVersion+')'
+                                p= (session.banned == true) ? 'banned: true' : 'banned: false'                          
 
             .panel.panel-default
                 .panel-body
@@ -71,18 +68,15 @@ html
                         - bucket.forEach((b, k) => {
                             .well
                                 h4= (new Date()).toLocaleDateString() + ', ' +  k + ':00:00'
-                                = 'sessions: ' +  b.length
-                                br
-                                = 'users: ' + usersPerHour.get(k).size                                
+                                h5= 'sessions: ' +  b.length
+                                h5= 'users: ' + usersPerHour.get(k).size                                
                                 hr
                                 -    b.forEach((session) => {
                                         - var useState = 'n/a';
-                                        for (var w in session.widget) {
-                                            var wstate = session.widget[w];
-                                            if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
-                                                useState = wstate.eventType;
-                                            }
-                                        }
+                                        for wstate in session.widget
+                                            - 
+                                                if (wstate.eventType === 'allow' || wstate.eventType === 'disallow')
+                                                    useState = wstate.eventType;
 
                                         - var sDate = (new Date(session.sessionStartTime));
                                         - var h = ('0' + sDate.getHours()).slice(-2);
@@ -93,11 +87,10 @@ html
                                             p= session.sessionID
                                             p= session.reactionType
                                             p= useState
-                                            p= sDate.toLocaleDateString() + ' ' + h + ':' + m + ':' + s
-                                            p= 'mobile: ' + session.environment.mobile
-                                            p= 'browser: ' + session.environment.browser
-                                            p= 'version: ' + session.environment.browserVersion
-                                            p= (session.banned) ? 'banned: true' : 'banned: false'
+                                            p= h + ':' + m + ':' + s
+                                            p= (session.environment.mobile == false)? 'no mobile' : 'mobile'
+                                            p= session.environment.browser + ' ('+session.environment.browserVersion+')'
+                                            p= (session.banned == true) ? 'banned: true' : 'banned: false'    
                                 -    });
                         - });
     block foot

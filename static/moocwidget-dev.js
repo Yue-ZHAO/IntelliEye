@@ -52,20 +52,20 @@
             });
         } else {
             _loadjs(['https://moocwidgets.cc/static/sqeye/js/sqeye-build.min.js'], function() {
-                var webcam = moocwidget.envChecker.webcamIsAvailable();
-                var desktop = (moocwidget.envChecker.getEnvironment().mobile == false); 
-                var browserInfo = moocwidget.envChecker.isValidBrowser();   
+                // var webcam = moocwidget.envChecker.webcamIsAvailable();
+                // var desktop = (moocwidget.envChecker.getEnvironment().mobile == false); 
+                // var browserInfo = moocwidget.envChecker.isValidBrowser();   
 
-                if (!desktop) {
-                    mwdet_logger.logBannedUser('Mobile');                       
-                }                      
-                if (!webcam) {
-                    mwdet_logger.logBannedUser('No webcam');
-                }                          
+                // if (!desktop) {
+                //     mwdet_logger.logBannedUser('Mobile');                       
+                // }                      
+                // if (!webcam) {
+                //     mwdet_logger.logBannedUser('No webcam');
+                // }                          
 
-                if (!browserInfo[0]) {
-                    mwdet_logger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
-                }
+                // if (!browserInfo[0]) {
+                //     mwdet_logger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                // }
             });           
         }
     }
@@ -106,16 +106,19 @@
                 var webcam = moocwidget.envChecker.webcamIsAvailable();
                 var desktop = (moocwidget.envChecker.getEnvironment().mobile == false);  
                 var browserInfo = moocwidget.envChecker.isValidBrowser();
+                var reasons = [];
                 if (!desktop) {
-                    IEWLogger.logBannedUser('Mobile');                      
+                    reasons.push('Mobile');
                 }                     
                 if (!webcam) {
-                    IEWLogger.logBannedUser('No webcam');
+                    reasons.push('No webcam')
                 }                         
      
                 if (!browserInfo[0]) {
-                    IEWLogger.logBannedUser('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
+                    reasons.push('Browser: ' + browserInfo[1] + ', version: ' + browserInfo[2]);
                 }               
+
+                IEWLogger.logBannedUser(reasons);
             });           
         }
      }
