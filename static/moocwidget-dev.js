@@ -111,7 +111,7 @@
                     reasons.push('Mobile');
                 }                     
                 if (!webcam) {
-                    reasons.push('No webcam')
+                    reasons.push('No webcam');
                 }                         
      
                 if (!browserInfo[0]) {
