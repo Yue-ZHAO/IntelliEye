@@ -3,7 +3,7 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "    <div class=\"introBox\">\n" +
     "        <div class=\"introTitle\">\n" +
     "            <img src=\"https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png\">\n" +
-    "            <h1 class=\"customh1\">Welcome to IntelliEye</h1>\n" +
+    "            <p class=\"customh1\">Welcome to IntelliEye</p>\n" +
     "        </div>\n" +
     "\n" +
     "        <!-- =============================================================== -->\n" +
@@ -19,7 +19,7 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "IntelliEye makes use of your Webcam to track your focus and attention. IntelliEye is privacy-aware: none of the Webcam data leaves your computer, all computations are made on your device.\n" +
     "            </p>\n" +
     "\n" +
-    "            <img src=\"https://moocwidgets.cc/static/ieye/img/ieye_instructions_audio.png\" width=\"350px\"><br>\n" +
+    "            <img src=\"https://moocwidgets.cc/static/ieye/img/ieye_instructions_audio.png\" width=\"550px\" style=\"margin-top:20px;margin-bottom:40px\"><br>\n" +
     "\n" +
     "            <!-- =========================================================== -->\n" +
     "            <!-- HOW DOES IT INTELLIEYE DO IT? -->\n" +
