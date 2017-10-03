@@ -1,18 +1,23 @@
 // Include gulp
 var gulp = require('gulp');
 var argv = require('yargs').argv;
- // Include plugins
+
+// Include plugins
+var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify-es').default;
 var rename = require('gulp-rename');
 var html2string = require('gulp-html2string');
 
 gulp.task('driver', function() {
-        return gulp.src([
-        './static/client.min.js',
-        './static/moocwidget-dev.js',
-        ])
+    return gulp.src([
+    './static/client.min.js',
+    './static/moocwidget-dev.js',
+    ])
     .pipe(concat('moocwidget.js'))
+        .pipe(babel({
+            presets: ['es2015'],
+        }))
         .pipe(uglify())
         .pipe(gulp.dest('./static/'));
 });
