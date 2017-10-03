@@ -40,7 +40,7 @@ html
                                 p= h + ':' + m + ':' + s
                                 p= session.environment.browser + ' ('+session.environment.browserVersion+')'                                            
                                 p= 'mobile: ' + session.environment.mobile
-                                p= (session.banned == true) ? 'banned: true' : 'banned: false'                          
+                                p= 'banned: ' + session.banned
 
             .panel.panel-default
                 .panel-body
@@ -90,7 +90,7 @@ html
                                             p= h + ':' + m + ':' + s
                                             p= session.environment.browser + ' ('+session.environment.browserVersion+')'                                            
                                             p= 'mobile: ' + session.environment.mobile
-                                            p= (session.banned == true) ? 'banned: true' : 'banned: false'    
+                                            p= 'banned: ' + session.banned
                                 -    });
                         - });
     block foot
