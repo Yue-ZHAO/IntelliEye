@@ -212,7 +212,7 @@ window.IEWLogger = window.IEWLogger || (function() {
                 'videoStatus': vcontrol.getCurrentPlayerState(), 
                 'currentTime': vcontrol.getCurrentPlayer().currentTime,
                 'length': vcontrol.getCurrentPlayer().duration(),
-                'size': $('#'+vcontrol.getCurrentPlayerID())[0].getBoundingClientRect(),
+                'size': JSON.stringify($('#'+vcontrol.getCurrentPlayerID())[0].getBoundingClientRect()),
                 'speed': pState.speed,
                 'subtitles': !pState.captionsHidden,
                 'fullscreen': pState.videoFullScreen.fullScreenState ? 'Y' : 'N',
@@ -224,7 +224,7 @@ window.IEWLogger = window.IEWLogger || (function() {
         console.log(">>>" + forceSend);
         console.log(">>>" + _videoStatus.length);
         console.log(">>>" + _videoDataSentBusy);
-        if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) ) {
+        if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
             _videoDataSentBusy = true;
             console.log('send server video status: ' + _videoStatus);
             $.post(dataRoute + '/video', {sessionID: getSessionId(), data: _videoStatus}, function() {
