@@ -6,6 +6,10 @@ window.IEWLogger = window.IEWLogger || (function() {
     //
     // IEYEVERSION IS DEFINED IN CONTROLLER MODULE
     // =========================================================================
+    // module ready status
+    var isReady;
+
+    // check edx's readiness
     var readyCheck;
 
     var LOG_ENABLED = true;
@@ -47,6 +51,7 @@ window.IEWLogger = window.IEWLogger || (function() {
      */
     function init() {
         readyCheck = setInterval(function() {
+            if (analytics && analytics.user()) {
                 clearInterval(readyCheck);
 
                 sessionStartDate = new Date();
@@ -95,7 +100,8 @@ window.IEWLogger = window.IEWLogger || (function() {
                     }
                 }, HEARTBEAT_TIME);                     
                 
-                isReady = true;                     
+                isReady = true;      
+            }               
         }, 100);
     }
 
@@ -202,7 +208,7 @@ window.IEWLogger = window.IEWLogger || (function() {
                 'videoStatus': vcontrol.getCurrentPlayerState(), 
                 'currentTime': vcontrol.getCurrentPlayer().currentTime,
                 'length': vcontrol.getCurrentPlayer().duration(),
-                'size': 'unknown',
+                'size': $('#'+vcontrol.getCurrentPlayerID())[0].getBoundingClientRect(),
                 'speed': pState.speed,
                 'subtitles': !pState.captionsHidden,
                 'fullscreen': pState.videoFullScreen.fullScreenState ? 'Y' : 'N',
