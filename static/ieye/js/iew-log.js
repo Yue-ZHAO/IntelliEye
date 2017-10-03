@@ -39,6 +39,7 @@ window.IEWLogger = window.IEWLogger || (function() {
     // time of heartbeat messages (ms) to send.
     // MUST BE SMALLER THAN SERVER'S CHECKTIME VALUE (300000)
     const HEARTBEAT_TIME = 30000; 
+    var HEARTBEAT_UPDATE = null;
     var _heartbeatBusy = false;
 
     /**
@@ -79,13 +80,13 @@ window.IEWLogger = window.IEWLogger || (function() {
                     clearInterval(HEARTBEAT_UPDATE);
                 }           
 
-                METRIC_UPDATE = setInterval(function() {
+                METRIC_UPDATE = (METRIC_UPDATE !== null) ? METRIC_UPDATE : setInterval(function() {
                     // console.log(getSessionId());
                     _updateEnvironment();
                     _updateVideoStatus();
                 }, METRIC_UPDATE_INTERVAL);
 
-                HEARTBEAT_UPDATE = setInterval(function() {
+                HEARTBEAT_UPDATE = (HEARTBEAT_UPDATE !== null) ? HEARTBEAT_UPDATE : setInterval(function() {
                     if (!_heartbeatBusy) {
                         _heartbeatBusy = true;
                         $.post(_route + '/heartbeat', {userID: getUserId(), sessionID: getSessionId()}, function() {

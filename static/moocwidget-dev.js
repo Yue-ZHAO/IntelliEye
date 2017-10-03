@@ -13,13 +13,18 @@
         var loaded = 0;
         var loadIntervalRef;
         files.forEach(function(src) {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = src;
-            script.onload = function() {
-                loaded+=1;
-            };
-            document.body.appendChild(script);
+            // var script = document.createElement('script');
+            // script.type = 'text/javascript';
+            // script.src = src;
+            // script.onload = function() {
+            //     loaded+=1;
+            // };
+            // document.body.appendChild(script);
+            $.getScript( src, function( data, textStatus, jqxhr ) {
+                console.log( data ); // Data returned
+                console.log( textStatus ); // Success
+                console.log( jqxhr.status ); // 200
+            });            
         });
         loadIntervalRef = setInterval(function() {
             if (loaded === files.length) {
