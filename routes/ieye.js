@@ -5,21 +5,37 @@ require('map.prototype.tojson');
 var dp = require('../dataprocessing.js');
 
 var sessionData = new Map();
+var historyData = new Map();
+
 var CHECKTIME = 300000;
+var DAY_IN_MS = 86400000; // a day in miliseconds, for clearing history
+var CHECK_PROGRESS = 0; // counts how many ms has gone by
 
 // checks if session is active
 // if not, store
 setInterval(function() {
+    if (CHECK_PROGRESS >= DAY_IN_MS) {
+        historyData.clear();
+        CHECK_PROGRESS = 0;
+    }
+
     sessionData.forEach((session, sessionID) => {
+        // update history map
+        if (!historyData.has(sessionID)) {
+            historyData.set(sessionID, session);
+        }
+
         var now = new Date();
         var then = new Date(session.lastBeat);
         if ((now - then) > CHECKTIME) {
-            // store and delete
+            // store and delete session data
             console.log('no heartbeat sensed - saving');
             dp.writeFile('ieye', sessionID, session.userID, sessionData.get(sessionID));
             sessionData.delete(sessionID);
         } 
     });
+
+    CHECK_PROGRESS += CHECKTIME;
 }, CHECKTIME);
 
 router.get('/', function(req, res) {
@@ -39,7 +55,7 @@ router.post('/heartbeat', function(req, res) {
 });
 
 router.get('/sessions', function(req, res) {
-    res.json(sessionData.toJSON());
+    res.render('analytics', {historyData: historyData.toJSON(), sessionData: sessionData.toJSON()});
 });
 
 router.post('/user', function(req, res) {
@@ -111,6 +127,79 @@ router.post('/data/:type', function(req, res) {
 
     console.log(data);
     res.end();
+});
+
+// =============================================================================
+// TESTING SPACE
+// =============================================================================
+/**
+ * @return {*} 
+ */
+function getMocks() {
+    var mock = new Map();
+    var now = new Date();
+    for (var i = 0; i < 5; i++) {
+        var log = {
+            'userID': 'user'+i,
+            'sessionID': '1111.2222.AAAA.BBBB||'+i,
+            'environment': {
+                'browser': 'Chrome',
+                'browserVersion': '11',
+                'mobile': false,                
+            },
+            'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
+        };
+        var userID = log.userID;
+        var sessionID = log.sessionID;
+
+        // set up user data
+        mock.set(sessionID, log);
+        mock.get(sessionID).userID = userID;    
+    }
+
+        var logA = {
+            'userID': 'user'+i,
+            'sessionID': '1111.2222.AAAA.BBBB||bannedA',
+            'banned': true,
+            'environment': {
+                'browser': 'Chrome',
+                'browserVersion': '11',
+                'mobile': true,                
+            },
+            'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
+        };
+        var userID = logA.userID;
+        var sessionID = logA.sessionID;
+
+        // set up user data
+        mock.set(sessionID, logA);
+        mock.get(sessionID).userID = userID;
+
+        var logB = {
+            'userID': 'user'+i,
+            'sessionID': '1111.2222.AAAA.BBBB||bannedB',
+            'banned': true,
+            'environment': {
+                'browser': 'Safari',
+                'browserVersion': '11',
+                'mobile': false,                
+            },
+            'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
+        };
+        var userID = logB.userID;
+        var sessionID = logB.sessionID;
+
+        // set up user data
+        mock.set(sessionID, logB);
+        mock.get(sessionID).userID = userID;           
+    
+    return mock;
+}
+
+router.get('/testsession', function(req, res) {
+    var mocks = getMocks();
+
+    res.render('analytics', {historyData: mocks.toJSON(), sessionData: mocks.toJSON()});
 });
 
 module.exports = router;

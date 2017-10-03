@@ -38,7 +38,9 @@ app.use(cors());
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
-// app.use('/static', express.static(path.join(__dirname, 'public')));
+
+// without nginx, uncomment:
+// app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // set up of the body parser
 // this dependency is required to send json files
