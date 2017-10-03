@@ -214,7 +214,7 @@
          * Places an alert if the webcam is denied by user.
          * @param {function} callIfFail call this function if permission to webcam is denied.
          */
-        function checkWebcamState(callIfFail='undefined') {
+        function checkWebcamState(callIfFail) {
             navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia;
             if (navigator.getUserMedia) {
                 navigator.getUserMedia( {
@@ -231,7 +231,7 @@
                             'You need to grant permission to the webcam and refresh the page for the widget to work.', 
                             []
                         );
-                        if (callIfFail !== 'undefined') {
+                        if (typeof callIfFail !== 'undefined') {
                             callIfFail();
                         }
                     }
