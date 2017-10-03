@@ -54,7 +54,10 @@ gulp.task('ieye-pause', ['html2js'], function() {
         './static/ieye/js/iew-log.js',              
         './static/ieye/js/iew-controller.js',
         ])
-    .pipe(concat('ieye-build.js'))
+        .pipe(concat('ieye-build.js'))
+        .pipe(babel({
+            presets: ['es2015'],
+        }))    
         .pipe(rename({suffix: '-pause.min'}))
         .pipe(uglify())
         .pipe(gulp.dest('./static/ieye/js/'));
@@ -72,6 +75,9 @@ gulp.task('ieye-auditory', ['html2js'], function() {
         './static/ieye/js/iew-controller.js',
         ])
     .pipe(concat('ieye-build.js'))
+        .pipe(babel({
+            presets: ['es2015'],
+        }))    
         .pipe(rename({suffix: '-auditoryAlert.min'}))
         .pipe(uglify())
         .pipe(gulp.dest('./static/ieye/js/'));
@@ -89,6 +95,9 @@ gulp.task('ieye-visual', ['html2js'], function() {
         './static/ieye/js/iew-controller.js',
         ])
     .pipe(concat('ieye-build.js'))
+        .pipe(babel({
+            presets: ['es2015'],
+        }))    
         .pipe(rename({suffix: '-visualAlert.min'}))
         .pipe(uglify())
         .pipe(gulp.dest('./static/ieye/js/'));
