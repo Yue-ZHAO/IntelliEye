@@ -460,16 +460,30 @@
 	function iEyeVideoPause() {
         // YUE: I add the if function
 		if (vcontrol.getCurrentPlayerState() != "pause") {
-			 vcontrol.pauseVideo();
+			vcontrol.pauseVideo();
 			ieyewidget.updateAndLogMetrics();
-		}
+            IEWLogger.logAlert({
+                'time': Date.now(),
+                'videoID': vcontrol.getCurrentPlayerID(),
+                'videoTime': vcontrol.getCurrentTime(),
+                'videoDuration': vcontrol.getDuration(),
+                'status': 'start',
+            });
+        }
 	}
 
 	// ----------------- Resume video ----------------- 
 	function iEyeVideoResume() {
 		if (vcontrol.getCurrentPlayerState() == "pause") {
 			vcontrol.rewindAndPlay(getRewindSeconds());
-			ieyewidget.updateAndLogMetrics();			
+			ieyewidget.updateAndLogMetrics();
+            IEWLogger.logAlert({
+                'time': Date.now(),
+                'videoID': vcontrol.getCurrentPlayerID(),
+                'videoTime': vcontrol.getCurrentTime(),
+                'videoDuration': vcontrol.getDuration(),
+                'status': 'stop',
+            });
 		}
 	}
 
