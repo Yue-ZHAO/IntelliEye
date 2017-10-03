@@ -19,7 +19,7 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "IntelliEye makes use of your Webcam to track your focus and attention. IntelliEye is privacy-aware: none of the Webcam data leaves your computer, all computations are made on your device.\n" +
     "            </p>\n" +
     "\n" +
-    "            <img src=\"https://moocwidgets.cc/static/ieye/img/ieye_instructions_audio.png\" width=\"350px\">\n" +
+    "            <img src=\"https://moocwidgets.cc/static/ieye/img/ieye_instructions_audio.png\" width=\"350px\"><br>\n" +
     "\n" +
     "            <!-- =========================================================== -->\n" +
     "            <!-- HOW DOES IT INTELLIEYE DO IT? -->\n" +
@@ -36,13 +36,12 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "            <!-- WHAT DO I NEED TO DO TO USE INTELLIEYE -->\n" +
     "            <!-- =========================================================== -->\n" +
     "            <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>\n" +
-    "            <div class='ieye_descr' id='lm2-d'>\n" +
-    "                <ul>\n" +
-    "                    <li>Allow the edX site to make use of your Webcam when asked to do so (once more: none of the Webcam data leaves your machine).</li>\n" +
-    "                    <li>Ensure that your webcam is pointing at your face from the front. If you have multiple webcams, make sure that the one facing you frontally is the default webcam of your system.</li>\n" +
-    "                    <li>Face the camera and watch each lecture video as you normally would.</li>\n" +
-    "                </ul>                                        \n" +
-    "            </div>\n" +
+    "            <ul class='ieye_descr' id='lm2-d'>\n" +
+    "                <li>Allow the edX site to make use of your Webcam when asked to do so (once more: none of the Webcam data leaves your machine).</li>\n" +
+    "                <li>Ensure that your webcam is pointing at your face from the front. If you have multiple webcams, make sure that the one facing you frontally is the default webcam of your system.</li>\n" +
+    "                <li>Face the camera and watch each lecture video as you normally would.</li>\n" +
+    "            </ul>                                        \n" +
+    "\n" +
     "\n" +
     "            <!-- =========================================================== -->\n" +
     "            <!-- WHAT DO I NEED TO DO TO USE INTELLIEYE -->\n" +

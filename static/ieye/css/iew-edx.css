@@ -95,6 +95,10 @@ body {
 	margin-bottom: 0px;
 }
 
+.customh1 {
+	font-size: 28px;
+}
+
 #ol-box-content {
 	padding: 1.25rem;
 }
