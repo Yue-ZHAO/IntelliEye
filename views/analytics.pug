@@ -23,10 +23,12 @@ html
                     .well
                         for session in sessionData
                             - var useState = 'n/a';
-                             for wstate in session.widget
+                            for (w in session.widget) {
+                                var wstate = session.widget[w];
                                 if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
                                     useState = wstate.eventType;
                                 }
+                            }
 
                             - var sDate = (new Date(session.sessionStartTime));
                             - var h = ('0' + sDate.getHours()).slice(-2);
