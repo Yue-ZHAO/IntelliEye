@@ -7,6 +7,7 @@ var dp = require('../dataprocessing.js');
 var sessionData = new Map();
 var historyData = new Map();
 
+var ACCESSKEY = 'wiseye';
 var CHECKTIME = 300000;
 var DAY_IN_MS = 86400000; // a day in miliseconds, for clearing history
 var CHECK_PROGRESS = 0; // counts how many ms has gone by
@@ -38,8 +39,23 @@ setInterval(function() {
     CHECK_PROGRESS += CHECKTIME;
 }, CHECKTIME);
 
+/**
+ * Middleware checks for valid user
+ * @param {*} req request
+ * @param {*} res response
+ * @param {*} next next function
+ */
+function checkUser(req, res, next) {
+    if (req.cookies.key === ACCESSKEY) {
+        next();
+    } else {
+        res.redirect('/ieye/sessionsgate');
+    }
+}
+
+
 router.get('/', function(req, res) {
-    res.send('ieye');
+    res.send('');
 });
 
 router.post('/heartbeat', function(req, res) {
@@ -54,7 +70,21 @@ router.post('/heartbeat', function(req, res) {
     res.end();
 });
 
-router.get('/sessions', function(req, res) {
+router.post('/check', function(req, res) {
+    var key = req.body.key;
+    if (key === ACCESSKEY) {
+        res.cookie('key', key, {maxAge: 3600000});
+        res.send('valid');
+    } else {
+        res.send('invalid');
+    }
+});
+
+router.get('/sessionsgate', function(req, res) {
+    res.render('check', {});
+});
+
+router.get('/sessions', checkUser, function(req, res) {
     res.render('analytics', {historyData: historyData.toJSON(), sessionData: sessionData.toJSON()});
 });
 

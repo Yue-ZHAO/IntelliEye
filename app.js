@@ -17,6 +17,7 @@ var bodyParser = require('body-parser');
 var mlog = require('morgan'); // request mlog
 var log4js = require('log4js'); // common mlog (logging our messages to file)
 require('map.prototype.tojson');
+var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var logger = log4js.getLogger();
 
@@ -35,12 +36,13 @@ var corsOptions = {
 };
 
 app.use(cors());
+app.use(cookieParser());
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
 // without nginx, uncomment:
-// app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // set up of the body parser
 // this dependency is required to send json files
