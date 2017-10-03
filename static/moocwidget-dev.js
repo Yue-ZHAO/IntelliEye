@@ -24,6 +24,9 @@
                 console.log( data ); // Data returned
                 console.log( textStatus ); // Success
                 console.log( jqxhr.status ); // 200
+                if (jqxhr.status === 200) {
+                    loaded += 1;
+                }
             });            
         });
         loadIntervalRef = setInterval(function() {
