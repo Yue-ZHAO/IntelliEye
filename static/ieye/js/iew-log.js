@@ -386,6 +386,7 @@ window.IEWLogger = window.IEWLogger || (function() {
             'userID': getUserId(),
             'sessionID': getSessionId(),
             'sessionStartTime': (new Date(sessionStartDate)).toISOString(),
+            'reactionType': moocwidget.WIDGET_TYPE,
             'pageTitle': document.title,
             'pageURL': document.URL,
             'environment': moocwidget.envChecker.getEnvironment(),
