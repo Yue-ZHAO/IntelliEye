@@ -399,6 +399,7 @@
                 if (events !== 'undefined') {
                     eval(events);
                 }
+                $('#msgOverlay').css('width', $(window).width());
                 $('#msgOverlay').css('height', (parseInt($('body').outerHeight()) + 100) + 'px');
                 $('#msgOverlay').css('display', 'flex');
                 $(window).scrollTop(0);
