@@ -43,8 +43,12 @@ window.IEyeController = window.IEyeController || (function() {
 
         updateIndicator();
 
-        if (!localStorage.use_ieye)
+        if (!localStorage.use_ieye) {
             moocwidget.UI.ieye_intro();
+        } else if (localStorage.use_ieye === 'true') {
+            // when the choice has been remembered, log this as well
+            IEWLogger.logWidgetStatus('allow', true);
+        }
     }
 
     /**
@@ -185,6 +189,7 @@ window.IEyeController = window.IEyeController || (function() {
             indicator.append('<div id="iEyeIndicator" class="indicator" onclick="vcontrol.pauseVideo();IEyeController.recallOverlay()"></div>');
             par.prepend(indicator);    
 
+            var currentIndicator;
             $('#iEyeIndicator').hover(function() {
                 currentIndicator = $(this).text();
                 $(this).text('Show menu');
