@@ -124,17 +124,23 @@ router.post('/data/:type', function(req, res) {
             user.video = user.video.concat(data);
             break;
         case 'widget': // single widget status object
-            user.widget.push(data);
+            // data is only not added when:
+            // event is 'pause' and it's not an ieye event.
+            // this is done so to keep track of pause counts in both cases (triggered by ieye/user)
+
             // if paused
-            if (data['eventTypeID'] == '4') {
+            if (data['eventTypeID'] == '3') {
                 // if paused by widget:
                 if (data['isIEyeEvent'] == '1') {
                     user.pausedCountWidget += 1;
+                    user.widget.push(data);   
                 } else {
-                    // if paused by user
+                    // if paused by user, don't push data
                     user.pausedCountUser += 1;
                 }
-            }            
+            } else {
+                user.widget.push(data);   
+            }
             break;
         case 'metrics':
             user.metrics.push(data);

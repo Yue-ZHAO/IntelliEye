@@ -224,9 +224,8 @@ window.IEWLogger = window.IEWLogger || (function() {
         console.log(">>>" + forceSend);
         console.log(">>>" + _videoStatus.length);
         console.log(">>>" + _videoDataSentBusy);
-        if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) && !_videoDataSentBusy) {
+        if ((forceSend || _videoStatus.length >= MAX_METRIC_COUNT) ) {
             _videoDataSentBusy = true;
-            // TODO: send to server
             console.log('send server video status: ' + _videoStatus);
             $.post(dataRoute + '/video', {sessionID: getSessionId(), data: _videoStatus}, function() {
                 console.log('Send success');
