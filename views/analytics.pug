@@ -23,7 +23,7 @@ html
                     .well
                         for session in sessionData
                             - var useState = 'n/a';
-                            for (w in session.widget) {
+                            for (var w in session.widget) {
                                 var wstate = session.widget[w];
                                 if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
                                     useState = wstate.eventType;
@@ -77,7 +77,7 @@ html
                                 hr
                                 -    b.forEach((session) => {
                                         - var useState = 'n/a';
-                                        for (w in session.widget) {
+                                        for (var w in session.widget) {
                                             var wstate = session.widget[w];
                                             if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
                                                 useState = wstate.eventType;
