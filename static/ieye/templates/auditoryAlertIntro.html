@@ -10,81 +10,55 @@
         <!-- =============================================================== -->
         <div class="introContent">
             <p>
-                For this course, we offer you IntelliEye, an experimental widget developed at TU Delft. 
-                IntelliEye will help you during watching MOOC videos. 
-                <br>Whenever you lose focus watching the video playing, 
-                IntelliEye will detect it and alert you with a beeping sound 
-                <img id="intro_alert_click" style="cursor:pointer" src="https://moocwidgets.cc/static/ieye/img/ieye_alert_icon.png" width="20" height:"20" style="vertical-align:middle">. 
-                Once you are focusing on the video again, the alert will stop. IntelliEye is an automated <b>privacy-aware</b> assistant 
-                (i.e. none of the webcam data leaves your computer) for you on the edX platform.
+Imagine someone looking over your shoulder while you learn in this MOOC, reminding you to pay attention and alerting you when you become distracted. This would probably make you learn more efficiently!
+<br>
+IntelliEye is a first step towards this vision: an intelligent video player add-on we have developed at the Delft University of Technology. It will become active when you watch a lecture video: whenever the add-on detects a loss of focus on your part it will beep repeatedly 
+<img id="intro_alert_click" style="cursor:pointer" src="https://moocwidgets.cc/static/ieye/img/ieye_alert_icon.png" width="20" height:"20" style="vertical-align:middle">. 
+until it detects your focus again.
+IntelliEye makes use of your Webcam to track your focus and attention. IntelliEye is privacy-aware: none of the Webcam data leaves your computer, all computations are made on your device.
             </p>
 
-            <p>
-                The following situations will be detected as inattention during the video watching:
-                <ul>
-                    <li>You are not facing the screen your webcam is aligned with.</li>
-                    <li>You are doing some stuff on the other tabs/windows on your computer.</li>
-                </ul>
-            </p>       
+            <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions_audio.png" width="350px">
 
             <!-- =========================================================== -->
-            <!-- TO USE INTELLIEYE -->
+            <!-- HOW DOES IT INTELLIEYE DO IT? -->
             <!-- =========================================================== -->
-            <div id="intro-howto-cont">
-                <div>
-                    <p>
-                    To use IntelliEye:
-                        <ul>
-                            <li>allow the edx site to use your webcam when you are asked to do so,</li>
-                            <li>face the camera and watch the video as you normally would.</li>
-                        </ul>
-                        IntelliEye is developed by TU Delft. Using this widget will be helpful for us to make better inattention-detection widgets in the future. 
-                        If you have any questions or feedback, please send an email to
-                        <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a> or <a href="mailto:y.zhao-1@tudelft.nl">t.robal@tudelft.nl</a>. 
-                        <br>
-                        <br>
-                    </p>
-                </div>
-                <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions.png" width="350px">
-            </div>
-
-            <!-- =========================================================== -->
-            <!-- HOW DOES IT WORK -->
-            <!-- =========================================================== -->
-            <span class='lm' id='lm1'><h2 class='h2-section'>How does it work?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <span class='lm' id='lm1'><h2 class='h2-section'>How does IntelliEye do it?<span id='lm1-text' style='margin-left:5px'>Learn more</span></h2></span>
             <p class='ieye_descr' id='lm1-d'>
-            IntelliEye uses your computer webcam, with your permission, and looks for a face frame in the camera feed. 
-            Based on detected face frame, IntelliEye can estimate whether you are watching at the video, and then decide alert you. 
-            IntelliEye is <b>privacy aware</b> - no videofeed leaves your computer.            
-            <br>
-            <img src="https://moocwidgets.cc/static/ieye/img/ieye_instructions3.png" width="400px" style="margin-top:10px">
+                IntelliEye makes use of the Webcam to track your face. 
+                If your face is not facing the screen (because you are talking to a friend, looking out of the window, wrapping your hands around it, leaning back heavily), 
+                IntelliEye assumes a loss of focus. If you are active in browser tabs/windows next to the video playing one (because you are checking your emails or browsing Reddit), 
+                IntelliEye also assumes a loss of focus.
             </p>
 
             <!-- =========================================================== -->
-            <!-- WHAT DO I NEED TO USE INTELLIEYE -->
+            <!-- WHAT DO I NEED TO DO TO USE INTELLIEYE -->
             <!-- =========================================================== -->
-            <span class='lm' id='lm2'><h2 class='h2-section'>What are required for using IntelliEye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <span class='lm' id='lm2'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm2-text' style='margin-left:5px'>Learn more</span></h2></span>
             <div class='ieye_descr' id='lm2-d'>
                 <ul>
-                    <li>IntelliEye can only run on laptop and desktop computers. We do not support mobile platforms.</li>
-                    <li>You can use IntelliEye with some modern web browsers, e.g., the latest version of Firefox, Opera and Chrome. Internet Explorer, Microsoft Edge and Safari are not supported currently.</li>
-                    <li>We need your permission to use the built-in camera or the external camera on your machine. The camera should be aligned with the screen you are watching the video on.</li>
+                    <li>Allow the edX site to make use of your Webcam when asked to do so (once more: none of the Webcam data leaves your machine).</li>
+                    <li>Ensure that your webcam is pointing at your face from the front. If you have multiple webcams, make sure that the one facing you frontally is the default webcam of your system.</li>
+                    <li>Face the camera and watch each lecture video as you normally would.</li>
                 </ul>                                        
             </div>
 
             <!-- =========================================================== -->
             <!-- WHAT DO I NEED TO DO TO USE INTELLIEYE -->
             <!-- =========================================================== -->
-            <span class='lm' id='lm3'><h2 class='h2-section'>What do I need to do to use IntelliEye?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
-            <div class='ieye_descr' id='lm3-d'>As Intellieye depends on the face detection in the web camera video feed, you should pay attention to the following:
-                <ul>
-                    <li>Enable your webcam once asked.</li>
-                    <li>Sit normally facing the camera.</li>
-                    <li>Try not to put your hand around your face or between your face and the webcam.</li>
-                    <li>Try not to lean back or forward heavily.</li>
-                    <li>Watch the video as you usually do.</li>
-                </ul>
+            <span class='lm' id='lm3'><h2 class='h2-section'>Who do I contact in case of concerns/issues/ideas?<span id='lm3-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <div class='ieye_descr' id='lm3-d'>
+                IntelliEye is actively being developed at the Web Information Systems group of the Delft University of Technology. 
+                If you have feedback, please email Yue Zhao (one of the add-on developers) at <a href="mailto:y.zhao-1@tudelft.nl">y.zhao-1@tudelft.nl</a>
             </div>     
+
+            <!-- =========================================================== -->
+            <!-- ANYTHING ELSE -->
+            <!-- =========================================================== -->
+            <span class='lm' id='lm4'><h2 class='h2-section'>Anything else?<span id='lm4-text' style='margin-left:5px'>Learn more</span></h2></span>
+            <div class='ieye_descr' id='lm4-d'>
+                We currently only support laptop and desktop computers. IntelliEye is not supported on mobile platforms. We support a subset of the most popular browsers: Firefox, Opera and Chrome. Other browsers are not supported (if such browsers are detected, the IntelliEye add-on is deactivated). 
+            </div>   
         </div>
 
         <!-- =============================================================== -->
@@ -99,9 +73,9 @@
                 <input name="r_remember" type="radio" value="yes" id='i_remember'><label for='i_remember'>Remember my choice</label>
             </div>
 
-            <i style="display:block;margin-top:20px">To return to this window, or to change the choice you have made here, 
-            please click on the <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png" 
-            width="20" height:"20" style="vertical-align:middle"> icon above the video.</i>
+            <i style="display:block;margin-top:20px">Any choice you make in allowing/disallowing IntelliEye can be changed: a click on
+                 <img src="https://moocwidgets.cc/static/ieye/img/intellieye_logo_edx_h60.png" 
+                width="20" height:"20" style="vertical-align:middle"> will bring up this interface again.</i>
         </div>
     </div>
 </div>
