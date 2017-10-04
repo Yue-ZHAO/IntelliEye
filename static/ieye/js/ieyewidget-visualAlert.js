@@ -466,26 +466,37 @@
 
 	// ----------------- Start visual alert ----------------- 
 	function iEyeVisualAlertStart() {
+		console.log(">>> visualAlertIntRef: " + visualAlertIntRef);
 		if (vcontrol.getCurrentPlayerState() === 'play') {
 			// fullscreen state, false if not in fullscreen, true if in fullscreen.
 			var fstate = vcontrol.getPlayerDataStateFromID(vcontrol.getCurrentPlayerID()).videoFullScreen.fullScreenState;		
 			// currently not in fullscreen mode
 			if (!fstate) {
-				$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink');
+				if (!($('.tc-wrapper').hasClass('blink'))) { 
+					$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink')
+					IEWLogger.logAlert({
+						'time': Date.now(),
+						'videoID': vcontrol.getCurrentPlayerID(),
+						'videoTime': vcontrol.getCurrentTime(),
+						'videoDuration': vcontrol.getDuration(),
+						'status': 'start',});
+				};
 			} else {
 				// fullscreen mode
-				$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink-fs');
+				if (!($('.tc-wrapper').hasClass('blink-fs'))) {
+					$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink-fs');
+					IEWLogger.logAlert({
+						'time': Date.now(),
+						'videoID': vcontrol.getCurrentPlayerID(),
+						'videoTime': vcontrol.getCurrentTime(),
+						'videoDuration': vcontrol.getDuration(),
+						'status': 'start',});
+				}
 			}
+			
 			if (visualAlertIntRef === 0){
                 visualAlertIntRef = 1
-                IEWLogger.logAlert({
-                    'time': Date.now(),
-                    'videoID': vcontrol.getCurrentPlayerID(),
-                    'videoTime': vcontrol.getCurrentTime(),
-                    'videoDuration': vcontrol.getDuration(),
-                    'status': 'start',
-                });
-			}
+			}			
 		}
 	}
 
@@ -560,5 +571,9 @@
 
 	ieyewidget.pausedByIEye = function() {
 		return pausedByIEye;
+	};	
+
+	ieyewidget.iEyeHasFocus = function() {
+		return iEyeHasFocus;
 	};	
 }) (window);

@@ -360,10 +360,13 @@ window.IEWLogger = window.IEWLogger || (function() {
             return wstatus.indexOf(s) > -1 ? wstatus.indexOf(s) : 'unknown';
         }
 
+        // decide isIEyeEvent on pause/resume
         if (status === 'pause') { 
+            // if state is pause, and paused by ieye:
             isIEyeEvent = (ieyewidget.pausedByIEye()) ? '1' : '0';
         } else if (status === 'resume') {
-            isIEyeEvent = (isIEyeEvent === '1') ? isIEyeEvent : '0';
+            // if state is resume AND ieye has focus, it's an iEyeEvent. Otherwise it's a manual resume.
+            isIEyeEvent = (isIEyeEvent === '1' && ieyewidget.iEyeHasFocus()) ? isIEyeEvent : '0';
         } else {
             isIEyeEvent = '0';
         }

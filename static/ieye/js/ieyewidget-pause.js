@@ -531,4 +531,8 @@
 	ieyewidget.pausedByIEye = function() {
 		return pausedByIEye;
 	};
+
+	ieyewidget.iEyeHasFocus = function() {
+		return iEyeHasFocus;
+	};
 }) (window);
