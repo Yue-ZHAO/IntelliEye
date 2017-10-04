@@ -8,7 +8,7 @@ var sessionData = new Map();
 var historyData = new Map();
 
 var ACCESSKEY = 'wiseye';
-var CHECKTIME = 300000;
+var CHECKTIME = 300000; // 5 minutes
 var DAY_IN_MS = 86400000; // a day in miliseconds, for clearing history
 var CHECK_PROGRESS = 0; // counts how many ms has gone by
 
@@ -16,7 +16,12 @@ var CHECK_PROGRESS = 0; // counts how many ms has gone by
 // if not, store
 setInterval(function() {
     if (CHECK_PROGRESS >= DAY_IN_MS) {
-        historyData.clear();
+        // if 24h has past, store history
+        dp.storeHistory(historyData, function() {
+            // clear when write finishes
+            historyData.clear();
+        });
+
         CHECK_PROGRESS = 0;
     }
 
@@ -166,6 +171,63 @@ router.post('/data/:type', function(req, res) {
  */
 function getMocks() {
     var mock = new Map();
+
+    // =============================================================================
+    // EXCEPTION CASES
+    // =============================================================================
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        var logA = {
+            'userID': 'userA',
+            'sessionID': '1111.2222.AAAA.BBBB||bannedA',
+            'reactionType': 'AuditoryAlert',
+            'banned': true,
+            'banReasons': ['Mobile'],
+            'environment': {
+                'browser': 'Chrome',
+                'browserVersion': '11',
+                'mobile': true,                
+            },
+            'widget': [{
+                'eventType': 'disallow',
+            }],            
+            'sessionStartTime': (new Date(yesterday.setHours(yesterday.getHours() + (Math.random() * 2) ))).toISOString(),
+        };
+        var userID = logA.userID;
+        var sessionID = logA.sessionID;
+
+        // set up user data
+        mock.set(sessionID, logA);
+        mock.get(sessionID).userID = userID;
+
+        var logB = {
+            'userID': 'userB',
+            'sessionID': '1111.2222.AAAA.BBBB||bannedB',
+            'reactionType': 'VisualAlert',
+            'banned': true,
+            'banReasons': ['Browser'],
+            'environment': {
+                'browser': 'Safari',
+                'browserVersion': '11',
+                'mobile': false,                
+            },
+            'widget': [{
+                'eventType': 'disallow',
+            }],            
+            'sessionStartTime': (new Date(yesterday.setHours(yesterday.getHours() + (Math.random() * 2) ))).toISOString(),
+        };
+        var userID = logB.userID;
+        var sessionID = logB.sessionID;
+
+        // set up user data
+        mock.set(sessionID, logB);
+        mock.get(sessionID).userID = userID;    
+        
+    // =========================================================================
+    // STANDARD CASES
+    // =========================================================================
+
     var now = new Date();
     for (var i = 0; i < 5; i++) {
         var log = {
@@ -190,60 +252,18 @@ function getMocks() {
         // set up user data
         mock.set(sessionID, log);
         mock.get(sessionID).userID = userID;    
-    }
-
-        var logA = {
-            'userID': 'user'+i,
-            'sessionID': '1111.2222.AAAA.BBBB||bannedA',
-            'reactionType': 'AuditoryAlert',
-            'banned': true,
-            'banReasons': ['Mobile'],
-            'environment': {
-                'browser': 'Chrome',
-                'browserVersion': '11',
-                'mobile': true,                
-            },
-            'widget': [{
-                'eventType': 'disallow',
-            }],            
-            'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
-        };
-        var userID = logA.userID;
-        var sessionID = logA.sessionID;
-
-        // set up user data
-        mock.set(sessionID, logA);
-        mock.get(sessionID).userID = userID;
-
-        var logB = {
-            'userID': 'user'+i,
-            'sessionID': '1111.2222.AAAA.BBBB||bannedB',
-            'reactionType': 'VisualAlert',
-            'banned': true,
-            'banReasons': ['Browser'],
-            'environment': {
-                'browser': 'Safari',
-                'browserVersion': '11',
-                'mobile': false,                
-            },
-            'widget': [{
-                'eventType': 'disallow',
-            }],            
-            'sessionStartTime': (new Date(now.setHours(now.getHours() + (Math.random() * 2) ))).toISOString(),
-        };
-        var userID = logB.userID;
-        var sessionID = logB.sessionID;
-
-        // set up user data
-        mock.set(sessionID, logB);
-        mock.get(sessionID).userID = userID;           
+    }      
     
     return mock;
 }
 
 router.get('/testsession', function(req, res) {
     var mocks = getMocks();
-
+    dp.storeHistory(mocks, function() {
+        // clear when write finishes
+        // historyData.clear();
+        console.log("write finish");
+    });
     res.render('analytics', {historyData: mocks.toJSON(), sessionData: mocks.toJSON()});
 });
 

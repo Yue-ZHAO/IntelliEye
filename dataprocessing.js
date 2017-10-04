@@ -1,58 +1,46 @@
 var jsonfile = require('jsonfile'); 
 jsonfile.spaces = 4;
 var fs = require('fs');
+var pug = require('pug');
+
 var path = require('path');
 
-var logsPath = 'logs/';
 var dataPath = '../moocdata/';
+var logPath = path.join(dataPath, 'logs');
 var userFeedbackFile = path.join(dataPath, 'UserFeedback');
 
 var squirreleyePath = path.join(dataPath, 'squirreleye');
 var ieyePath = path.join(dataPath, 'ieye');
 
-// create log file path, replace all : occurences for Windows
-// var logfile = logsPath + (new Date()).toISOString().replace(/:/g, '.');
-
-// // check if log folder exists
-// if (!fs.existsSync(logsPath)) {
-//     console.log('Creating logs folder for log4js');
-//     fs.mkdirSync(logsPath);
-// }
-
 // check if data folder exists
 if (!fs.existsSync(dataPath)) {
     fs.mkdirSync(dataPath);
-
-    if (!fs.existsSync(squirreleyePath)) {
-        console.log('creating ' + squirreleyePath +' data folder');
-        fs.mkdirSync(squirreleyePath);
-    }
-
-    if (!fs.existsSync(ieyePath)) {
-        console.log('creating ' + ieyePath +' data folder');
-        fs.mkdirSync(ieyePath);
-    }
-
-    if (!fs.existsSync(userFeedbackFile)) {
-        fs.writeFile(userFeedbackFile, '', function(err) {
-            if (err) {
-                console.log(err);
-            }
-            console.log('Create userFeedbackFile ' + userFeedbackFile + ' success');
-        });
-    }        
-
     console.log('Using' + dataPath + ' data folder');
 }    
 
-// // Logger to write logs to file.
-// // to change the filename or folder, change the filename part below.
-// log4js.configure({
-//     appenders: [
-//         {type: 'console'},
-//         {type: 'file', filename: logfile},
-//     ],
-// });
+if (!fs.existsSync(squirreleyePath)) {
+    console.log('creating ' + squirreleyePath +' data folder');
+    fs.mkdirSync(squirreleyePath);
+}
+
+if (!fs.existsSync(ieyePath)) {
+    console.log('creating ' + ieyePath +' data folder');
+    fs.mkdirSync(ieyePath);
+}
+
+if (!fs.existsSync(logPath)) {
+    console.log('creating ' + logPath +' data folder');
+    fs.mkdirSync(logPath);
+}    
+
+if (!fs.existsSync(userFeedbackFile)) {
+    fs.writeFile(userFeedbackFile, '', function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log('Create userFeedbackFile ' + userFeedbackFile + ' success');
+    });
+}        
 
 /**
  * 
@@ -100,6 +88,28 @@ var writeFeedback = function(data) {
     });
 };
 
+/**
+ * Stores the history pages as html
+ * @param {*} data history session data from ieye.js
+ * @param {*} onFinish call when write finishes
+ */
+var storeHistory = function(data, onFinish) {
+    var firstEntry = Array.from(data.entries())[0][1]; // get first added session (0=key 1=val)
+    var historyFile = path.join(logPath, (new Date()).toDateString() + ' ('+firstEntry.sessionStartTime.replace(/:/g, '.') +').html');
+
+    var output = pug.renderFile('views/history.pug', {historyData: data});
+
+    fs.writeFile(historyFile, output, function(err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        if (typeof onFinish !== 'undefined') {
+            onFinish();            
+        }
+    });      
+};
+
 module.exports.createUserFile = createUserFile;
 module.exports.writeFile = writeFile;
 module.exports.writeFeedback = writeFeedback;
+module.exports.storeHistory = storeHistory;

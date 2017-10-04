@@ -1,47 +1,13 @@
 html
   head
     title Sessions
-    link(rel='stylesheet', href='/static/ieye/css/bootstrap.min.css')
+    link(rel='stylesheet', href='../../moocwidgets/static/ieye/css/bootstrap.min.css')
 
     block scripts
     //-   script(src='/jquery.js')
   body
     block content
         .container(style="margin-top:50px")
-            .panel.panel-default
-                .panel-body
-                    - var users = new Map();
-                    for session in sessionData
-                        - if (!users.has(session.userID))
-                        -     users.set(session.userID, '');
-
-                    h2 Sessions
-                    h5= (new Date()).toLocaleDateString()
-                    h5= 'current sessions: ' +  Object.keys(sessionData).length
-                    h5= 'current users: ' + users.size                 
-                    hr(style="visibility:hidden")
-                    .well
-                        for session in sessionData
-                            - var useState = 'n/a';
-                            for wstate in session.widget
-                                - 
-                                    if (wstate.eventType === 'allow' || wstate.eventType === 'disallow')
-                                        useState = wstate.eventType;
-                                
-                            - var sDate = (new Date(session.sessionStartTime));
-                            - var h = ('0' + sDate.getHours()).slice(-2);
-                            - var m = ('0' + sDate.getMinutes()).slice(-2);
-                            - var s = ('0' + sDate.getSeconds()).slice(-2);
-                            div(style="display:flex; justify-content: space-between")
-                                p= session.userID
-                                p= session.sessionID
-                                p= session.reactionType
-                                p= useState
-                                p= h + ':' + m + ':' + s
-                                p= session.environment.browser + ' ('+session.environment.browserVersion+')'                                            
-                                p= 'mobile: ' + session.environment.mobile
-                                p= 'banned: ' + session.banned
-
             .panel.panel-default
                 .panel-body
                     h2 History
@@ -51,6 +17,7 @@ html
                         //- bucket sessions into [date-hours, session]
                         - var bucket = new Map();
                         - var usersPerDateHour = new Map();
+                        - historyData = JSON.parse(JSON.stringify(historyData))
                         - var keys = Object.keys(historyData).reverse();
                         - for(var i = 0; i < keys.length; i++)
                             - var session = historyData[keys[i]]
@@ -66,7 +33,7 @@ html
                                     usersPerDateHour.set(h, new Map());
                                 }
                                 usersPerDateHour.get(h).set(session.userID, '');
-
+                        
                         - bucket.forEach((b, k) => {
                             .well
                                 h4= k
@@ -98,4 +65,4 @@ html
     block foot
 footer(style="margin:auto;margin-bottom:50px;width:50%;text-align:center")
     p
-        i History shown here will be cleared within 24 hours, but stored on server.
+        i History logged.
