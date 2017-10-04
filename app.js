@@ -42,7 +42,7 @@ app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
 // without nginx, uncomment:
-// app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // set up of the body parser
 // this dependency is required to send json files
@@ -68,23 +68,6 @@ app.use('/sqeye', sqeyeRoutes);
 app.use('/ieye', ieyeRoutes);
 
 // =============================================================================
-
-// var options = {
-//     key: fs.readFileSync('./ssl/key.key'),
-//     cert: fs.readFileSync('./ssl/cert.pem'),
-//     ca: fs.readFileSync('./ssl/chain.crt'),
-// };
-
-// var server = https.createServer(options, app);
-
-// /**
-//  * Sets up the app.
-//  * Initializes the logs folder if needed.
-//  */
-// server.listen(port, ipaddress, function() {
-//     logger.info('[%s] Node server started on %s:%d',
-//         (new Date()).toLocaleTimeString(), ipaddress, port);
-// });
 
 app.listen(port, ipaddress, function() {
     logger.info('[%s] Node server started on %s:%d',

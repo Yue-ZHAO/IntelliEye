@@ -17,7 +17,7 @@ var CHECK_PROGRESS = 0; // counts how many ms has gone by
 setInterval(function() {
     if (CHECK_PROGRESS >= DAY_IN_MS) {
         // if 24h has past, store history
-        dp.storeHistory(historyData, function() {
+        dp.parseHistory(historyData, true, function() {
             // clear when write finishes
             historyData.clear();
         });
@@ -89,8 +89,14 @@ router.get('/sessionsgate', function(req, res) {
     res.render('check', {});
 });
 
-router.get('/sessions', checkUser, function(req, res) {
+router.get('/sessions/', checkUser, function(req, res) {
     res.render('analytics', {historyData: historyData.toJSON(), sessionData: sessionData.toJSON()});
+});
+
+router.get('/gethistory', checkUser, function(req, res) {
+    var mocks = getMocks();    
+    var output = dp.parseHistory(mocks, false).replace(/(?:\r\n|\r|\n)/g, '<br>');    
+    res.send(output);
 });
 
 router.post('/user', function(req, res) {
@@ -159,7 +165,6 @@ router.post('/data/:type', function(req, res) {
         default: // none
     }
 
-    console.log(data);
     res.end();
 });
 
@@ -257,14 +262,20 @@ function getMocks() {
     return mock;
 }
 
-router.get('/testsession', function(req, res) {
+router.get('/testsessions', function(req, res) {
     var mocks = getMocks();
-    dp.storeHistory(mocks, function() {
+    dp.parseHistory(mocks, true, function() {
         // clear when write finishes
         // historyData.clear();
         console.log("write finish");
     });
     res.render('analytics', {historyData: mocks.toJSON(), sessionData: mocks.toJSON()});
+});
+
+router.get('/testgethistory', function(req, res) {
+    var mocks = getMocks();    
+    var output = dp.parseHistory(mocks, false).replace(/(?:\r\n|\r|\n)/g, '<br>');    
+    res.send(output);
 });
 
 module.exports = router;

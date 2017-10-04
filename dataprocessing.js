@@ -90,26 +90,92 @@ var writeFeedback = function(data) {
 
 /**
  * Stores the history pages as html
- * @param {*} data history session data from ieye.js
- * @param {*} onFinish call when write finishes
+ * @param {Map} historyData history session data from ieye.js
+ * @param {Boolean} store if true, save history to file.
+ * @param {Function} onFinish call when write finishes, required when store=true.
+ * @return {String} returns the data string that was parsed.
  */
-var storeHistory = function(data, onFinish) {
-    var firstEntry = Array.from(data.entries())[0][1]; // get first added session (0=key 1=val)
-    var historyFile = path.join(logPath, (new Date()).toDateString() + ' ('+firstEntry.sessionStartTime.replace(/:/g, '.') +').html');
+var parseHistory = function(historyData, store, onFinish) {
+    if (historyData.size === 0) {
+        return 'Empty.';
+    }
 
-    var output = pug.renderFile('views/history.pug', {historyData: data});
+    var firstEntry = Array.from(historyData.entries())[0][1]; // get first added session (0=key 1=val)
+    var historyFile = path.join(logPath, (new Date(firstEntry.sessionStartTime)).toDateString() + ' ('+firstEntry.sessionStartTime.replace(/:/g, '.') +').txt');
 
-    fs.writeFile(historyFile, output, function(err, data) {
-        if (err) {
-            return console.log(err);
+    // use this to render html history to file (raw history is without styling)
+    // var output = pug.renderFile('views/rawhistory.pug', {historyData: data});
+
+    var output = '';
+
+    var historyData = JSON.parse(JSON.stringify(historyData));
+    var bucket = new Map();
+    var usersPerDateHour = new Map();
+    var keys = Object.keys(historyData).reverse();
+    for (var i = 0; i < keys.length; i++) {
+        var session = historyData[keys[i]];
+        var date = new Date(session.sessionStartTime);
+        var h = date.toLocaleDateString() + ', ' + date.getHours() + ':00:00';
+        if (!bucket.has(h)) {
+            bucket.set(h, []);
         }
-        if (typeof onFinish !== 'undefined') {
-            onFinish();            
+        bucket.get(h).push(session);
+
+        if (!usersPerDateHour.has(h)) {
+            usersPerDateHour.set(h, new Map());
         }
-    });      
+        usersPerDateHour.get(h).set(session.userID, '');
+    }
+
+    bucket.forEach((b, k) => {
+        if (b.length > 0) { 
+            output += k + ',';
+            output += 'sessions: ' + b.length+ ',';
+            output += 'users: ' + usersPerDateHour.get(k).size;                         
+            output += '\n';
+
+            b.forEach((session) => {
+                var useState = 'n/a';
+                for (var wi = 0; wi < session.widget.length; wi++) {
+                    var wstate = session.widget[wi];
+                    if (wstate.eventType === 'allow' || wstate.eventType === 'disallow') {
+                        useState = wstate.eventType;
+                    }
+                }
+                    var sDate = (new Date(session.sessionStartTime));
+                    var h = ('0' + sDate.getHours()).slice(-2);
+                    var m = ('0' + sDate.getMinutes()).slice(-2);
+                    var s = ('0' + sDate.getSeconds()).slice(-2);
+                
+                    output += session.userID + ',';
+                    output += session.sessionID + ',';
+                    output += session.reactionType+ ',';
+                    output += useState+ ',';
+                    output += session.sessionStartTime + ',';
+                    output += session.environment.browser + ' ('+session.environment.browserVersion+')'+ ',';
+                    output += 'mobile: ' + session.environment.mobile+ ',';
+                    output += 'banned: ' + session.banned+ ',';
+                    output += '\n';
+            });
+            output += '--------------------------------------------------------------------------------------\n';
+        }
+    });
+
+    if (store) {
+        fs.writeFile(historyFile, output, function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            if (typeof onFinish !== 'undefined') {
+                onFinish();            
+            }
+        });    
+    }
+    
+    return output;
 };
 
 module.exports.createUserFile = createUserFile;
 module.exports.writeFile = writeFile;
 module.exports.writeFeedback = writeFeedback;
-module.exports.storeHistory = storeHistory;
+module.exports.parseHistory = parseHistory;
