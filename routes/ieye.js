@@ -93,9 +93,8 @@ router.get('/sessions/', checkUser, function(req, res) {
     res.render('analytics', {historyData: historyData.toJSON(), sessionData: sessionData.toJSON()});
 });
 
-router.get('/gethistory', checkUser, function(req, res) {
-    var mocks = getMocks();    
-    var output = dp.parseHistory(mocks, false).replace(/(?:\r\n|\r|\n)/g, '<br>');    
+router.get('/gethistory', checkUser, function(req, res) { 
+    var output = dp.parseHistory(historyData.toJSON(), false).replace(/(?:\r\n|\r|\n)/g, '<br>');    
     res.send(output);
 });
 
@@ -274,7 +273,7 @@ router.get('/testsessions', function(req, res) {
 
 router.get('/testgethistory', function(req, res) {
     var mocks = getMocks();    
-    var output = dp.parseHistory(mocks, false).replace(/(?:\r\n|\r|\n)/g, '<br>');    
+    var output = dp.parseHistory(mocks.toJSON(), false).replace(/(?:\r\n|\r|\n)/g, '<br>');    
     res.send(output);
 });
 
