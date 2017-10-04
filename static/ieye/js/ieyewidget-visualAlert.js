@@ -43,6 +43,9 @@
 	// preflightcheck notifications
 	var preflightNote;
 
+    // auditory alert
+    var visualAlertIntRef = 0;
+
 	/** 
 	 *	----------------- Collect the metrics stream -----------------
 	*/
@@ -473,19 +476,26 @@
 				// fullscreen mode
 				$('#' + vcontrol.getCurrentPlayerID()).closest('div').find('.tc-wrapper').addClass('blink-fs');
 			}
-
-			IEWLogger.logAlert({
-				'time': Date.now(),
-				'videoID': vcontrol.getCurrentPlayerID(),
-				'videoTime': vcontrol.getCurrentTime(),
-				'videoDuration': vcontrol.getDuration(),
-				'status': 'start',
-			});				
+			if (visualAlertIntRef === 0){
+                visualAlertIntRef = 1
+                IEWLogger.logAlert({
+                    'time': Date.now(),
+                    'videoID': vcontrol.getCurrentPlayerID(),
+                    'videoTime': vcontrol.getCurrentTime(),
+                    'videoDuration': vcontrol.getDuration(),
+                    'status': 'start',
+                });
+			}
 		}
 	}
 
 	// ----------------- Stop visual alert ----------------- 
 	function iEyeVisualAlertStop() {
+
+        if (visualAlertIntRef !== 0) {
+            visualAlertIntRef = 0
+        }
+
 		if ($('.tc-wrapper').hasClass('blink-fs')) {
 			$('.tc-wrapper').removeClass('blink-fs');
 			IEWLogger.logAlert({
@@ -494,7 +504,7 @@
 				'videoTime': vcontrol.getCurrentTime(),
 				'videoDuration': vcontrol.getDuration(),
 				'status': 'stop',
-			});				
+			});
 		} else if ($('.tc-wrapper').hasClass('blink')) {
 			$('.tc-wrapper').removeClass('blink');
 			IEWLogger.logAlert({
@@ -503,8 +513,8 @@
 				'videoTime': vcontrol.getCurrentTime(),
 				'videoDuration': vcontrol.getDuration(),
 				'status': 'stop',
-			});				
-		}		
+			});
+		}
 	}
 
 	/**

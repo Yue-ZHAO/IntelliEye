@@ -469,15 +469,14 @@
 		if (auditoryAlertIntRef !== null) {
 			clearInterval(auditoryAlertIntRef);
 			auditoryAlertIntRef = null;
-			IEWLogger.logAlert({
-				'time': Date.now(),
-				'videoID': vcontrol.getCurrentPlayerID(),
-				'videoTime': vcontrol.getCurrentTime(),
-				'videoDuration': vcontrol.getDuration(),
-				'status': 'stop',
-			});					
 		}
-	
+        IEWLogger.logAlert({
+            'time': Date.now(),
+            'videoID': vcontrol.getCurrentPlayerID(),
+            'videoTime': vcontrol.getCurrentTime(),
+            'videoDuration': vcontrol.getDuration(),
+            'status': 'stop',
+        });
 	}
 
 	// ----------------- Start auditory alert ----------------- 
