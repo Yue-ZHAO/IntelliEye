@@ -90,7 +90,7 @@ var writeFeedback = function(data) {
 
 /**
  * Stores the history pages as html
- * @param {JSON} historyData history session data from ieye.js
+ * @param {Map} historyData history session data from ieye.js
  * @param {Boolean} store if true, save history to file.
  * @param {Function} onFinish call when write finishes, required when store=true.
  * @return {String} returns the data string that was parsed.
@@ -108,6 +108,7 @@ var parseHistory = function(historyData, store, onFinish) {
 
     var output = '';
 
+    var historyData = JSON.parse(JSON.stringify(historyData));
     var bucket = new Map();
     var usersPerDateHour = new Map();
     var keys = Object.keys(historyData).reverse();
