@@ -162,7 +162,7 @@
             console.log('Initializing MOOCWidgets.');
             
             // if in studio, we don't start any widgets.
-            if (document.URL.indexOf('studio.edge.edx.org') >= 0) {
+            if (document.URL.indexOf('studio.edge.edx.org') >= 0 || document.URL.indexOf('studio.edx.org') >= 0) {
                 return;
             }
             if (MW_ENABLE_INTELLIEYE) {
