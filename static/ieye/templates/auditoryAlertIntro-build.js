@@ -68,9 +68,9 @@ INTROTEMPLATES['auditoryAlertIntro.html'] = "<div class=\"introOverlay\">\n" +
     "            <div class=\"msgButton\" id=\"start_ieye\">Enable IntelliEye</div>\n" +
     "            <div class=\"msgButtonFaded\" id=\"skip_ieye\">Disable IntelliEye</div>\n" +
     "            \n" +
-    "            <div id='remember_ieye'> For future:\n" +
-    "                <input name=\"r_remember\" type=\"radio\" value=\"no\" id='i_dont_remember' checked><label for='i_dont_remember'>Always ask me</label>\n" +
-    "                <input name=\"r_remember\" type=\"radio\" value=\"yes\" id='i_remember'><label for='i_remember'>Remember my choice</label>\n" +
+    "            <div id='remember_ieye'>\n" +
+    "                <input name=\"r_remember\" type=\"radio\" value=\"no\" id='i_dont_remember' checked><label for='i_dont_remember'> Always ask me</label>\n" +
+    "                <input name=\"r_remember\" type=\"radio\" value=\"yes\" id='i_remember'><label for='i_remember'> Remember my choice</label>\n" +
     "            </div>\n" +
     "\n" +
     "            <i style=\"display:block;margin-top:20px\">Any choice you make in allowing/disallowing IntelliEye can be changed: a click on\n" +
