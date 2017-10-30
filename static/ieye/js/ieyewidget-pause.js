@@ -133,6 +133,9 @@
 	 *	----------------- Handle scores and make a decision -----------------
 	*/
 	function handleDecision() {
+		// Yue's revision
+		// We do not consider page focus for the pause and auditory version
+
 		var isDefocus = false; 	// true= defocus detected
 		var trend = getCurrentTrend();
 		var hasFocus = document.hasFocus();
@@ -157,10 +160,10 @@
 					isDefocus = true;
 			}
 		}
-		else if (scoreTjs > tjsThresholdFocus && isVisible && hasFocus) {
+		else if (scoreTjs > tjsThresholdFocus && isVisible) {
 			isDefocus = false;	
 		}
-		else if (scoreTjs > tjsThresholdFocus && (isVisible == false || hasFocus == false)) {
+		else if (scoreTjs > tjsThresholdFocus && (isVisible == false)) {
 			isDefocus = true;			
 		}
 		
